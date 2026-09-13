@@ -1368,6 +1368,52 @@
         </div>
     </footer>
 
+    <!-- Firebase SDK & Script -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+      import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyCmpOjdxAkJTL7uE9I_CazbQfh-qSbPnNQ",
+        authDomain: "factory-system-a4db8.firebaseapp.com",
+        projectId: "factory-system-a4db8",
+        storageBucket: "factory-system-a4db8.firebasestorage.app",
+        messagingSenderId: "216358094084",
+        appId: "1:216358094084:web:500d511f7b130f23ecfc51",
+        measurementId: "G-ECNQ5M5HNE"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const db = getDatabase(app);
+
+      // الاستماع الفوري لبيانات السلايدر من Firebase Realtime Database
+      const sliderRef = ref(db, 'slider');
+      onValue(sliderRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          Object.keys(data).forEach((index) => {
+            const targetSlide = document.getElementById(`slide-${index}`);
+            if (targetSlide && data[index]) {
+              targetSlide.style.backgroundImage = `url('${data[index]}')`;
+            }
+          });
+        }
+      });
+
+      // إتاحة دالة حفظ السلايدر في Realtime Database للوحة التحكم
+      window.saveSliderToFirebase = function(index, imageUrl) {
+        set(ref(db, 'slider/' + index), imageUrl)
+          .then(() => {
+            alert(`Image du Slide ${parseInt(index) + 1} mise à jour sur Firebase!`);
+          })
+          .catch((error) => {
+            alert("Erreur lors de la mise à jour: " + error.message);
+          });
+      };
+    </script>
+
     <script>
         // قاموس الترجمات المحدث
         const translations = {
@@ -1699,7 +1745,7 @@
             closeAdminModal();
         }
 
-        /* تحديث أي صورة في السلايدر عبر لوحة التحكم */
+        /* تحديث أي صورة في السلايدر وحفظها مباشرة في Firebase */
         function updateSlider() {
             let index = document.getElementById('sliderSelectIndex').value;
             let url = document.getElementById('sliderUrl').value;
@@ -1715,10 +1761,13 @@
         }
 
         function setHeroBackground(src, index) {
-            let targetSlide = document.getElementById(`slide-${index}`);
-            if(targetSlide) {
-                targetSlide.style.backgroundImage = `url('${src}')`;
-                alert(`Image du Slide ${parseInt(index)+1} mise à jour!`);
+            if (window.saveSliderToFirebase) {
+                window.saveSliderToFirebase(index, src);
+            } else {
+                let targetSlide = document.getElementById(`slide-${index}`);
+                if(targetSlide) {
+                    targetSlide.style.backgroundImage = `url('${src}')`;
+                }
             }
             closeAdminModal();
         }
@@ -1763,25 +1812,6 @@
             alert('Produit ajouté!');
             closeAdminModal();
         }
-    </script>
-
-    <!-- كود إعداد وتفعيل Firebase -->
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
-
-      const firebaseConfig = {
-        apiKey: "AIzaSyCmpOjdxAkJTL7uE9I_CazbQfh-qSbPnNQ",
-        authDomain: "factory-system-a4db8.firebaseapp.com",
-        projectId: "factory-system-a4db8",
-        storageBucket: "factory-system-a4db8.firebasestorage.app",
-        messagingSenderId: "216358094084",
-        appId: "1:216358094084:web:500d511f7b130f23ecfc51",
-        measurementId: "G-ECNQ5M5HNE"
-      };
-
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
     </script>
 </body>
 </html>
