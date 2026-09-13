@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin - Parfum LUXE</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script type="importmap">
+{"imports":{"firebase/app":"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js","firebase/firestore":"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"}}
+</script>
+</head>
+<body class="bg-[#F6FFFD] min-h-screen">
+<div id="login" class="min-h-screen grid place-items-center p-6">
+<div class="bg-white rounded-[24px] p-8 w-full max-w-sm shadow-xl">
+<h2 class="text-2xl font-black mb-6">دخول الأدمن</h2>
+<input id="pass" type="password" placeholder="كلمة السر admin123" class="w-full border rounded-full px-5 py-3 mb-4">
+<button onclick="login()" class="w-full bg-zinc-900 text-white py-3 rounded-full font-bold">دخول</button>
+<a href="index.html" class="block text-center mt-4 text-sm text-zinc-500">← رجوع للمتجر</a>
+</div>
+</div>
+
+<div id="panel" class="hidden max-w-7xl mx-auto p-6">
+<header class="flex justify-between items-center mb-8"><h1 class="text-3xl font-black">لوحة التحكم</h1><a href="index.html" class="px-5 py-2 bg-white rounded-full border">المتجر</a></header>
+
+<div class="flex gap-2 mb-8 overflow-x-auto">
+<button onclick="tab('products')" id="tab-products" class="tab px-6 py-3 rounded-full bg-zinc-900 text-white font-bold">العطور</button>
+<button onclick="tab('logo')" id="tab-logo" class="tab px-6 py-3 rounded-full bg-white border">اللوغو</button>
+<button onclick="tab('slider')" id="tab-slider" class="tab px-6 py-3 rounded-full bg-white border">السلايدر</button>
+<button onclick="tab('offer')" id="tab-offer" class="tab px-6 py-3 rounded-full bg-white border">عرض 3 بـ 200</button>
+<button onclick="tab('phrases')" id="tab-phrases" class="tab px-6 py-3 rounded-full bg-white border">العبارات</button>
+</div>
+
+<!-- PRODUCTS -->
+<div id="view-products" class="tabView">
+<div class="bg-white rounded-[24px] p-6 shadow-sm mb-6">
+<h3 class="font-bold mb-4">إضافة عطر جديد</h3>
+<div class="grid md:grid-cols-2 gap-4">
+<input id="p-name" placeholder="الاسم" class="border rounded-xl px-4 py-3">
+<input id="p-price" type="number" placeholder="الثمن MAD" class="border rounded-xl px-4 py-3">
+<input id="p-cat" placeholder="التصنيف Homme/Femme" class="border rounded-xl px-4 py-3">
+<label class="flex items-center gap-2"><input id="p-best" type="checkbox"> الأكثر مبيعا</label>
+<textarea id="p-desc" placeholder="الوصف" class="md:col-span-2 border rounded-xl px-4 py-3"></textarea>
+<div class="md:col-span-2">
+<label class="block text-sm mb-2">صورة العطر (جودة عالية - تتحول فابور)</label>
+<input id="p-image" type="file" accept="image/*" class="w-full">
+<img id="p-preview" class="mt-3 w-32 h-32 object-contain hidden rounded-xl bg-zinc-50">
+</div>
+</div>
+<button onclick="addProduct()" class="mt-4 w-full py-3 bg-[#0d6d62] text-white rounded-full font-bold">إضافة</button>
+</div>
+<div id="list" class="grid md:grid-cols-3 gap-4"></div>
+</div>
+
+<!-- LOGO -->
+<div id="view-logo" class="tabView hidden">
+<div class="bg-white rounded-[24px] p-8 shadow-sm">
+<h3 class="font-bold text-xl mb-6">تغيير لوغو المتجر - كبير وواضح</h3>
+<div class="space-y-6">
+<div>
+<label class="text-sm font-bold">نص اللوغو (إذا ماعندكش صورة)</label>
+<input id="logoTextInput" class="w-full mt-2 border rounded-xl px-4 py-3 text-xl" placeholder="Parfum LUXE">
+</div>
+<div>
+<label class="text-sm font-bold">أو رفع صورة لوغو بجودة عالية PNG</label>
+<input id="logoImageInput" type="file" accept="image/*" class="w-full mt-2">
+<img id="logoPreview" class="mt-4 h-20 hidden">
+</div>
+<button onclick="saveLogo()" class="w-full py-3 bg-zinc-900 text-white rounded-full font-bold">حفظ اللوغو</button>
+<p class="text-sm text-zinc-500">اللوغو كيبان كبير فالهيدر - 40px و واضح</p>
+</div>
+</div>
+</div>
+
+<!-- SLIDER -->
+<div id="view-slider" class="tabView hidden">
+<div class="bg-white rounded-[24px] p-6 shadow-sm">
+<h3 class="font-bold mb-4">تعديل السلايدر - صور عالية الجودة</h3>
+<div id="sliderEdits" class="space-y-6"></div>
+<button onclick="saveSlider()" class="w-full mt-6 py-3 bg-zinc-900 text-white rounded-full font-bold">حفظ السلايدر</button>
+</div>
+</div>
+
+<!-- OFFER -->
+<div id="view-offer" class="tabView hidden">
+<div class="bg-white rounded-[24px] p-6 shadow-sm max-w-xl">
+<h3 class="font-bold mb-4">إعدادات عرض 3 عطور</h3>
+<input id="offerTitle" class="w-full border rounded-xl px-4 py-3 mb-3" placeholder="عنوان الباقة">
+<input id="offerPriceInput" type="number" class="w-full border rounded-xl px-4 py-3 mb-3" placeholder="ثمن 3 عطور">
+<textarea id="offerDesc" class="w-full border rounded-xl px-4 py-3" placeholder="وصف العرض"></textarea>
+<button onclick="saveOffer()" class="w-full mt-4 py-3 bg-zinc-900 text-white rounded-full font-bold">حفظ العرض</button>
+</div>
+</div>
+
+<!-- PHRASES -->
+<div id="view-phrases" class="tabView hidden">
+<div class="bg-white rounded-[24px] p-6 shadow-sm max-w-xl">
+<h3 class="font-bold mb-4">العبارات المثيرة</h3>
+<textarea id="phrasesInput" rows="5" class="w-full border rounded-xl px-4 py-3" placeholder="كل عبارة فسطر"></textarea>
+<button onclick="savePhrases()" class="w-full mt-4 py-3 bg-zinc-900 text-white rounded-full font-bold">حفظ</button>
+</div>
+</div>
+
+</div>
+
+<script type="module">
+import {initializeApp} from 'firebase/app';
+import {getFirestore, collection, addDoc, deleteDoc, doc, setDoc, onSnapshot, getDoc} from 'firebase/firestore';
+const firebaseConfig={apiKey:"AIzaSyDwrJ2FR0NVggoXeKchu2YGqqam5ZFMZXU",authDomain:"parfum-e53ad.firebaseapp.com",projectId:"parfum-e53ad",storageBucket:"parfum-e53ad.firebasestorage.app",messagingSenderId:"791467480753",appId:"1:791467480753:web:4c370b7e3635a37686f490"};
+const app=initializeApp(firebaseConfig); const db=getFirestore(app);
+
+let siteConfig={}; let currentImageBase64=''; let logoBase64='';
+window.login=()=>{if(document.getElementById('pass').value==='admin123'){document.getElementById('login').classList.add('hidden'); document.getElementById('panel').classList.remove('hidden'); load();} else alert('خطأ');}
+window.tab=(name)=>{
+ document.querySelectorAll('.tabView').forEach(v=>v.classList.add('hidden'));
+ document.getElementById('view-'+name).classList.remove('hidden');
+ document.querySelectorAll('.tab').forEach(b=>{b.classList.remove('bg-zinc-900','text-white'); b.classList.add('bg-white','border')});
+ document.getElementById('tab-'+name).classList.add('bg-zinc-900','text-white'); document.getElementById('tab-'+name).classList.remove('bg-white','border');
+}
+
+function toBase64(file, max=700){
+ return new Promise(res=>{
+  const r=new FileReader(); r.onload=e=>{
+   const img=new Image(); img.onload=()=>{
+    const c=document.createElement('canvas'); let w=img.width, h=img.height;
+    if(w>max){h=h*max/w; w=max;} c.width=w; c.height=h;
+    c.getContext('2d').drawImage(img,0,0,w,h); res(c.toDataURL('image/jpeg',0.85));
+   }; img.src=e.target.result;
+  }; r.readAsDataURL(file);
+ });
+}
+
+document.getElementById('p-image').addEventListener('change', async (e)=>{
+ const b=await toBase64(e.target.files[0], 600); currentImageBase64=b; document.getElementById('p-preview').src=b; document.getElementById('p-preview').classList.remove('hidden');
+});
+document.getElementById('logoImageInput').addEventListener('change', async (e)=>{
+ logoBase64=await toBase64(e.target.files[0], 400); document.getElementById('logoPreview').src=logoBase64; document.getElementById('logoPreview').classList.remove('hidden');
+});
+
+window.addProduct=async()=>{
+ const name=document.getElementById('p-name').value, price=Number(document.getElementById('p-price').value), cat=document.getElementById('p-cat').value, desc=document.getElementById('p-desc').value, best=document.getElementById('p-best').checked;
+ if(!name||!price) return alert('املأ الاسم والثمن');
+ await addDoc(collection(db,'parfums'),{name, price, category:cat, description:desc, bestseller:best, imageBase64:currentImageBase64, created:Date.now()});
+ alert('تمت الإضافة'); currentImageBase64=''; document.getElementById('p-preview').classList.add('hidden');
+};
+
+function load(){
+ onSnapshot(collection(db,'parfums'), snap=>{
+  document.getElementById('list').innerHTML=snap.docs.map(d=>{
+   const p=d.data(); return `<div class="bg-white rounded-xl p-4 flex gap-3"><img src="${p.imageBase64||''}" class="w-16 h-16 object-contain bg-zinc-50 rounded"><div class="flex-1"><p class="font-bold">${p.name}</p><p>${p.price} MAD</p><button onclick="del('${d.id}')" class="text-red-500 text-xs mt-2">حذف</button></div></div>`;
+  }).join('');
+ });
+ getDoc(doc(db,'config','site')).then(s=>{
+  if(s.exists()){siteConfig=s.data();
+   document.getElementById('logoTextInput').value=siteConfig.logoText||'';
+   document.getElementById('offerTitle').value=siteConfig.offerTitle||'ركّب باقتك';
+   document.getElementById('offerPriceInput').value=siteConfig.offerPrice||200;
+   document.getElementById('offerDesc').value=siteConfig.offerDesc||'';
+   document.getElementById('phrasesInput').value=(siteConfig.phrases||[]).join('\n');
+   // slider edits
+   const slider=siteConfig.slider||[];
+   document.getElementById('sliderEdits').innerHTML=slider.map((sl,i)=>`
+    <div class="border rounded-xl p-4"><p class="font-bold mb-2">شريحة ${i+1}</p>
+    <input data-i="${i}" data-k="title" value="${sl.title||''}" class="w-full border rounded px-3 py-2 mb-2" placeholder="العنوان">
+    <input data-i="${i}" data-k="sub" value="${sl.sub||''}" class="w-full border rounded px-3 py-2 mb-2" placeholder="العنوان الفرعي">
+    <input type="file" data-i="${i}" class="sliderFile">
+    <img src="${sl.img}" class="h-20 mt-2 object-cover rounded">
+    </div>`).join('');
+   document.querySelectorAll('.sliderFile').forEach(inp=>{
+    inp.addEventListener('change', async (e)=>{
+     const b=await toBase64(e.target.files[0], 1200); const i=e.target.dataset.i; siteConfig.slider[i].img=b;
+     e.target.nextElementSibling.src=b;
+    });
+   });
+   document.querySelectorAll('#sliderEdits input[data-k]').forEach(inp=>{
+    inp.addEventListener('input', e=>{siteConfig.slider[e.target.dataset.i][e.target.dataset.k]=e.target.value});
+   });
+  }
+ });
+}
+window.del=async(id)=>{if(confirm('حذف؟')) await deleteDoc(doc(db,'parfums',id));}
+window.saveLogo=async()=>{
+ const text=document.getElementById('logoTextInput').value;
+ const update={logoText:text}; if(logoBase64) update.logoImage=logoBase64;
+ await setDoc(doc(db,'config','site'), {...siteConfig, ...update}, {merge:true}); alert('تم حفظ اللوغو - غايبان كبير وواضح فالمتجر');
+}
+window.saveSlider=async()=>{await setDoc(doc(db,'config','site'), {slider: siteConfig.slider}, {merge:true}); alert('تم');}
+window.saveOffer=async()=>{
+ const t=document.getElementById('offerTitle').value, p=Number(document.getElementById('offerPriceInput').value), d=document.getElementById('offerDesc').value;
+ await setDoc(doc(db,'config','site'), {offerTitle:t, offerPrice:p, offerDesc:d}, {merge:true}); alert('تم حفظ العرض');
+}
+window.savePhrases=async()=>{
+ const arr=document.getElementById('phrasesInput').value.split('\n').filter(x=>x.trim());
+ await setDoc(doc(db,'config','site'), {phrases:arr}, {merge:true}); alert('تم');
+}
+</script>
+</body>
+</html>
