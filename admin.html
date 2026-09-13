@@ -7,172 +7,231 @@
 <script type="importmap">{"imports":{"firebase/app":"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js","firebase/firestore":"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"}}</script>
 <style>
 *{font-family:system-ui; box-sizing:border-box}
-.glass{background:rgba(255,255,255,0.90);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.9);box-shadow:0 12px 40px rgba(0,0,0,.06)}
+.glass{background:rgba(255,255,255,.92);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.9);box-shadow:0 12px 40px rgba(0,0,0,.06)}
 .card{border-radius:20px;background:white;box-shadow:0 8px 32px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.05);transition:.3s}
-.card:hover{box-shadow:0 16px 48px rgba(0,0,0,.10)}
 .btn{border-radius:999px;font-weight:800;transition:.2s;white-space:nowrap}
 .btn:active{scale:.97}
 @media(max-width:640px){.card{border-radius:16px}}
 </style>
 </head>
-<body class="bg-[#F6FFFE] min-h-screen">
-<div id="login" class="min-h-screen grid place-items-center p-4 bg-gradient-to-br from-zinc-900 to-[#0B7A6E]">
-<div class="glass rounded-[28px] p-8 w-full max-w-[400px] text-center">
+<body class="bg-[#F6FFFE] min-h-screen overflow-x-hidden">
+
+<!-- LOGIN - يعمل 100% بدون Firebase -->
+<div id="loginScreen" class="min-h-screen grid place-items-center p-4 bg-gradient-to-br from-zinc-900 via-zinc-800 to-[#0B7A6E]">
+<div class="glass rounded-[28px] p-8 w-full max-w-[400px] text-center shadow-2xl">
 <div class="text-[28px] font-black tracking-tight">SENTEL<span class="font-normal text-[#0B7A6E]">LUXE</span><span class="block text-[11px] tracking-[0.3em] text-zinc-500">ADMIN CLOUD ☁️</span></div>
-<div class="mt-4 bg-[#0B7A6E]/10 border border-[#0B7A6E]/20 rounded-[14px] p-3 text-[11px] text-right leading-relaxed">☁️ النظام السحابي: أي صورة ترفعها هنا تظهر فورا في الموقع في أي جهاز - هاتف، تابلت، PC - بدون روابط خارجية</div>
-<input id="pass" type="password" placeholder="admin123" class="w-full mt-6 border-2 rounded-full px-6 py-4 text-[16px] outline-none focus:border-zinc-900">
-<button onclick="login()" class="w-full mt-4 py-4 bg-zinc-900 text-white rounded-full font-bold text-[16px] hover:bg-black">دخول ☁️</button>
-<a href="index.html" class="mt-4 inline-block text-[12px] font-bold underline">← المتجر</a>
+<div class="mt-4 bg-[#0B7A6E]/10 border border-[#0B7A6E]/20 rounded-[14px] p-3 text-[11px] text-right leading-relaxed">☁️ الصور ترفع للسحابة وتظهر في أي جهاز - هاتف، تابلت، PC</div>
+<input id="passInput" type="password" placeholder="كلمة السر: admin123" class="w-full mt-6 border-2 rounded-full px-6 py-4 text-[16px] outline-none focus:border-zinc-900 text-center">
+<button id="loginBtn" class="w-full mt-4 py-4 bg-zinc-900 text-white rounded-full font-bold text-[16px] hover:bg-black transition">دخول ☁️</button>
+<p id="loginMsg" class="mt-3 text-[12px] text-red-500 hidden"></p>
+<a href="index.html" class="block text-center mt-4 text-[12px] font-bold underline">← رجوع للمتجر</a>
 </div>
 </div>
 
-<div id="panel" class="hidden max-w-[1320px] mx-auto p-4 sm:p-6">
-<div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-<h1 class="text-[22px] sm:text-[28px] font-black">لوحة التحكم ☁️ <span class="text-[12px] font-normal text-green-600">الصور تظهر في كل الأجهزة</span></h1>
-<div class="flex gap-2"><a href="index.html" target="_blank" class="px-4 h-[40px] rounded-full bg-white border grid place-items-center text-[13px] font-bold">👁️ المتجر</a><button onclick="location.reload()" class="w-10 h-10 rounded-full bg-zinc-900 text-white">↻</button></div>
-</div>
+<!-- PANEL -->
+<div id="panelScreen" class="hidden max-w-[1320px] mx-auto p-4 sm:p-6">
+<header class="flex flex-wrap justify-between items-center gap-4 mb-6 sm:mb-8">
+<div><h1 class="text-[22px] sm:text-[30px] font-black">لوحة التحكم ☁️</h1><p class="text-[11px] sm:text-[12px] text-green-600 font-bold">✅ الصور السحابية تظهر في أي جهاز تفتحه</p></div>
+<div class="flex gap-2"><a href="index.html" target="_blank" class="px-4 sm:px-5 h-[40px] rounded-full bg-white border grid place-items-center text-[12px] sm:text-[13px] font-bold shadow-sm">👁️ المتجر</a><button onclick="location.reload()" class="w-10 h-10 rounded-full bg-zinc-900 text-white grid place-items-center">↻</button></div>
+</header>
 
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-<div class="glass rounded-[18px] p-4"><div class="text-[11px] text-zinc-500">☁️ عطور سحابية</div><div id="st-count" class="text-[26px] font-black">0</div><div class="text-[10px] text-green-600">تظهر في كل الأجهزة ✅</div></div>
-<div class="glass rounded-[18px] p-4"><div class="text-[11px] text-zinc-500">الباقة</div><div id="st-offer" class="text-[20px] font-bold">200 MAD</div><div class="text-[10px] text-zinc-500">3 عطور</div></div>
-<div class="glass rounded-[18px] p-4"><div class="text-[11px] text-zinc-500">اللوغو</div><div id="st-logo" class="text-[13px] font-bold">—</div></div>
-<div class="glass rounded-[18px] p-4"><div class="text-[11px] text-zinc-500">حالة السحابة</div><div id="st-cloud" class="text-[12px] font-bold text-amber-600">⏳ جاري الاتصال...</div></div>
+<div class="glass rounded-[18px] p-4"><div class="text-[11px] text-zinc-500">☁️ عطور سحابية</div><div id="st-count" class="text-[26px] font-black">0</div><div class="text-[10px] text-green-600">يظهر في كل الأجهزة ✅</div></div>
+<div class="glass rounded-[18px] p-4"><div class="text-[11px] text-zinc-500">الباقة</div><div id="st-offer" class="text-[18px] font-bold">200 MAD</div></div>
+<div class="glass rounded-[18px] p-4"><div class="text-[11px] text-zinc-500">اللوغو</div><div id="st-logo" class="text-[12px] font-bold truncate">—</div></div>
+<div class="glass rounded-[18px] p-4"><div class="text-[11px] text-zinc-500">السحابة</div><div id="st-cloud" class="text-[11px] font-bold text-amber-600">⏳...</div></div>
 </div>
 
-<div class="flex gap-2 mb-6 sm:mb-8 overflow-auto pb-2">
-<button onclick="tab('p')" id="t-p" class="px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-zinc-900 text-white font-bold text-[14px] sm:text-[15px] whitespace-nowrap">🧴 العطور ☁️</button>
-<button onclick="tab('logo')" id="t-logo" class="px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-white border font-bold text-[14px] whitespace-nowrap">🖼️ اللوغو Cloud</button>
-<button onclick="tab('slider')" id="t-slider" class="px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-white border font-bold text-[14px] whitespace-nowrap">🎞️ السلايدر Cloud</button>
-<button onclick="tab('offer')" id="t-offer" class="px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-white border font-bold text-[14px] whitespace-nowrap">🎁 العرض + العبارات</button>
+<div class="flex gap-2 mb-6 sm:mb-8 overflow-auto pb-2 scrollbar-hide">
+<button onclick="switchTab('products')" id="btn-products" class="tabBtn px-6 py-3 rounded-full bg-zinc-900 text-white font-bold text-[14px] whitespace-nowrap">🧴 العطور ☁️</button>
+<button onclick="switchTab('logo')" id="btn-logo" class="tabBtn px-6 py-3 rounded-full bg-white border font-bold text-[14px] whitespace-nowrap">🖼️ اللوغو</button>
+<button onclick="switchTab('slider')" id="btn-slider" class="tabBtn px-6 py-3 rounded-full bg-white border font-bold text-[14px] whitespace-nowrap">🎞️ السلايدر</button>
+<button onclick="switchTab('offer')" id="btn-offer" class="tabBtn px-6 py-3 rounded-full bg-white border font-bold text-[14px] whitespace-nowrap">🎁 العرض</button>
+<button onclick="switchTab('phrases')" id="btn-phrases" class="tabBtn px-6 py-3 rounded-full bg-white border font-bold text-[14px] whitespace-nowrap">✨ العبارات</button>
 </div>
 
-<div id="v-p">
-<div class="card p-5 sm:p-7 mb-8 border-2 border-[#0B7A6E]/20 bg-gradient-to-br from-white to-[#F0FFF9]">
-<h3 class="font-black text-[18px] sm:text-[20px] mb-1">إضافة عطر جديد - رفع مباشر للسحابة ☁️</h3>
-<p class="text-[11px] sm:text-[12px] text-zinc-500 mb-5">الصورة ترفع من هاتفك → تذهب للسحابة Firebase → تظهر في الموقع في أي جهاز تفتحه - بدون الحاجة لرابط خارجي</p>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-<input id="pn" placeholder="الاسم - Poison Girl" class="border-2 rounded-2xl px-5 py-4 text-[15px] sm:text-[16px] bg-white outline-none focus:border-zinc-900">
-<input id="pp" type="number" placeholder="الثمن 149" class="border-2 rounded-2xl px-5 py-4 text-[15px] sm:text-[16px] bg-white outline-none focus:border-zinc-900">
-<input id="pc" placeholder="التصنيف - Femme / Homme / Unisexe" class="border-2 rounded-2xl px-5 py-4 text-[14px] bg-white outline-none focus:border-zinc-900">
-<label class="flex items-center gap-3 text-[14px] sm:text-[16px] font-bold border-2 rounded-2xl px-5 py-4 bg-white"><input id="pb" type="checkbox" class="w-5 h-5"> 🔥 الأكثر مبيعا (Bestseller)</label>
-<textarea id="pd" placeholder="الوصف - عطر فاخر بثبات 24 ساعة..." class="sm:col-span-2 border-2 rounded-2xl px-5 py-4 text-[14px] sm:text-[16px] min-h-[80px] bg-white outline-none focus:border-zinc-900"></textarea>
-<div class="sm:col-span-2"><label class="block text-[12px] font-bold mb-2">📸 صورة العطر - ترفع للسحابة وتظهر في كل الأجهزة ☁️</label><input id="pi" type="file" accept="image/*" class="w-full text-[14px] border-2 border-dashed rounded-2xl p-4 bg-white"><img id="prev" class="mt-4 w-40 h-40 object-contain hidden rounded-2xl bg-zinc-50 border shadow-sm"></div>
+<!-- PRODUCTS -->
+<div id="tab-products" class="tabView">
+<div class="card p-5 sm:p-7 mb-6 border-2 border-[#0B7A6E]/20 bg-gradient-to-br from-white to-[#F0FFF9]">
+<h3 class="font-black text-[18px] mb-1">إضافة عطر جديد - رفع سحابي مباشر ☁️</h3>
+<p class="text-[11px] text-zinc-500 mb-5">الصورة ترفع من هاتفك → السحابة → تظهر في الموقع في أي جهاز</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<input id="p-name" placeholder="الاسم - Poison Girl" class="border-2 rounded-2xl px-5 py-4 text-[15px] bg-white outline-none focus:border-zinc-900">
+<input id="p-price" type="number" placeholder="الثمن 149" class="border-2 rounded-2xl px-5 py-4 text-[15px] bg-white outline-none focus:border-zinc-900">
+<input id="p-cat" placeholder="التصنيف Femme/Homme" class="border-2 rounded-2xl px-5 py-4 text-[14px] bg-white">
+<label class="flex items-center gap-3 text-[14px] font-bold border-2 rounded-2xl px-5 py-4 bg-white cursor-pointer"><input id="p-best" type="checkbox" class="w-5 h-5"> 🔥 Bestseller</label>
+<textarea id="p-desc" placeholder="الوصف - عطر فاخر بثبات 24 ساعة..." class="sm:col-span-2 border-2 rounded-2xl px-5 py-4 text-[14px] min-h-[80px] bg-white outline-none focus:border-zinc-900"></textarea>
+<div class="sm:col-span-2"><label class="block text-[12px] font-bold mb-2">📸 صورة العطر - تظهر في كل الأجهزة ☁️</label><input id="p-image" type="file" accept="image/*" class="w-full text-[13px] border-2 border-dashed rounded-2xl p-4 bg-white"><img id="p-preview" class="mt-4 w-32 h-32 object-contain hidden rounded-xl bg-zinc-50 border"></div>
 </div>
-<button onclick="add()" id="btnAdd" class="mt-6 w-full py-4 bg-[#0B7A6E] text-white rounded-full font-black text-[16px] sm:text-[18px] shadow-lg hover:bg-[#0a6b60] transition">☁️ رفع للسحابة + إضافة للمتجر</button>
+<button id="btnAddProduct" class="mt-6 w-full py-4 bg-[#0B7A6E] text-white rounded-full font-black text-[16px] shadow-lg">☁️ رفع للسحابة + إضافة</button>
 </div>
-<div id="list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-</div>
-
-<div id="v-logo" class="hidden"><div class="card p-6 sm:p-8 max-w-[600px] border-2 border-green-200"><h3 class="font-black text-[20px] sm:text-[22px] mb-2">اللوغو - كبير وواضح ☁️</h3><p class="text-[11px] text-zinc-500 mb-6">اللوغو يرفع للسحابة ويظهر في كل الأجهزة</p><input id="lt" class="w-full border-2 rounded-2xl px-5 py-4 text-[18px] sm:text-[20px] mb-4 bg-white" placeholder="SENTEL LUXE"><div><label class="block text-[12px] font-bold mb-2">📸 صورة اللوغو - رفع سحابي</label><input id="li" type="file" accept="image/*" class="w-full border-2 border-dashed rounded-2xl p-4 bg-white"><img id="lp" class="mt-4 h-20 hidden object-contain border rounded-xl p-2 bg-white"></div><button onclick="saveLogo()" class="w-full mt-6 py-4 bg-zinc-900 text-white rounded-full font-bold text-[16px] sm:text-[18px]">☁️ حفظ اللوغو في السحابة</button><div id="logoStatus" class="mt-3 text-[11px] text-zinc-500"></div></div></div>
-
-<div id="v-slider" class="hidden"><div class="card p-5 sm:p-6"><h3 class="font-bold text-[18px] sm:text-[20px] mb-2">السلايدر - صور سحابية ☁️</h3><p class="text-[11px] text-zinc-500 mb-6">كل صورة ترفع للسحابة - Responsive: هاتف 380px / PC 600px</p><div id="sEdits" class="space-y-4"></div><div class="flex gap-3 mt-6"><button onclick="addSlide()" class="px-6 py-3 rounded-full bg-white border font-bold">+ شريحة</button><button onclick="saveS()" class="flex-1 py-3 bg-zinc-900 text-white rounded-full font-bold">💾 حفظ السلايدر في السحابة</button></div></div></div>
-
-<div id="v-offer" class="hidden"><div class="grid md:grid-cols-2 gap-6"><div class="card p-6"><h3 class="font-bold text-[18px] mb-4">🎁 إعدادات العرض</h3><input id="ot" class="w-full border-2 rounded-2xl px-5 py-4 mb-3 text-[16px] bg-white" placeholder="عنوان العرض - ركّب باقتك"><input id="op" type="number" class="w-full border-2 rounded-2xl px-5 py-4 mb-3 text-[16px] bg-white" placeholder="ثمن 3 عطور - 200"><textarea id="od" class="w-full border-2 rounded-2xl px-5 py-4 min-h-[100px] text-[14px] bg-white" placeholder="وصف الباقة"></textarea><button onclick="saveO()" class="w-full mt-4 py-4 bg-zinc-900 text-white rounded-full font-bold">💾 حفظ العرض في السحابة</button></div><div class="card p-6"><h3 class="font-bold text-[18px] mb-4">✨ العبارات المتحركة - Top Bar + Marquee</h3><div id="phrasesEdits" class="space-y-3"></div><div class="flex gap-2 mt-4"><button onclick="addPhrase()" class="px-5 py-3 rounded-full bg-white border font-bold text-[13px]">+ عبارة</button><button onclick="savePhrases()" class="flex-1 py-3 bg-[#0B7A6E] text-white rounded-full font-bold text-[14px]">💾 حفظ العبارات</button></div><p class="text-[11px] text-zinc-500 mt-3">تظهر في الشريط العلوي الأسود والشريط المتحرك</p></div></div></div>
-
+<div id="productsList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 </div>
 
+<!-- LOGO -->
+<div id="tab-logo" class="tabView hidden"><div class="card p-6 sm:p-8 max-w-[600px] border-2 border-green-200"><h3 class="font-black text-[20px] mb-2">اللوغو - كبير وواضح ☁️</h3><input id="logoTextInput" class="w-full border-2 rounded-2xl px-5 py-4 text-[18px] mb-4 bg-white" placeholder="SENTEL LUXE"><input id="logoImageInput" type="file" accept="image/*" class="w-full border-2 border-dashed rounded-2xl p-4 bg-white mb-4"><img id="logoPreview" class="h-20 hidden object-contain border rounded-xl p-2 bg-white"><button id="btnSaveLogo" class="w-full mt-4 py-4 bg-zinc-900 text-white rounded-full font-bold text-[16px]">☁️ حفظ اللوغو في السحابة</button><p id="logoStatus" class="mt-3 text-[11px] text-zinc-500"></p></div></div>
+
+<!-- SLIDER -->
+<div id="tab-slider" class="tabView hidden"><div class="card p-5 sm:p-6"><h3 class="font-bold text-[18px] mb-4">السلايدر - صور سحابية HD</h3><div id="sliderEdits" class="space-y-4"></div><div class="flex gap-3 mt-6"><button id="btnAddSlide" class="px-6 py-3 rounded-full bg-white border font-bold">+ شريحة</button><button id="btnSaveSlider" class="flex-1 py-3 bg-zinc-900 text-white rounded-full font-bold">💾 حفظ في السحابة</button></div></div></div>
+
+<!-- OFFER -->
+<div id="tab-offer" class="tabView hidden"><div class="card p-6 max-w-xl"><h3 class="font-bold text-[18px] mb-4">إعدادات الباقة 3 بـ 200</h3><input id="offerTitle" class="w-full border-2 rounded-2xl px-5 py-4 mb-3 text-[16px] bg-white" placeholder="عنوان الباقة"><input id="offerPriceInput" type="number" class="w-full border-2 rounded-2xl px-5 py-4 mb-3 text-[16px] bg-white" placeholder="الثمن 200"><textarea id="offerDesc" class="w-full border-2 rounded-2xl px-5 py-4 min-h-[100px] text-[14px] bg-white" placeholder="وصف الباقة"></textarea><button id="btnSaveOffer" class="w-full mt-4 py-3 bg-zinc-900 text-white rounded-full font-bold">حفظ</button></div></div>
+
+<!-- PHRASES -->
+<div id="tab-phrases" class="tabView hidden"><div class="card p-6 max-w-xl"><h3 class="font-bold text-[18px] mb-4">العبارات المتحركة ✨</h3><textarea id="phrasesInput" rows="5" class="w-full border-2 rounded-2xl px-5 py-4 text-[14px] bg-white" placeholder="كل عبارة في سطر - مثال: توصيل مجاني"></textarea><button id="btnSavePhrases" class="w-full mt-4 py-3 bg-[#0B7A6E] text-white rounded-full font-bold">💾 حفظ العبارات</button></div></div>
+
+</div>
+
+<!-- NON-MODULE LOGIN SCRIPT - يعمل حتى لو Firebase فشل -->
+<script>
+(function(){
+  const passEl=document.getElementById('passInput');
+  const loginBtn=document.getElementById('loginBtn');
+  const msg=document.getElementById('loginMsg');
+  function doLogin(){
+    const v=(passEl.value||'').trim();
+    if(v==='admin123'){
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('panelScreen').classList.remove('hidden');
+      localStorage.setItem('sentel_admin_ok','1');
+      if(window.afterLogin) window.afterLogin();
+    }else{
+      msg.textContent='كلمة السر خطأ - جرب admin123';
+      msg.classList.remove('hidden');
+      passEl.classList.add('border-red-500');
+      setTimeout(()=>{msg.classList.add('hidden'); passEl.classList.remove('border-red-500')},2500);
+    }
+  }
+  loginBtn.addEventListener('click', doLogin);
+  passEl.addEventListener('keydown', e=>{if(e.key==='Enter') doLogin()});
+  // auto-login if already
+  if(localStorage.getItem('sentel_admin_ok')==='1'){
+    passEl.value='admin123';
+    // لا تدخل تلقائي - خليه يضغط
+  }
+  window.switchTab=function(name){
+    document.querySelectorAll('.tabView').forEach(v=>v.classList.add('hidden'));
+    const target=document.getElementById('tab-'+name);
+    if(target) target.classList.remove('hidden');
+    document.querySelectorAll('.tabBtn').forEach(b=>{b.classList.remove('bg-zinc-900','text-white'); b.classList.add('bg-white','border')});
+    const btn=document.getElementById('btn-'+name);
+    if(btn){btn.classList.add('bg-zinc-900','text-white'); btn.classList.remove('bg-white','border')}
+  }
+})();
+</script>
+
+<!-- FIREBASE MODULE -->
 <script type="module">
 import {initializeApp} from 'firebase/app';
 import {getFirestore, collection, addDoc, deleteDoc, doc, setDoc, onSnapshot, getDoc} from 'firebase/firestore';
+
 const firebaseConfig={apiKey:"AIzaSyDwrJ2FR0NVggoXeKchu2YGqqam5ZFMZXU",authDomain:"parfum-e53ad.firebaseapp.com",projectId:"parfum-e53ad",storageBucket:"parfum-e53ad.firebasestorage.app",messagingSenderId:"791467480753",appId:"1:791467480753:web:4c370b7e3635a37686f490"};
-const db=getFirestore(initializeApp(firebaseConfig));
-let cfg={}, img='', logo='';
-let sliderCache=[];
+let db;
+try{db=getFirestore(initializeApp(firebaseConfig)); document.getElementById('st-cloud').textContent='☁️ متصل';}catch(e){document.getElementById('st-cloud').textContent='❌ خطأ Firebase'; console.error(e)}
 
-const toB=(f,m=800)=>new Promise(r=>{const fr=new FileReader(); fr.onload=e=>{const im=new Image(); im.onload=()=>{const c=document.createElement('canvas'); let w=im.width,h=im.height; if(w>m){h=h*m/w; w=m;} c.width=w; c.height=h; c.getContext('2d').drawImage(im,0,0,w,h); r(c.toDataURL('image/jpeg',0.85));}; im.src=e.target.result;}; fr.readAsDataURL(f);});
+let siteConfig={}; let currentImageBase64=''; let logoBase64='';
 
-window.login=()=>{if(pass.value==='admin123'){login.classList.add('hidden'); panel.classList.remove('hidden'); load();} else alert('كلمة السر admin123')}
-window.tab=n=>{document.querySelectorAll('[id^="v-"]').forEach(v=>v.classList.add('hidden')); document.getElementById('v-'+n).classList.remove('hidden'); document.querySelectorAll('[id^="t-"]').forEach(b=>{b.classList.remove('bg-zinc-900','text-white'); b.classList.add('bg-white','border')}); document.getElementById('t-'+n).classList.add('bg-zinc-900','text-white'); document.getElementById('t-'+n).classList.remove('bg-white','border');}
-
-document.getElementById('pi').addEventListener('change', async e=>{const f=e.target.files[0]; if(!f) return; document.getElementById('btnAdd').textContent='⏳ جاري ضغط الصورة...'; img=await toB(f,600); prev.src=img; prev.classList.remove('hidden'); document.getElementById('btnAdd').textContent='☁️ رفع للسحابة + إضافة للمتجر';});
-document.getElementById('li').addEventListener('change', async e=>{logo=await toB(e.target.files[0],500); lp.src=logo; lp.classList.remove('hidden')});
-
-window.add=async()=>{
- if(!pn.value||!pp.value){alert('املأ الاسم والثمن'); return}
- const btn=document.getElementById('btnAdd'); btn.textContent='⏳ جاري الرفع للسحابة...'; btn.disabled=true;
- try{
-  await addDoc(collection(db,'parfums'),{name:pn.value, price:Number(pp.value), category:pc.value, description:pd.value, bestseller:pb.checked, imageBase64:img, image:img, created:Date.now()});
-  alert('✅ تم الرفع للسحابة! الصورة الآن تظهر في الموقع في أي جهاز تفتحه - هاتف، تابلت، PC');
-  pn.value=''; pp.value=''; pc.value=''; pd.value=''; pb.checked=false; img=''; prev.classList.add('hidden'); pi.value='';
- }catch(e){alert('خطأ: '+e.message)}
- btn.textContent='☁️ رفع للسحابة + إضافة للمتجر'; btn.disabled=false;
+function toBase64(file, max=700){
+ return new Promise(res=>{
+  const r=new FileReader(); r.onload=e=>{
+   const img=new Image(); img.onload=()=>{
+    const c=document.createElement('canvas'); let w=img.width, h=img.height;
+    if(w>max){h=h*max/w; w=max;} c.width=w; c.height=h;
+    c.getContext('2d').drawImage(img,0,0,w,h); res(c.toDataURL('image/jpeg',0.85));
+   }; img.src=e.target.result;
+  }; r.readAsDataURL(file);
+ });
 }
 
-function load(){
- onSnapshot(collection(db,'parfums'), s=>{
-  const docs=s.docs;
-  document.getElementById('st-count').textContent=docs.length;
-  document.getElementById('st-cloud').textContent='☁️ متصل - '+docs.length+' منتج سحابي';
-  document.getElementById('list').innerHTML=docs.map(d=>{
+const $=id=>document.getElementById(id);
+
+$('p-image')?.addEventListener('change', async e=>{
+ const f=e.target.files[0]; if(!f) return;
+ $('p-preview').classList.remove('hidden');
+ $('p-preview').src=URL.createObjectURL(f);
+ currentImageBase64=await toBase64(f, 600);
+ $('p-preview').src=currentImageBase64;
+});
+
+$('logoImageInput')?.addEventListener('change', async e=>{
+ logoBase64=await toBase64(e.target.files[0], 400);
+ $('logoPreview').src=logoBase64; $('logoPreview').classList.remove('hidden');
+});
+
+async function loadData(){
+ if(!db) return;
+ onSnapshot(collection(db,'parfums'), snap=>{
+  const docs=snap.docs;
+  $('st-count').textContent=docs.length;
+  $('st-cloud').textContent='☁️ متصل - '+docs.length+' منتج';
+  $('productsList').innerHTML=docs.map(d=>{
    const p=d.data();
-   return `<div class="card p-4 flex gap-3 group"><img src="${p.imageBase64||p.image}" class="w-16 h-16 object-contain bg-[#F7FFFD] rounded-xl border"><div class="flex-1 min-w-0"><p class="font-bold text-[15px] truncate">${p.name}</p><p class="text-[14px] font-bold text-[#0B7A6E]">${p.price} MAD ${p.bestseller?'🔥':''}</p><p class="text-[11px] text-zinc-500 truncate">${p.category||''}</p><div class="flex gap-2 mt-2"><button onclick="del('${d.id}')" class="text-red-500 text-[11px] font-bold px-3 py-1 rounded-full bg-red-50">حذف</button><span class="text-[10px] text-green-600 font-bold">☁️ سحابي - يظهر في كل الأجهزة</span></div></div></div>`;
-  }).join('');
+   return `<div class="card p-4 flex gap-3"><img src="${p.imageBase64||p.image||''}" class="w-16 h-16 object-contain bg-[#F7FFFD] rounded-xl border"><div class="flex-1 min-w-0"><p class="font-bold text-[14px] truncate">${p.name}</p><p class="text-[13px] font-bold text-[#0B7A6E]">${p.price} MAD ${p.bestseller?'🔥':''}</p><p class="text-[11px] text-zinc-500 truncate">${p.category||''}</p><div class="flex gap-2 mt-2"><button onclick="window.delProduct('${d.id}')" class="text-red-500 text-[11px] font-bold px-3 py-1 rounded-full bg-red-50">حذف</button><span class="text-[10px] text-green-600">☁️ يظهر في كل الأجهزة</span></div></div></div>`;
+  }).join('') || '<div class="col-span-full py-10 text-center text-zinc-400">لا يوجد عطور - أضف أول عطر</div>';
  });
 
- getDoc(doc(db,'config','site')).then(s=>{
-  if(s.exists()){
-   cfg=s.data();
-   lt.value=cfg.logoText||'';
-   ot.value=cfg.offerTitle||'ركّب باقتك';
-   op.value=cfg.offerPrice||200;
-   od.value=cfg.offerDesc||'';
-   document.getElementById('st-offer').textContent=(cfg.offerPrice||200)+' MAD';
-   document.getElementById('st-logo').textContent=cfg.logoText? '✅ '+cfg.logoText.slice(0,15) : (cfg.logoImage?'✅ صورة':'❌');
-   // slider
-   sliderCache=cfg.slider||[];
-   renderSliderEdits();
-   // phrases
-   renderPhrases();
-  }
- });
+ const cfgDoc=await getDoc(doc(db,'config','site')).catch(()=>null);
+ if(cfgDoc && cfgDoc.exists()){
+  siteConfig=cfgDoc.data();
+  $('logoTextInput').value=siteConfig.logoText||'';
+  $('offerTitle').value=siteConfig.offerTitle||'ركّب باقتك';
+  $('offerPriceInput').value=siteConfig.offerPrice||200;
+  $('offerDesc').value=siteConfig.offerDesc||'';
+  $('phrasesInput').value=(siteConfig.phrases||[]).join('\n');
+  $('st-offer').textContent=(siteConfig.offerPrice||200)+' MAD';
+  $('st-logo').textContent=siteConfig.logoText? '✅ '+siteConfig.logoText.slice(0,15) : (siteConfig.logoImage?'✅ صورة':'❌');
+  renderSlider();
+ }
 }
 
-function renderSliderEdits(){
- sEdits.innerHTML=(cfg.slider||[]).map((sl,i)=>`
-  <div class="border-2 rounded-2xl p-4 bg-white"><div class="flex justify-between items-center mb-3"><p class="font-bold text-[14px]">شريحة ${i+1}</p><button onclick="removeSlide(${i})" class="text-red-500 text-[11px] font-bold">حذف</button></div>
-  <input data-i="${i}" data-k="title" value="${sl.title||''}" class="w-full border-2 rounded-xl px-4 py-3 mb-2 text-[14px] font-bold" placeholder="العنوان - عطرك.. بصمتك">
-  <input data-i="${i}" data-k="sub" value="${sl.sub||''}" class="w-full border-2 rounded-xl px-4 py-3 mb-2 text-[13px]" placeholder="الوصف الفرعي">
-  <div class="flex gap-2"><input type="file" data-i="${i}" class="slF flex-1 text-[12px] border-2 border-dashed rounded-xl p-2"><img src="${sl.img}" class="h-16 w-24 object-cover rounded-xl border"></div>
+function renderSlider(){
+ const slider=siteConfig.slider||[];
+ $('sliderEdits').innerHTML=slider.map((sl,i)=>`
+  <div class="border-2 rounded-2xl p-4 bg-white"><div class="flex justify-between mb-2"><p class="font-bold text-[13px]">شريحة ${i+1}</p><button onclick="window.removeSlide(${i})" class="text-red-500 text-[11px]">حذف</button></div>
+  <input data-i="${i}" data-k="title" value="${(sl.title||'').replace(/"/g,'&quot;')}" class="w-full border-2 rounded-xl px-4 py-3 mb-2 text-[14px] font-bold" placeholder="العنوان">
+  <input data-i="${i}" data-k="sub" value="${(sl.sub||'').replace(/"/g,'&quot;')}" class="w-full border-2 rounded-xl px-4 py-3 mb-2 text-[12px]" placeholder="الوصف">
+  <div class="flex gap-2 items-center"><input type="file" data-i="${i}" class="sliderFile flex-1 text-[11px] border-2 border-dashed rounded-xl p-2"><img src="${sl.img||''}" class="h-12 w-20 object-cover rounded-lg border"></div>
   </div>`).join('');
- document.querySelectorAll('.slF').forEach(inp=>{
+ document.querySelectorAll('.sliderFile').forEach(inp=>{
   inp.addEventListener('change', async e=>{
-   const b=await toB(e.target.files[0],1200);
-   cfg.slider[e.target.dataset.i].img=b;
+   const b=await toBase64(e.target.files[0], 1200);
+   siteConfig.slider[e.target.dataset.i].img=b;
    e.target.nextElementSibling.src=b;
   });
  });
- document.querySelectorAll('#sEdits input[data-k]').forEach(inp=>{
-  inp.addEventListener('input', e=>{cfg.slider[e.target.dataset.i][e.target.dataset.k]=e.target.value});
+ document.querySelectorAll('#sliderEdits input[data-k]').forEach(inp=>{
+  inp.addEventListener('input', e=>{siteConfig.slider[e.target.dataset.i][e.target.dataset.k]=e.target.value});
  });
 }
 
-window.addSlide=()=>{cfg.slider=cfg.slider||[]; cfg.slider.push({title:'عنوان جديد ✨', sub:'وصف جذاب', img:'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1600&q=90'}); renderSliderEdits();}
-window.removeSlide=i=>{cfg.slider.splice(i,1); renderSliderEdits();}
+window.delProduct=async(id)=>{if(confirm('حذف المنتج من السحابة؟ سيختفي من كل الأجهزة')) await deleteDoc(doc(db,'parfums',id));}
+window.removeSlide=i=>{siteConfig.slider.splice(i,1); renderSlider();}
 
-function renderPhrases(){
- const phrases=cfg.phrases||['توصيل مجاني لجميع المدن','الدفع عند الاستلام','خصم 93%','ثبات 24 ساعة'];
- document.getElementById('phrasesEdits').innerHTML=phrases.map((ph,i)=>`
-  <div class="flex gap-2"><input data-pi="${i}" value="${ph}" class="flex-1 border-2 rounded-xl px-4 py-3 text-[13px]"><button onclick="removePhrase(${i})" class="w-10 h-10 rounded-full bg-red-50 text-red-500">✕</button></div>
- `).join('');
- document.querySelectorAll('#phrasesEdits input').forEach(inp=>{
-  inp.addEventListener('input', e=>{cfg.phrases[e.target.dataset.pi]=e.target.value});
- });
-}
-window.addPhrase=()=>{cfg.phrases=cfg.phrases||[]; cfg.phrases.push('عبارة جديدة ✨'); renderPhrases();}
-window.removePhrase=i=>{cfg.phrases.splice(i,1); renderPhrases();}
-window.savePhrases=async()=>{await setDoc(doc(db,'config','site'),{phrases:cfg.phrases},{merge:true}); alert('✅ تم حفظ العبارات في السحابة - تظهر في كل الأجهزة');}
+$('btnAddProduct')?.addEventListener('click', async()=>{
+ const name=$('p-name').value.trim(), price=Number($('p-price').value), cat=$('p-cat').value.trim(), desc=$('p-desc').value.trim(), best=$('p-best').checked;
+ if(!name||!price){alert('املأ الاسم والثمن'); return}
+ const btn=$('btnAddProduct'); const old=btn.textContent; btn.textContent='⏳ جاري الرفع للسحابة...'; btn.disabled=true;
+ try{
+  await addDoc(collection(db,'parfums'),{name, price, category:cat, description:desc, bestseller:best, imageBase64:currentImageBase64, image:currentImageBase64, created:Date.now()});
+  alert('✅ تم الرفع للسحابة! يظهر الآن في الموقع في أي جهاز');
+  $('p-name').value=''; $('p-price').value=''; $('p-cat').value=''; $('p-desc').value=''; $('p-best').checked=false; currentImageBase64=''; $('p-preview').classList.add('hidden'); $('p-image').value='';
+ }catch(e){alert('خطأ: '+e.message)}
+ btn.textContent=old; btn.disabled=false;
+});
 
-window.del=async id=>{if(confirm('حذف المنتج من السحابة؟ سيختفي من كل الأجهزة')) await deleteDoc(doc(db,'parfums',id));}
-window.saveLogo=async()=>{
- const u={logoText:lt.value};
- if(logo) u.logoImage=logo;
- document.getElementById('logoStatus').textContent='⏳ جاري الحفظ في السحابة...';
- await setDoc(doc(db,'config','site'), {...cfg, ...u},{merge:true});
- document.getElementById('logoStatus').textContent='✅ تم الحفظ - اللوغو الآن يظهر في كل الأجهزة';
- alert('✅ تم حفظ اللوغو في السحابة - كبير وواضح ويظهر في أي جهاز');
-}
-window.saveS=async()=>{await setDoc(doc(db,'config','site'),{slider:cfg.slider},{merge:true}); alert('✅ تم حفظ السلايدر في السحابة');}
-window.saveO=async()=>{await setDoc(doc(db,'config','site'),{offerTitle:ot.value, offerPrice:Number(op.value), offerDesc:od.value},{merge:true}); alert('✅ تم حفظ العرض في السحابة');}
+$('btnSaveLogo')?.addEventListener('click', async()=>{
+ const text=$('logoTextInput').value.trim();
+ const update={logoText:text}; if(logoBase64) update.logoImage=logoBase64;
+ $('logoStatus').textContent='⏳ جاري الحفظ في السحابة...';
+ try{await setDoc(doc(db,'config','site'), {...siteConfig, ...update}, {merge:true}); $('logoStatus').textContent='✅ تم الحفظ - يظهر في كل الأجهزة'; alert('✅ تم حفظ اللوغو - يظهر كبير وواضح');}catch(e){$('logoStatus').textContent='❌ خطأ: '+e.message}
+});
+
+$('btnAddSlide')?.addEventListener('click', ()=>{siteConfig.slider=siteConfig.slider||[]; siteConfig.slider.push({title:'عنوان جديد ✨', sub:'وصف جذاب', img:'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1600&q=90'}); renderSlider();});
+$('btnSaveSlider')?.addEventListener('click', async()=>{await setDoc(doc(db,'config','site'), {slider: siteConfig.slider}, {merge:true}); alert('✅ تم حفظ السلايدر');});
+$('btnSaveOffer')?.addEventListener('click', async()=>{const t=$('offerTitle').value, p=Number($('offerPriceInput').value), d=$('offerDesc').value; await setDoc(doc(db,'config','site'), {offerTitle:t, offerPrice:p, offerDesc:d}, {merge:true}); alert('✅ تم حفظ العرض');});
+$('btnSavePhrases')?.addEventListener('click', async()=>{const arr=$('phrasesInput').value.split('\n').filter(x=>x.trim()); await setDoc(doc(db,'config','site'), {phrases:arr}, {merge:true}); alert('✅ تم حفظ العبارات');});
+
+window.afterLogin=()=>{loadData();};
 </script>
 </body>
 </html>
