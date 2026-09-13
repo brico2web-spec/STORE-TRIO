@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم المجانية | إدارة المتجر</title>
+    <title>لوحة التحكم | إدارة المتجر</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
 <body class="p-4 md:p-8 max-w-5xl mx-auto">
 
     <div class="flex justify-between items-center mb-8 border-b border-gray-800 pb-4">
-        <h1 class="text-2xl font-bold text-amber-400"><i class="fa-solid fa-sliders ml-2"></i> لوحة تحكم المتجر (خطة مجانية)</h1>
+        <h1 class="text-2xl font-bold text-amber-400"><i class="fa-solid fa-sliders ml-2"></i> لوحة تحكم المتجر</h1>
         <a href="index.html" class="text-sm bg-gray-800 px-4 py-2 rounded-xl text-gray-300 hover:bg-gray-700">الرجوع للواجهة</a>
     </div>
 
@@ -31,7 +31,7 @@
                     <input type="number" id="p-price" required class="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-amber-500">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1">اختر صورة العطر من هاتفك / جهازك</label>
+                    <label class="block text-sm text-gray-400 mb-1">اختر صورة العطر من هاتفك</label>
                     <input type="file" id="p-file" accept="image/*" required class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-gray-300 focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-500 file:text-black hover:file:bg-amber-400">
                 </div>
                 <div>
@@ -39,7 +39,7 @@
                     <textarea id="p-desc" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-amber-500" rows="3"></textarea>
                 </div>
 
-                <div id="upload-status" class="text-amber-400 text-sm hidden font-bold">جاري رفع الصورة مجاناً وحفظ العطر... ⏳</div>
+                <div id="upload-status" class="text-amber-400 text-sm hidden font-bold">جاري معالجة الصورة وإضافة العطر... ⏳</div>
 
                 <button type="submit" id="btn-submit" class="w-full bg-amber-500 text-black font-bold py-3 rounded-xl hover:bg-amber-400 transition">إضافة العطر للمتجر</button>
             </form>
@@ -50,17 +50,17 @@
             <h2 class="text-lg font-bold text-white mb-4"><i class="fa-solid fa-images text-amber-400 ml-2"></i> إضافة صورة لسلايدر الواجهة</h2>
             <form id="add-slider-form" class="space-y-4">
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1">اختر صورة السلايدر من جهازك</label>
+                    <label class="block text-sm text-gray-400 mb-1">اختر صورة السلايدر</label>
                     <input type="file" id="s-file" accept="image/*" required class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-gray-300 focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-500 file:text-black hover:file:bg-amber-400">
                 </div>
-                <div id="slider-status" class="text-amber-400 text-sm hidden font-bold">جاري رفع صورة السلايدر... ⏳</div>
+                <div id="slider-status" class="text-amber-400 text-sm hidden font-bold">جاري إضافة الصورة للسلايدر... ⏳</div>
                 <button type="submit" id="btn-slider-submit" class="w-full bg-amber-500 text-black font-bold py-3 rounded-xl hover:bg-amber-400 transition">إضافة للسلايدر</button>
             </form>
         </div>
 
     </div>
 
-    <!-- Firebase SDK (Firestore Only) -->
+    <!-- Firebase SDK (Firestore) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -77,26 +77,17 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // مفتاح مجاني لرفع الصور
-        const IMGBB_API_KEY = "c8942df154edbe72e3a793a38ee5d0a6";
-
-        // دالة رفع الصورة مجاناً إلى ImgBB
-        async function uploadImageFree(file) {
-            const formData = new FormData();
-            formData.append("image", file);
-            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-                method: "POST",
-                body: formData
+        // دالة تحويل الصورة إلى Base64
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
             });
-            const data = await res.json();
-            if (data.success) {
-                return data.data.url;
-            } else {
-                throw new Error("فشل رفع الصورة");
-            }
         }
 
-        // رفع وإضافة المنتج
+        // إضافة المنتج
         document.getElementById('add-product-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const status = document.getElementById('upload-status');
@@ -109,29 +100,28 @@
                 status.classList.remove('hidden');
                 btn.disabled = true;
 
-                // 1. رفع الصورة مجاناً
-                const imageUrl = await uploadImageFree(file);
+                // تحويل الصورة لنص Base64 للرفع المباشر
+                const base64Image = await fileToBase64(file);
 
-                // 2. حفظ البيانات فقط في Firestore الموضحة في صورتك
                 await addDoc(collection(db, "products"), {
                     name: document.getElementById('p-name').value,
                     price: document.getElementById('p-price').value,
-                    imageUrl: imageUrl,
+                    imageUrl: base64Image,
                     description: document.getElementById('p-desc').value,
-                    createdAt: new Date()
+                    createdAt: new Date().toISOString()
                 });
 
-                alert('✅ تم إضافة العطر والصورة بنجاح!');
+                alert('✅ تم إضافة العطر بنجاح وسيظهر فوراً في الواجهة!');
                 e.target.reset();
             } catch (err) {
-                alert('❌ حدث خطأ: ' + err.message);
+                alert('❌ حدث خطأ أثناء الحفظ: ' + err.message);
             } finally {
                 status.classList.add('hidden');
                 btn.disabled = false;
             }
         });
 
-        // رفع وإضافة صورة السلايدر
+        // إضافة صورة السلايدر
         document.getElementById('add-slider-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const status = document.getElementById('slider-status');
@@ -144,11 +134,11 @@
                 status.classList.remove('hidden');
                 btn.disabled = true;
 
-                const imageUrl = await uploadImageFree(file);
+                const base64Image = await fileToBase64(file);
 
                 await addDoc(collection(db, "slider"), {
-                    url: imageUrl,
-                    createdAt: new Date()
+                    url: base64Image,
+                    createdAt: new Date().toISOString()
                 });
 
                 alert('✅ تم إضافة صورة السلايدر بنجاح!');
