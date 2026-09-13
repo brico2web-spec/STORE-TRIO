@@ -1,256 +1,149 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>TRIO PARFUM - Fatin Style - Green White - FIXED</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
-<style>
-*{font-family:'Tajawal',sans-serif;box-sizing:border-box}
-body{background:#fff;color:#0a0a0a;margin:0}
-.header-top{background:linear-gradient(135deg,#0B3D36 0%,#0B7A6E 100%);height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(11,122,110,.2)}
-.logo-big{height:52px;max-width:220px;object-fit:contain}
-.icon-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.12);display:grid;place-items:center;border:1px solid rgba(255,255,255,.15)}
-.search-bar{background:#0B3D36;padding:12px 16px;position:sticky;top:62px;z-index:90}
-.search-input{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:14px 48px 14px 20px;width:100%;color:#fff;font-size:15px;outline:none}
-.hero-slider{height:420px;position:relative;overflow:hidden;background:#061E1A}
-@media(min-width:640px){.hero-slider{height:560px}}
-.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity .8s ease}
-.hero-slide.active{opacity:1}
-.hero-slide img{width:100%;height:100%;object-fit:cover}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,30,26,.9) 0%,rgba(11,61,54,.3) 55%,transparent 100%)}
-.hero-content{position:absolute;bottom:28px;left:20px;right:20px}
-.hero-badge{background:rgba(255,255,255,.92);color:#0B3D36;padding:8px 14px;border-radius:999px;font-size:11px;font-weight:800;display:inline-flex;gap:6px;align-items:center;margin-bottom:12px}
-.hero-title{color:#fff;font-size:32px;font-weight:900;line-height:.9;text-shadow:0 4px 20px rgba(0,0,0,.5)}
-@media(min-width:640px){.hero-title{font-size:52px}}
-.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(0,0,0,.06)}
-@media(min-width:640px){.cat-grid{grid-template-columns:repeat(4,1fr)}}
-.cat-box{aspect-ratio:3/4;position:relative;overflow:hidden;background:#fff}
-.cat-box img{width:100%;height:100%;object-fit:cover}
-.cat-label{position:absolute;bottom:0;left:0;right:0;background:rgba(255,255,255,.94);padding:12px;text-align:center;border-top:1px solid rgba(0,0,0,.06)}
-.cat-label small{font-size:11px;color:#666;letter-spacing:1px;display:block}
-.cat-label strong{font-size:14px;font-weight:800;display:block;margin-top:2px}
-.section-head{display:flex;justify-content:space-between;align-items:center;padding:22px 16px 12px;border-bottom:1px solid rgba(0,0,0,.08);background:#fff}
-.section-head h2{font-size:18px;font-weight:800;margin:0}
-.products-scroll{display:flex;gap:12px;overflow-x:auto;padding:16px;scroll-snap-type:x mandatory;scrollbar-width:none;background:#fff}
-.products-scroll::-webkit-scrollbar{display:none}
-.product-mini{min-width:150px;max-width:150px;scroll-snap-align:start;flex-shrink:0;background:#fff}
-.product-mini .img-wrap{aspect-ratio:3/4;background:#f8fffe;border:1px solid rgba(0,0,0,.06);border-radius:16px;position:relative;overflow:hidden}
-.product-mini img{width:100%;height:100%;object-fit:contain;padding:12px}
-.discount-badge{position:absolute;top:8px;left:8px;background:linear-gradient(135deg,#00C9A7,#0B7A6E);color:#fff;font-size:11px;font-weight:800;padding:5px 9px;border-radius:8px}
-.product-mini .info{padding:10px 4px}
-.product-mini .cat{font-size:10px;color:#888}
-.product-mini .name{font-size:12px;font-weight:600;color:#0B7A6E;line-height:1.3;min-height:32px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.product-mini .price-old{font-size:11px;color:#999;text-decoration:line-through}
-.product-mini .price-new{font-size:13px;font-weight:800}
-.offer-fatin{background:#fff;border-top:8px solid #0B3D36;margin-top:2px}
-.offer-fatin .offer-image{height:340px;position:relative;overflow:hidden}
-.offer-fatin .offer-image img{width:100%;height:100%;object-fit:cover}
-.offer-dark-box{position:absolute;bottom:16px;left:16px;right:16px;background:linear-gradient(135deg,#061E1A,#0B3D36);padding:16px 18px;border-radius:6px;box-shadow:0 12px 32px rgba(0,0,0,.3)}
-.offer-dark-box small{color:#D6FFF1;font-size:12px;font-weight:600;display:block;margin-bottom:4px}
-.offer-dark-box strong{color:#D6FFF1;font-size:18px;font-weight:800;display:block;line-height:1.2}
-.offer-text{padding:20px;background:#fff}
-.offer-builder{background:linear-gradient(180deg,#F0FFF8,#fff);border:2px solid #0B7A6E;border-radius:20px;margin:16px;padding:16px;box-shadow:0 12px 40px rgba(11,122,110,.1)}
-.bundle-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-.bundle-slot{aspect-ratio:1;border:2px dashed #8ED4BE;border-radius:16px;background:rgba(255,255,255,.9);display:grid;place-items:center;cursor:pointer;position:relative;transition:.3s}
-.bundle-slot:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(11,122,110,.12);border-color:#0B7A6E;background:#fff}
-.bundle-slot.filled{border-style:solid;background:#fff;border-color:#0B7A6E;box-shadow:0 8px 20px rgba(11,122,110,.12)}
-.bundle-slot img{width:70%;height:70%;object-fit:contain}
-.trust-grid{background:#0B3D36;display:grid;grid-template-columns:1fr 1fr;gap:1px;padding:1px}
-@media(min-width:640px){.trust-grid{grid-template-columns:1fr 1fr 1fr}}
-.trust-box{background:#0B3D36;padding:24px 16px;text-align:center;color:#fff}
-.footer-dark{background:#061E1A;color:#fff;padding:28px 20px;text-align:center}
-@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.marquee{animation:marquee 26s linear infinite}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر العطور الفاخرة | Royal Perfumes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #0d0f12; color: #f3f4f6; }
+        .gold-gradient { background: linear-gradient(135deg, #d4af37 0%, #f3e5ab 50%, #aa771c 100%); }
+        .gold-text { background: linear-gradient(135deg, #d4af37, #f3e5ab, #aa771c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.2); }
+    </style>
 </head>
-<body>
+<body class="bg-gray-950 text-gray-100 min-h-screen flex flex-col">
 
-<div class="header-top">
-  <button class="icon-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
-  <div class="flex items-center gap-2">
-    <img id="logoImg" class="logo-big hidden" alt="logo">
-    <div id="logoText" class="text-white font-black text-[22px]">TRIÖ<span class="font-normal text-[#D6FFF1]"> PARFUM</span></div>
-  </div>
-  <div class="flex gap-2">
-    <button class="icon-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg></button>
-    <button id="cartBtn" class="icon-btn relative" style="background:#D6FFF1;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B3D36" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span id="cartCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-5 h-5 rounded-full grid place-items-center hidden border-2 border-white">0</span></button>
-  </div>
-</div>
+    <!-- Header -->
+    <nav class="border-b border-amber-500/20 bg-black/60 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-black gold-text tracking-wider"><i class="fa-solid fa-spray-can-sparkles ml-2"></i>ROYAL PARFUM</h1>
+            <a href="admin.html" class="text-xs bg-amber-500/10 text-amber-400 border border-amber-500/30 px-3 py-1.5 rounded-full hover:bg-amber-500 hover:text-black transition">
+                <i class="fa-solid fa-user-shield ml-1"></i> لوحة التحكم
+            </a>
+        </div>
+    </nav>
 
-<div class="search-bar">
-  <div class="relative max-w-[700px] mx-auto">
-    <input class="search-input" placeholder="Chercher votre parfum ... ابحث عن عطرك">
-    <svg class="absolute left-4 top-1/2 -translate-y-1/2" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/></svg>
-  </div>
-</div>
+    <!-- Slider -->
+    <section class="relative overflow-hidden my-6 max-w-7xl mx-auto w-full px-4">
+        <div id="slider-container" class="relative h-[280px] md:h-[400px] rounded-3xl overflow-hidden glass-card flex items-center justify-center">
+            <img id="slider-img" src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?q=80&w=1200" class="absolute inset-0 w-full h-full object-cover opacity-50 transition-opacity duration-700" alt="Slider">
+            <div class="relative z-10 text-center p-6">
+                <h2 class="text-3xl md:text-5xl font-extrabold mb-3 gold-text">عالم من الفخامة والعطور الاستثنائية</h2>
+                <p class="text-gray-300 max-w-lg mx-auto text-sm md:text-base">تشكيلة مختارة بعناية تعكس تميزك وحضورك الراقي.</p>
+            </div>
+        </div>
+    </section>
 
-<div class="h-[36px] bg-[#D6FFF1] text-[#0B3D36] flex items-center overflow-hidden border-b border-black/5">
-  <div class="flex marquee gap-8 text-[11px] font-bold whitespace-nowrap">
-    <span>توصيل 50 DH لكل المغرب ✦ الدفع عند الاستلام ✦ عطور أصلية 100% ✦ +200 عطر فاخر ✦ ثبات 24 ساعة ✦</span>
-    <span>توصيل 50 DH لكل المغرب ✦ الدفع عند الاستلام ✦ عطور أصلية 100% ✦ +200 عطر فاخر ✦ ثبات 24 ساعة ✦</span>
-  </div>
-</div>
+    <!-- Special Offer (3 العطور بـ 200 درهم) -->
+    <section class="max-w-7xl mx-auto px-4 my-6 w-full">
+        <div class="glass-card rounded-3xl p-6 md:p-8 border-2 border-amber-500/40 relative overflow-hidden bg-gradient-to-r from-amber-950/40 via-gray-900 to-amber-950/40">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+                <div class="text-center md:text-right">
+                    <span class="bg-amber-500 text-black text-xs font-bold px-3 py-1 rounded-full">عرض حظري 🔥</span>
+                    <h3 class="text-2xl md:text-3xl font-extrabold mt-3 gold-text">باك الفخامة: اختر 3 عطور بـ 200 درهم فقط!</h3>
+                    <p class="text-gray-400 mt-1 text-sm">اختر عطورك المفضلة من المجموعات المعروضة بأسفل الصفحة واستفد من العرض.</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="text-center bg-black/60 p-3 px-5 rounded-2xl border border-amber-500/30">
+                        <span class="text-2xl font-black text-amber-400">200 <span class="text-xs">درهم</span></span>
+                    </div>
+                    <button onclick="alert('تواصل معنا على الواتساب لاختيار عطورك الثلاثة!')" class="gold-gradient text-black font-bold px-6 py-3 rounded-2xl hover:opacity-90 transition">
+                        اطلب العرض الآن
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div id="slider" class="hero-slider">
-  <div class="hero-slide active"><img src="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1200&q=80"><div class="hero-overlay"></div><div class="hero-content"><div class="hero-badge">🔥 +200 عطر فاخر • توصيل 50 DH</div><h2 class="hero-title">JIMMY CHOO URBAN HERO<br>GOLD EDITION</h2><p style="color:rgba(255,255,255,.8);font-size:13px;margin-top:8px">THE NEW FRAGRANCE</p></div></div>
-  <div class="hero-slide"><img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1200&q=80"><div class="hero-overlay"></div><div class="hero-content"><div class="hero-badge">✨ عرض 3 بـ 200 درهم</div><h2 class="hero-title">LIBRE<br>Dans toutes les couleurs</h2><p style="color:rgba(255,255,255,.8);font-size:13px;margin-top:8px">Plusieurs Parfums AU PRIX D'UN SEUL</p></div></div>
-  <div class="hero-slide"><img src="https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=1200&q=80"><div class="hero-overlay"></div><div class="hero-content"><div class="hero-badge">⭐ ثبات 24 ساعة</div><h2 class="hero-title">عطرك.. بصمتك<br>التي لا تُنسى ✨</h2><p style="color:rgba(255,255,255,.8);font-size:13px;margin-top:8px">فخامة لا تقاوم - الآن ب 149 درهم</p></div></div>
-</div>
-<div id="dots" class="flex justify-center gap-2 py-3 bg-white"><button class="w-8 h-1 rounded-full bg-[#0B3D36]"></button><button class="w-8 h-1 rounded-full bg-zinc-300"></button><button class="w-8 h-1 rounded-full bg-zinc-300"></button></div>
+    <!-- Products Section -->
+    <section class="max-w-7xl mx-auto px-4 my-8 w-full flex-grow">
+        <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+            <i class="fa-solid fa-gem text-amber-400"></i> منتجاتنا المتاحة
+        </h3>
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <p class="text-gray-500 col-span-full text-center py-10">جاري تحميل المنتجات...</p>
+        </div>
+    </section>
 
-<div class="cat-grid">
-  <div class="cat-box"><img src="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=400&q=80"><div class="cat-label"><small>PARFUMS</small><strong>DE LUXE</strong></div></div>
-  <div class="cat-box"><img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=400&q=80"><div class="cat-label"><small>PARFUMS</small><strong>ARABES</strong></div></div>
-  <div class="cat-box"><img src="https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=400&q=80"><div class="cat-label"><small>PARFUMS</small><strong>DE NICHES</strong></div></div>
-  <div class="cat-box"><img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=400&q=80"><div class="cat-label"><small>PARFUMS</small><strong>DUPES</strong></div></div>
-</div>
+    <footer class="border-t border-gray-800 bg-black/80 py-6 text-center text-gray-500 text-sm">
+        <p>© 2026 متجر العطور الفاخرة - جميع الحقوق محفوظة.</p>
+    </footer>
 
-<div class="offer-fatin">
-  <div class="offer-image">
-    <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1200&q=80" alt="decant">
-    <div class="offer-dark-box">
-      <small>Plusieurs Parfums ✨ ركّب باقتك الخاصة</small>
-      <strong>AU PRIX D'UN SEUL - 3 عطور بـ 200 درهم فقط</strong>
-    </div>
-  </div>
-  <div class="offer-text">
-    <h3 style="font-size:15px;font-weight:700;line-height:1.6;color:#333">Maintenant chez TRIO PARFUM Vous pouvez découvrir et profiter de plusieurs parfums authentiques à la fois, au prix d'un seul parfum.</h3>
-    <p style="font-size:13px;color:#666;line-height:1.7;margin-top:10px">Nous décantons vos parfums préférés sur des flacons de 20ml:</p>
-    <ul style="list-style:none;padding:0;margin:10px 0 0">
-      <li style="font-size:13px;padding:3px 0;color:#444">- De gagner en prix - توفير</li>
-      <li style="font-size:13px;padding:3px 0;color:#444">- De gagner en plaisir - متعة</li>
-      <li style="font-size:13px;padding:3px 0;color:#444">- Plusieurs senteurs à prix abordable - 3 روائح بسعر واحد</li>
-    </ul>
-  </div>
-  <div class="offer-builder">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-      <h4 style="font-size:16px;font-weight:800;color:#0B3D36;margin:0">باقتك الخاصة ✨</h4>
-      <div style="background:#0B3D36;color:#fff;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:800;display:flex;gap:6px;align-items:center"><span style="width:8px;height:8px;background:#22c55e;border-radius:50%;display:inline-block"></span><span id="offerCounter">0/3</span></div>
-    </div>
-    <div id="offerSlots" class="bundle-grid"></div>
-    <p id="offerDesc" style="text-align:center;margin-top:14px;font-size:12px;font-weight:600;color:#0B7A6E">اضغط لاختيار 3 عطور من الأكثر مبيعاً - باقتك ستظهر هنا</p>
-    <div style="display:flex;gap:10px;margin-top:16px">
-      <button id="offerOrderBtn" disabled style="flex:1;background:#0B3D36;color:#fff;border:none;border-radius:999px;padding:14px;font-weight:800;font-size:14px;opacity:.4">اطلب الباقة بـ <span id="offerPrice">200</span> درهم ✨ - 3 عطور</button>
-      <button onclick="clearPicks()" style="background:#fff;color:#0B3D36;border:1.5px solid #0B3D36;border-radius:999px;padding:14px 18px;font-weight:700;font-size:13px">مسح</button>
-    </div>
-  </div>
-</div>
+    <!-- Firebase Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-<div class="relative bg-white mt-2">
-  <div class="section-head"><h2>PARFUM HOMME 🔥 رجالي</h2><a href="#grid" style="color:#0B7A6E;font-size:13px;font-weight:700">Nouveautés ›</a></div>
-  <div id="hommeScroll" class="products-scroll"></div>
-</div>
+        const firebaseConfig = {
+            apiKey: "AIzaSyOwrJ2FRONVggeXeKcnuZYOq...",
+            authDomain: "parfum-e53ad.firebaseapp.com",
+            projectId: "parfum-e53ad",
+            storageBucket: "parfum-e53ad.firebasestorage.app",
+            messagingSenderId: "791467480753",
+            appId: "1:791467480753:web:4c370bfe3635a37686f490"
+        };
 
-<div class="relative bg-white mt-1">
-  <div class="section-head"><h2>PARFUM FEMME 💖 نسائي</h2><a href="#grid" style="color:#0B7A6E;font-size:13px;font-weight:700">Nouveautés ›</a></div>
-  <div id="femmeScroll" class="products-scroll"></div>
-</div>
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-<section id="gridSection" class="bg-white mt-2 px-4 pb-8">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-top:20px">
-    <h2 style="font-size:18px;font-weight:800">TOUS LES PARFUMS - جميع العطور</h2>
-    <span id="prodCount" style="background:#F0FFF8;border:1px solid rgba(11,122,110,.1);padding:6px 12px;border-radius:999px;font-size:11px;font-weight:700;color:#0B3D36">8 منتجات • ثابت</span>
-  </div>
-  <div id="grid" class="grid grid-cols-2 lg:grid-cols-4 gap-3"></div>
-</section>
+        // جلب وعرض المنتجات المضافة من الأدمن
+        async function loadProducts() {
+            const grid = document.getElementById('products-grid');
+            try {
+                const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
+                const querySnapshot = await getDocs(q);
+                
+                grid.innerHTML = '';
+                if (querySnapshot.empty) {
+                    grid.innerHTML = '<p class="text-gray-400 col-span-full text-center py-10">لا توجد منتجات حالياً. قم بإضافتها عبر لوحة التحكم.</p>';
+                    return;
+                }
 
-<div class="trust-grid">
-  <div class="trust-box"><div style="font-size:36px">🚚</div><h4 style="font-size:14px;font-weight:700;margin:8px 0 4px">Livraison à 50 DH</h4><p style="font-size:12px;opacity:.7">Votre Parfum Partout au MAROC</p></div>
-  <div class="trust-box"><div style="font-size:36px">🧴</div><h4 style="font-size:14px;font-weight:700;margin:8px 0 4px">Parfums Authentiques</h4><p style="font-size:12px;opacity:.7">عطور أصلية 100%</p></div>
-  <div class="trust-box"><div style="font-size:36px">💳</div><h4 style="font-size:14px;font-weight:700;margin:8px 0 4px">Paiement à la livraison</h4><p style="font-size:12px;opacity:.7">الدفع عند الاستلام</p></div>
-</div>
+                querySnapshot.forEach((doc) => {
+                    const item = doc.data();
+                    grid.innerHTML += `
+                        <div class="glass-card rounded-2xl overflow-hidden hover:border-amber-500/50 transition duration-300 group">
+                            <div class="h-64 overflow-hidden relative">
+                                <img src="${item.imageUrl}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="${item.name}">
+                            </div>
+                            <div class="p-5">
+                                <h4 class="font-bold text-lg mb-1 text-white">${item.name}</h4>
+                                <p class="text-gray-400 text-xs mb-4 line-clamp-2">${item.description || 'عطر فاخر ومميز.'}</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-amber-400 font-bold text-lg">${item.price} د.م.</span>
+                                    <button class="bg-amber-500/20 text-amber-300 border border-amber-500/30 px-4 py-2 rounded-xl text-sm hover:bg-amber-500 hover:text-black transition">طلب العطر</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (e) {
+                grid.innerHTML = '<p class="text-red-400 col-span-full text-center">حدث خطأ في جلب البيانات.</p>';
+            }
+        }
 
-<footer class="footer-dark">
-  <div style="max-width:900px;margin:0 auto">
-    <div style="font-size:24px;font-weight:900">TRIÖ<span style="color:#D6FFF1;font-weight:400"> PARFUM</span></div>
-    <p style="font-size:12px;opacity:.6;margin-top:12px">© 2026 TRIO PARFUM - متجر العطور الفاخر - الأخضر الفاتح + الأبيض</p>
-    <a href="admin.html" style="color:#D6FFF1;font-size:11px;text-decoration:underline;font-weight:700;margin-top:8px;display:inline-block">ADMIN CLOUD</a>
-  </div>
-</footer>
+        // جلب صور السلايدر
+        async function loadSlider() {
+            try {
+                const querySnapshot = await getDocs(collection(db, "slider"));
+                const images = [];
+                querySnapshot.forEach(doc => images.push(doc.data().url));
+                if (images.length > 0) {
+                    let idx = 0;
+                    const imgEl = document.getElementById('slider-img');
+                    setInterval(() => {
+                        idx = (idx + 1) % images.length;
+                        imgEl.src = images[idx];
+                    }, 4000);
+                }
+            } catch (e) { console.log(e); }
+        }
 
-<div id="drawer" class="fixed inset-0 z-50 hidden"><div class="absolute inset-0 bg-black/40" onclick="closeDrawer()"></div><div class="absolute left-0 top-0 h-full w-[90%] max-w-[380px] bg-white p-5 overflow-auto shadow-2xl"><div class="flex justify-between items-center mb-6"><h3 style="font-size:18px;font-weight:800">السلة 👜</h3><button onclick="closeDrawer()" style="width:36px;height:36px;border-radius:50%;background:#f4f4f5;display:grid;place-items:center">✕</button></div><div id="cartList"></div><div style="border-top:1px solid #eee;margin-top:20px;padding-top:16px"><div style="display:flex;justify-content:space-between;font-weight:800;margin-bottom:16px"><span>المجموع</span><span id="cartTotal" style="color:#0B7A6E">0 MAD</span></div><button onclick="order()" style="width:100%;padding:14px;background:#0B3D36;color:#fff;border-radius:999px;font-weight:800">اطلب عبر واتساب ✨</button></div></div></div>
-
-<div id="pickModal" class="fixed inset-0 z-[70] hidden bg-black/40 backdrop-blur-sm p-4 grid place-items-center"><div class="bg-white rounded-[20px] w-full max-w-[560px] p-5 max-h-[80vh] overflow-auto shadow-2xl"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><h4 style="font-weight:800;font-size:16px">اختر عطر للباقة ✨ 3 بـ 200 درهم</h4><button onclick="closePick()" style="width:36px;height:36px;border-radius:50%;background:#f4f4f5;display:grid;place-items:center">✕</button></div><div id="pickGrid" class="grid gap-2"></div></div></div>
-
-<script>
-// FIXED - NO FIREBASE DEPENDENCY - ALWAYS WORKS
-const mockProducts = [
-  {id:'m1', name:'TOM FORD - BOIS MAROCAIN', price:149, oldPrice:1740, category:'EAU DE PARFUM H', image:'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=400&q=80', bestseller:true},
-  {id:'m2', name:'DIESEL - FUEL FOR LIFE DENIM 125ML', price:149, oldPrice:850, category:'EAU DE TOILETTE H', image:'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=400&q=80'},
-  {id:'m3', name:'JEAN PAUL GAULTIER - LE MALE ELIXIR', price:149, oldPrice:1700, category:'EAU DE PARFUM H', image:'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=400&q=80'},
-  {id:'m4', name:'GUESS - GOLD TESTEUR FEMME', price:149, oldPrice:910, category:'TESTEUR FEMME', image:'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=400&q=80'},
-  {id:'m5', name:'LIBRE LE PARFUM - YVES SAINT LAURENT', price:149, oldPrice:1380, category:'EAU DE PARFUM', image:'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=400&q=80', bestseller:true},
-  {id:'m6', name:'DOLCE GABBANA - DEVOTION EDP', price:149, oldPrice:1321, category:'EAU DE PARFUM', image:'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=400&q=80'},
-  {id:'m7', name:'CLINIQUE HAPPY - DE LUXE', price:149, oldPrice:799, category:'PARFUMS DE LUXE', image:'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=400&q=80'},
-  {id:'m8', name:'ISHQ AL SHUYUKH SILVER - ARABES', price:149, oldPrice:599, category:'PARFUMS ARABES', image:'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=400&q=80'}
-];
-
-let products = [...mockProducts];
-let cart = [];
-let picks = [];
-const $ = id => document.getElementById(id);
-function getImage(p){return p.imageBase64||p.image||p.img||p.image||'';}
-
-function miniCard(p){
-  const img=getImage(p);
-  const disc=Math.round((1-p.price/(p.oldPrice||899))*100);
-  return `<div class="product-mini"><div class="img-wrap"><img src="${img}" loading="lazy"><div class="discount-badge">-${disc}%</div></div><div class="info"><div class="cat">${p.category}</div><div class="name">${p.name}</div><div class="price-old">${p.oldPrice} DH</div><div class="price-new">${p.price} DH</div></div></div>`;
-}
-function productCard(p){
-  const img=getImage(p);
-  const disc=Math.round((1-p.price/(p.oldPrice||899))*100);
-  return `<div class="bg-white border border-zinc-100 rounded-[16px] overflow-hidden"><div class="aspect-[3/4] bg-[#F8FFFE] relative"><img src="${img}" class="w-full h-full object-contain p-4"><div class="discount-badge">-${disc}%</div>${p.bestseller?'<div style="position:absolute;top:8px;right:8px;background:#0B3D36;color:#fff;font-size:9px;font-weight:800;padding:3px 7px;border-radius:999px">BEST</div>':''}</div><div class="p-3"><div class="text-[10px] text-zinc-500">${p.category}</div><div class="font-bold text-[12px] leading-tight mt-1 min-h-[32px]">${p.name}</div><div class="flex gap-2 mt-2 items-center"><span class="text-[10px] line-through text-zinc-400">${p.oldPrice} DH</span><span class="font-black text-[13px]">${p.price} DH</span></div><div class="flex gap-2 mt-2"><button onclick="addToCart('${p.id}')" class="flex-1 py-2 bg-[#0B3D36] text-white rounded-full text-[11px] font-bold">أضف للسلة</button><button onclick="pickForBundle('${p.id}')" class="w-8 h-8 rounded-full border border-[#0B3D36] grid place-items-center text-[14px]">+</button></div></div></div>`;
-}
-function renderAll(){
-  const grid=$('grid'), homme=$('hommeScroll'), femme=$('femmeScroll'), count=$('prodCount');
-  if(grid) grid.innerHTML=products.map(p=>productCard(p)).join('');
-  if(count) count.textContent=products.length+' منتجات • ثابت ✅';
-  if(homme) homme.innerHTML=products.filter((_,i)=>i%2===0).map(miniCard).join('');
-  if(femme) femme.innerHTML=products.filter((_,i)=>i%2===1).map(miniCard).join('');
-  renderPicks();
-}
-function renderPicks(){
-  const slots=$('offerSlots');
-  if(!slots) return;
-  slots.innerHTML=[0,1,2].map(i=>{
-    const p=picks[i];
-    if(p) return `<div class="bundle-slot filled"><div style="position:absolute;top:6px;left:6px;width:20px;height:20px;background:#0B3D36;color:#fff;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:800">${i+1}</div><img src="${getImage(p)}"><button onclick="removePick(${i})" style="position:absolute;bottom:4px;right:4px;width:20px;height:20px;background:#fee;color:#ef4444;border-radius:50%;border:none;font-size:12px">×</button><div style="position:absolute;bottom:4px;left:4px;background:#0B3D36;color:#fff;font-size:9px;padding:2px 6px;border-radius:999px">${p.price} DH</div></div>`;
-    return `<div class="bundle-slot" onclick="openPick(${i})"><div style="text-align:center"><div style="width:40px;height:40px;background:#0B3D36;color:#fff;border-radius:50%;display:grid;place-items:center;margin:auto;font-size:18px">+</div><div style="font-size:10px;font-weight:700;color:#0B3D36;margin-top:4px">عطر ${i+1}</div><div style="font-size:9px;color:#888">اضغط</div></div></div>`;
-  }).join('');
-  const counter=$('offerCounter'); if(counter) counter.textContent=`${picks.length}/3`;
-  const btn=$('offerOrderBtn'); if(btn){btn.disabled=picks.length!==3; btn.style.opacity=picks.length===3?'1':'.4';}
-}
-window.openPick=i=>{ $('pickModal').classList.remove('hidden'); $('pickGrid').innerHTML=products.map(p=>`<button onclick="pickForBundle('${p.id}')" style="display:flex;gap:10px;padding:12px;background:#F0FFF8;border-radius:12px;width:100%;text-align:right;border:1px solid rgba(11,122,110,.1)"><img src="${getImage(p)}" style="width:50px;height:50px;border-radius:10px;background:#fff;object-fit:contain"><div style="flex:1;text-align:right"><div style="font-weight:700;font-size:13px">${p.name}</div><div style="font-size:11px;color:#0B7A6E">${p.price} DH • ${p.category}</div></div></button>`).join('');};
-window.closePick=()=>$('pickModal').classList.add('hidden');
-window.clearPicks=()=>{picks=[]; renderPicks();};
-window.removePick=i=>{picks.splice(i,1); renderPicks();};
-window.pickForBundle=id=>{ const p=products.find(x=>x.id===id); if(picks.length>=3) return alert('الباقة مكتملة - 3 فقط'); if(picks.find(x=>x.id===id)) return alert('موجود بالفعل'); picks.push(p); renderPicks(); window.closePick(); };
-window.addToCart=id=>{ const p=products.find(x=>x.id===id); cart.push(p); updateCart(); };
-function updateCart(){ const c=$('cartCount'); if(c){c.textContent=cart.length; c.classList.toggle('hidden',cart.length===0);} const list=$('cartList'); if(list) list.innerHTML=cart.map((x,i)=>`<div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #eee"><img src="${getImage(x)}" style="width:50px;height:50px;border-radius:10px;background:#F0FFF8;object-fit:contain"><div style="flex:1"><div style="font-weight:700;font-size:12px">${x.name}</div><div style="font-size:11px;color:#0B7A6E">${x.price} DH</div></div><button onclick="cart.splice(${i},1);updateCart()" style="width:28px;height:28px;border-radius:50%;background:#f4f4f5">×</button></div>`).join('')||'<div style="padding:40px;text-align:center;color:#888">السلة فارغة</div>'; const total=cart.reduce((a,b)=>a+Number(b.price||0),0)+(picks.length===3?200:0); const t=$('cartTotal'); if(t) t.textContent=total+' MAD'; }
-window.closeDrawer=()=>$('drawer').classList.add('hidden');
-window.order=()=>{ let txt=picks.length===3?`بغيت الباقة 3 بـ 200 درهم: ${picks.map(p=>p.name).join(' + ')}`:`بغيت نطلب: ${cart.map(c=>c.name).join(', ')}`; window.open(`https://wa.me/212612345678?text=${encodeURIComponent(txt)}`,'_blank'); };
-$('cartBtn').onclick=()=>$('drawer').classList.remove('hidden');
-$('offerOrderBtn').onclick=()=>{ if(picks.length===3) window.order(); };
-
-// Slider auto
-let cur=0;
-setInterval(()=>{
-  const slides=document.querySelectorAll('.hero-slide');
-  const dots=document.querySelectorAll('#dots button');
-  if(!slides.length) return;
-  slides.forEach((s,i)=>s.classList.toggle('active',i===cur));
-  dots.forEach((d,i)=>{d.className=`h-1 rounded-full transition-all ${i===cur?'w-10 bg-[#0B3D36]':'w-8 bg-zinc-300'}`});
-  cur=(cur+1)%slides.length;
-},4000);
-window.goSlide=n=>{cur=n; document.querySelectorAll('.hero-slide').forEach((s,i)=>s.classList.toggle('active',i===n)); document.querySelectorAll('#dots button').forEach((d,i)=>{d.className=`h-1 rounded-full transition-all ${i===n?'w-10 bg-[#0B3D36]':'w-8 bg-zinc-300'}`});};
-
-// INITIAL RENDER IMMEDIATELY - NO WAITING
-renderAll();
-updateCart();
-console.log('TRIO PARFUM FIXED - No loading, all visible ✅');
-</script>
-
+        loadProducts();
+        loadSlider();
+    </script>
 </body>
 </html>
