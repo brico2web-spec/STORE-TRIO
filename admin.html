@@ -3,67 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم | إدارة المتجر</title>
+    <title>لوحة التحكم الشاملة | إدارة المتجر</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Cairo', sans-serif; background-color: #0b0d10; color: #f3f4f6; }</style>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #0b0d10; color: #f3f4f6; }
+    </style>
 </head>
-<body class="p-4 md:p-8 max-w-5xl mx-auto">
+<body class="p-3 sm:p-6 md:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8">
 
-    <div class="flex justify-between items-center mb-8 border-b border-gray-800 pb-4">
-        <h1 class="text-2xl font-bold text-amber-400"><i class="fa-solid fa-sliders ml-2"></i> لوحة تحكم المتجر</h1>
-        <a href="index.html" class="text-sm bg-gray-800 px-4 py-2 rounded-xl text-gray-300 hover:bg-gray-700">الرجوع للواجهة</a>
+    <!-- Navbar Header -->
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 border-b border-gray-800 pb-4">
+        <h1 class="text-xl sm:text-2xl font-black text-amber-400 text-center sm:text-right">
+            <i class="fa-solid fa-sliders ml-2"></i> لوحة تحكم المتجر
+        </h1>
+        <a href="index.html" class="w-full sm:w-auto text-center text-xs sm:text-sm bg-gray-800 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-gray-700 transition">
+            <i class="fa-solid fa-house ml-1"></i> الرجوع للواجهة الرئيسية
+        </a>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        
-        <!-- إضافة منتج جديد -->
-        <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800">
-            <h2 class="text-lg font-bold text-white mb-4"><i class="fa-solid fa-plus text-amber-400 ml-2"></i> إضافة عطر جديد</h2>
-            <form id="add-product-form" class="space-y-4">
-                <div>
-                    <label class="block text-sm text-gray-400 mb-1">اسم العطر</label>
-                    <input type="text" id="p-name" required class="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-amber-500">
-                </div>
-                <div>
-                    <label class="block text-sm text-gray-400 mb-1">السعر (درهم)</label>
-                    <input type="number" id="p-price" required class="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-amber-500">
-                </div>
-                <div>
-                    <label class="block text-sm text-gray-400 mb-1">اختر صورة العطر من هاتفك</label>
-                    <input type="file" id="p-file" accept="image/*" required class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-gray-300 focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-500 file:text-black hover:file:bg-amber-400">
-                </div>
-                <div>
-                    <label class="block text-sm text-gray-400 mb-1">الوصف</label>
-                    <textarea id="p-desc" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-amber-500" rows="3"></textarea>
-                </div>
-
-                <div id="upload-status" class="text-amber-400 text-sm hidden font-bold">جاري معالجة الصورة وإضافة العطر... ⏳</div>
-
-                <button type="submit" id="btn-submit" class="w-full bg-amber-500 text-black font-bold py-3 rounded-xl hover:bg-amber-400 transition">إضافة العطر للمتجر</button>
-            </form>
+    <!-- 1. قسم تغيير اللوغو والنصوص للعرض الخاص -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- تغيير اللوغو -->
+        <div class="bg-gray-900 p-4 sm:p-6 rounded-2xl border border-gray-800">
+            <h2 class="text-base sm:text-lg font-bold text-white mb-4"><i class="fa-solid fa-image text-amber-400 ml-2"></i> لوغو المتجر (PNG / JPG)</h2>
+            <div id="logo-preview" class="mb-4 h-20 bg-gray-800 rounded-xl flex items-center justify-center overflow-hidden border border-gray-700">
+                <span class="text-gray-500 text-xs">لا يوجد لوغو مرفوع حالياً</span>
+            </div>
+            <input type="file" id="logo-file" accept="image/png, image/jpeg" class="w-full text-xs sm:text-sm text-gray-400 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:bg-amber-500 file:text-black file:font-bold">
+            <button id="btn-upload-logo" class="w-full mt-3 bg-amber-500 text-black font-bold py-2.5 rounded-xl hover:bg-amber-400 transition text-sm">حفظ اللوغو الجديد</button>
         </div>
 
-        <!-- إضافة صورة للسلايدر -->
-        <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800">
-            <h2 class="text-lg font-bold text-white mb-4"><i class="fa-solid fa-images text-amber-400 ml-2"></i> إضافة صورة لسلايدر الواجهة</h2>
-            <form id="add-slider-form" class="space-y-4">
-                <div>
-                    <label class="block text-sm text-gray-400 mb-1">اختر صورة السلايدر</label>
-                    <input type="file" id="s-file" accept="image/*" required class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-gray-300 focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-500 file:text-black hover:file:bg-amber-400">
-                </div>
-                <div id="slider-status" class="text-amber-400 text-sm hidden font-bold">جاري إضافة الصورة للسلايدر... ⏳</div>
-                <button type="submit" id="btn-slider-submit" class="w-full bg-amber-500 text-black font-bold py-3 rounded-xl hover:bg-amber-400 transition">إضافة للسلايدر</button>
+        <!-- إعدادات نصوص عرض الـ 3 عطور -->
+        <div class="bg-gray-900 p-4 sm:p-6 rounded-2xl border border-gray-800">
+            <h2 class="text-base sm:text-lg font-bold text-white mb-4"><i class="fa-solid fa-tags text-amber-400 ml-2"></i> إعدادات "عرض 3 عطور"</h2>
+            <form id="offer-settings-form" class="space-y-3">
+                <input type="text" id="offer-title" placeholder="عنوان العرض (مثال: ركّب باقتك)" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+                <input type="text" id="offer-sub" placeholder="الوصف (مثال: اضغط لاختيار 3 عطور من الأكثر مبيعاً)" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+                <input type="number" id="offer-price" placeholder="سعر العرض بالدرهم (مثال: 200)" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+                <button type="submit" class="w-full bg-amber-500 text-black font-bold py-2.5 rounded-xl hover:bg-amber-400 transition text-sm">حفظ إعدادات العرض</button>
             </form>
         </div>
-
     </div>
 
-    <!-- Firebase SDK (Firestore) -->
+    <!-- 2. قسم إضافة وتعديل المنتجات -->
+    <div class="bg-gray-900 p-4 sm:p-6 rounded-2xl border border-gray-800">
+        <h2 class="text-base sm:text-lg font-bold text-white mb-4"><i class="fa-solid fa-box-open text-amber-400 ml-2"></i> إضافة / تعديل منتج</h2>
+        <form id="product-form" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <input type="hidden" id="p-id">
+            <input type="text" id="p-name" placeholder="اسم العطر" required class="bg-gray-800 border border-gray-700 rounded-xl p-3 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+            <input type="number" id="p-price" placeholder="السعر (درهم)" required class="bg-gray-800 border border-gray-700 rounded-xl p-3 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+            <div class="sm:col-span-2">
+                <label class="block text-xs text-gray-400 mb-1">صورة العطر:</label>
+                <input type="file" id="p-file" accept="image/*" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-xs sm:text-sm text-gray-300">
+            </div>
+            <textarea id="p-desc" placeholder="وصف العطر" class="sm:col-span-2 bg-gray-800 border border-gray-700 rounded-xl p-3 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500" rows="2"></textarea>
+            
+            <div class="sm:col-span-2 flex items-center gap-2">
+                <input type="checkbox" id="p-allow-offer" class="w-4 h-4 text-amber-500 rounded accent-amber-500">
+                <label for="p-allow-offer" class="text-xs sm:text-sm text-gray-300">السماح باختيار هذا العطر داخل "عرض 3 عطور بـ 200 درهم"</label>
+            </div>
+
+            <button type="submit" id="p-btn" class="sm:col-span-2 bg-amber-500 text-black font-bold py-3 rounded-xl hover:bg-amber-400 transition text-sm">حفظ المنتج</button>
+        </form>
+    </div>
+
+    <!-- قائمة المنتجات الحالية -->
+    <div class="bg-gray-900 p-4 sm:p-6 rounded-2xl border border-gray-800">
+        <h3 class="font-bold text-base sm:text-lg mb-4 text-white">قائمة عطور المتجر الحالية</h3>
+        <div id="admin-products-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+    </div>
+
+    <!-- 3. قسم السلايدر -->
+    <div class="bg-gray-900 p-4 sm:p-6 rounded-2xl border border-gray-800">
+        <h2 class="text-base sm:text-lg font-bold text-white mb-4"><i class="fa-solid fa-images text-amber-400 ml-2"></i> إدارة صور السلايدر</h2>
+        <div class="flex flex-col sm:flex-row gap-3 mb-6">
+            <input type="file" id="s-file" accept="image/*" class="flex-grow bg-gray-800 border border-gray-700 rounded-xl p-2 text-xs sm:text-sm text-gray-300">
+            <button id="btn-add-slider" class="bg-amber-500 text-black font-bold px-6 py-2.5 rounded-xl hover:bg-amber-400 transition text-sm">إضافة للسلايدر</button>
+        </div>
+        <div id="admin-slider-list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3"></div>
+    </div>
+
+    <!-- Firebase Code -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyOwrJ2FRONVggeXeKcnuZYOq...",
@@ -77,79 +102,144 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // دالة تحويل الصورة إلى Base64
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
+        const fileToBase64 = file => new Promise((res, rej) => {
+            const r = new FileReader(); r.readAsDataURL(file);
+            r.onload = () => res(r.result); r.onerror = e => rej(e);
+        });
+
+        // 1. اللوغو والنصوص
+        async function loadSettings() {
+            try {
+                const sDoc = await getDoc(doc(db, "settings", "general"));
+                if(sDoc.exists()) {
+                    const data = sDoc.data();
+                    if(data.logo) document.getElementById('logo-preview').innerHTML = `<img src="${data.logo}" class="h-16 object-contain">`;
+                    if(data.offerTitle) document.getElementById('offer-title').value = data.offerTitle;
+                    if(data.offerSub) document.getElementById('offer-sub').value = data.offerSub;
+                    if(data.offerPrice) document.getElementById('offer-price').value = data.offerPrice;
+                }
+            } catch(e){}
+        }
+
+        document.getElementById('btn-upload-logo').onclick = async () => {
+            const file = document.getElementById('logo-file').files[0];
+            if(!file) return alert('اختر ملف اللوغو أولاً');
+            const b64 = await fileToBase64(file);
+            await setDoc(doc(db, "settings", "general"), { logo: b64 }, { merge: true });
+            alert('تم حفظ اللوغو!');
+            loadSettings();
+        };
+
+        document.getElementById('offer-settings-form').onsubmit = async (e) => {
+            e.preventDefault();
+            await setDoc(doc(db, "settings", "general"), {
+                offerTitle: document.getElementById('offer-title').value,
+                offerSub: document.getElementById('offer-sub').value,
+                offerPrice: document.getElementById('offer-price').value
+            }, { merge: true });
+            alert('تم حفظ إعدادات العرض!');
+        };
+
+        // 2. إدارة المنتجات
+        async function loadProducts() {
+            const container = document.getElementById('admin-products-list');
+            const snap = await getDocs(collection(db, "products"));
+            container.innerHTML = '';
+            snap.forEach(d => {
+                const p = d.data();
+                container.innerHTML += `
+                    <div class="bg-gray-800 p-3 rounded-xl flex items-center gap-3 border border-gray-700">
+                        <img src="${p.imageUrl}" class="w-14 h-14 object-cover rounded-lg flex-shrink-0">
+                        <div class="flex-grow min-w-0">
+                            <h4 class="font-bold text-xs sm:text-sm truncate">${p.name}</h4>
+                            <p class="text-xs text-amber-400 font-bold">${p.price} د.م.</p>
+                            ${p.allowOffer ? '<span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded">متاح بالعرض</span>' : ''}
+                        </div>
+                        <div class="flex flex-col gap-1 flex-shrink-0">
+                            <button onclick="editProduct('${d.id}', '${p.name}', '${p.price}', '${p.description||''}', ${p.allowOffer||false})" class="text-xs bg-blue-600/30 text-blue-300 p-1.5 rounded hover:bg-blue-600/50"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="deleteProduct('${d.id}')" class="text-xs bg-red-600/30 text-red-300 p-1.5 rounded hover:bg-red-600/50"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
             });
         }
 
-        // إضافة المنتج
-        document.getElementById('add-product-form').addEventListener('submit', async (e) => {
+        window.editProduct = (id, name, price, desc, allowOffer) => {
+            document.getElementById('p-id').value = id;
+            document.getElementById('p-name').value = name;
+            document.getElementById('p-price').value = price;
+            document.getElementById('p-desc').value = desc;
+            document.getElementById('p-allow-offer').checked = allowOffer;
+            document.getElementById('p-btn').innerText = 'تحديث العطر';
+            window.scrollTo({ top: 300, behavior: 'smooth' });
+        };
+
+        window.deleteProduct = async (id) => {
+            if(confirm('هل أنت تأكد من الحذف؟')) {
+                await deleteDoc(doc(db, "products", id));
+                loadProducts();
+            }
+        };
+
+        document.getElementById('product-form').onsubmit = async (e) => {
             e.preventDefault();
-            const status = document.getElementById('upload-status');
-            const btn = document.getElementById('btn-submit');
+            const id = document.getElementById('p-id').value;
             const file = document.getElementById('p-file').files[0];
+            const data = {
+                name: document.getElementById('p-name').value,
+                price: document.getElementById('p-price').value,
+                description: document.getElementById('p-desc').value,
+                allowOffer: document.getElementById('p-allow-offer').checked
+            };
 
-            if (!file) return;
+            if(file) data.imageUrl = await fileToBase64(file);
 
-            try {
-                status.classList.remove('hidden');
-                btn.disabled = true;
-
-                // تحويل الصورة لنص Base64 للرفع المباشر
-                const base64Image = await fileToBase64(file);
-
-                await addDoc(collection(db, "products"), {
-                    name: document.getElementById('p-name').value,
-                    price: document.getElementById('p-price').value,
-                    imageUrl: base64Image,
-                    description: document.getElementById('p-desc').value,
-                    createdAt: new Date().toISOString()
-                });
-
-                alert('✅ تم إضافة العطر بنجاح وسيظهر فوراً في الواجهة!');
-                e.target.reset();
-            } catch (err) {
-                alert('❌ حدث خطأ أثناء الحفظ: ' + err.message);
-            } finally {
-                status.classList.add('hidden');
-                btn.disabled = false;
+            if(id) {
+                await updateDoc(doc(db, "products", id), data);
+                alert('تم التحديث!');
+            } else {
+                if(!file) return alert('الرجاء اختيار صورة العطر');
+                await addDoc(collection(db, "products"), { ...data, createdAt: new Date().toISOString() });
+                alert('تم الإضافة!');
             }
-        });
+            e.target.reset();
+            document.getElementById('p-id').value = '';
+            document.getElementById('p-btn').innerText = 'حفظ المنتج';
+            loadProducts();
+        };
 
-        // إضافة صورة السلايدر
-        document.getElementById('add-slider-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const status = document.getElementById('slider-status');
-            const btn = document.getElementById('btn-slider-submit');
+        // 3. السلايدر
+        async function loadSlider() {
+            const container = document.getElementById('admin-slider-list');
+            const snap = await getDocs(collection(db, "slider"));
+            container.innerHTML = '';
+            snap.forEach(d => {
+                container.innerHTML += `
+                    <div class="relative group rounded-xl overflow-hidden border border-gray-700 h-24">
+                        <img src="${d.data().url}" class="w-full h-full object-cover">
+                        <button onclick="deleteSlider('${d.id}')" class="absolute top-1 right-1 bg-red-600 text-white p-1 rounded-full text-xs opacity-80 hover:opacity-100"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                `;
+            });
+        }
+
+        document.getElementById('btn-add-slider').onclick = async () => {
             const file = document.getElementById('s-file').files[0];
+            if(!file) return alert('اختر صورة أولاً');
+            const url = await fileToBase64(file);
+            await addDoc(collection(db, "slider"), { url });
+            document.getElementById('s-file').value = '';
+            loadSlider();
+        };
 
-            if (!file) return;
+        window.deleteSlider = async (id) => {
+            await deleteDoc(doc(db, "slider", id));
+            loadSlider();
+        };
 
-            try {
-                status.classList.remove('hidden');
-                btn.disabled = true;
-
-                const base64Image = await fileToBase64(file);
-
-                await addDoc(collection(db, "slider"), {
-                    url: base64Image,
-                    createdAt: new Date().toISOString()
-                });
-
-                alert('✅ تم إضافة صورة السلايدر بنجاح!');
-                e.target.reset();
-            } catch (err) {
-                alert('❌ حدث خطأ: ' + err.message);
-            } finally {
-                status.classList.add('hidden');
-                btn.disabled = false;
-            }
-        });
+        loadSettings();
+        loadProducts();
+        loadSlider();
     </script>
 </body>
 </html>
