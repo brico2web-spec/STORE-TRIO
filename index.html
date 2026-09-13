@@ -237,7 +237,7 @@ function updCart(){
  const c=document.getElementById('cartCount');
  c.textContent=cart.length;
  c.classList.toggle('hidden', cart.length===0);
- const total=cart.reduce((a,b)=>a+b.price,0)+ (picks.length===3?cfg.offerPrice:0);
+ const total=cart.reduce((a,b)=>a+Number(b.price||0),0)+ (picks.length===3?cfg.offerPrice:0);
  document.getElementById('cartTotal').textContent=total+' MAD';
  document.getElementById('cartList').innerHTML=`
  ${picks.length===3?`<div class="glass rounded-[16px] p-4 mb-4 border-2 border-[#0B7A6E]/20"><div class="font-bold text-[14px]">الباقة الخاصة ✨</div><div class="text-[12px] text-zinc-600 mt-1">${picks.map(p=>p.name).join(' + ')}</div><div class="font-bold mt-2">${cfg.offerPrice} MAD</div></div>`:''}
@@ -247,7 +247,7 @@ function updCart(){
 window.order=()=>{
  let txt='';
  if(picks.length===3) txt=`السلام بغيت عرض 3 عطور ب ${cfg.offerPrice} درهم: ${picks.map(p=>p.name).join(' + ')}`;
- else if(cart.length) txt=`بغيت نطلب: ${cart.map(c=>c.name+' ('+c.price+' MAD)').join(', ')} - المجموع ${cart.reduce((a,b)=>a+b.price,0)} MAD`;
+ else if(cart.length) txt=`بغيت نطلب: ${cart.map(c=>c.name+' ('+c.price+' MAD)').join(', ')} - المجموع ${cart.reduce((a,b)=>a+Number(b.price||0),0)} MAD`;
  else {alert('السلة فارغة'); return}
  window.open(`https://wa.me/212612345678?text=${encodeURIComponent(txt)}`,'_blank');
 };
@@ -280,21 +280,50 @@ function apply(){
  renderSlider(); renderPicks();
 }
 
+// --- FIXED CLOUD LOGIC - يقرا الصور من Firebase ويظهرها في أي جهاز ---
+const DEFAULT_PRODUCTS=[
+ {id:'1',name:'Sauvage Elixir',price:299,oldPrice:899,description:'فخم رجالي يدوم 24 ساعة - ثبات 24 ساعة',bestseller:true,image:'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=800&q=90'},
+ {id:'2',name:'Jadore Dior',price:349,oldPrice:999,description:'أنثوي ساحر وجذاب - عطر فاخر',bestseller:true,image:'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=90'},
+ {id:'3',name:'Bleu Chanel',price:279,oldPrice:899,description:'منعش وأنيق - للرجل العصري',image:'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=800&q=90'},
+ {id:'4',name:'Poison Girl',price:299,oldPrice:899,description:'حلو وجذاب - للمرأة الجريئة',bestseller:true,image:'https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=800&q=90'}
+];
+
+function isValidProduct(p){
+  if(!p) return false;
+  const hasName = p.name && typeof p.name==='string' && p.name.trim().length>1 && p.name!=='undefined';
+  const hasPrice = p.price && !isNaN(Number(p.price));
+  const hasImage = p.imageBase64 || p.image || p.img;
+  return hasName && hasPrice && hasImage;
+}
+
 if(db){
  onSnapshot(collection(db,'parfums'), s=>{
-  products=s.docs.map(d=>({id:d.id,...d.data()}));
-  if(!products.length){
-   products=[
-    {id:'1',name:'Sauvage Elixir',price:299,oldPrice:899,description:'فخم رجالي يدوم 24 ساعة',bestseller:true,image:'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=800&q=90'},
-    {id:'2',name:'Jadore Dior',price:349,oldPrice:999,description:'أنثوي ساحر وجذاب',bestseller:true,image:'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=90'},
-    {id:'3',name:'Bleu Chanel',price:279,oldPrice:899,description:'منعش وأنيق',image:'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=800&q=90'},
-    {id:'4',name:'Poison Girl',price:299,oldPrice:899,description:'حلو وجذاب',bestseller:true,image:'https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=800&q=90'}
-   ];
+  let cloudProducts = s.docs.map(d=>({id:d.id,...d.data()}));
+  // تنظيف المنتجات الخاوية (اللي كتبان undefined)
+  let validCloud = cloudProducts.filter(isValidProduct);
+  console.log('Firebase: total', cloudProducts.length, 'valid', validCloud.length);
+  if(validCloud.length>0){
+   products=validCloud;
+  }else if(cloudProducts.length>0 && validCloud.length===0){
+   // كاينين منتجات خاوية - نوري الافتراضية + رسالة
+   console.warn('جميع المنتجات في Firebase خاوية - نعرض الافتراضية');
+   products=DEFAULT_PRODUCTS;
+  }else{
+   // ما كاين والو - نعرض الافتراضية
+   products=DEFAULT_PRODUCTS;
   }
+  renderProducts();
+ }, err=>{
+  console.error('Firebase error', err);
+  products=DEFAULT_PRODUCTS;
   renderProducts();
  });
  onSnapshot(doc(db,'config','site'), s=>{if(s.exists()){cfg={...cfg,...s.data()};} apply();}, ()=>apply());
-}else{apply(); renderProducts();}
+}else{
+ apply();
+ products=DEFAULT_PRODUCTS;
+ renderProducts();
+}
 </script>
 <style>@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}</style>
 </body>

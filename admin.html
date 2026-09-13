@@ -164,10 +164,21 @@ async function loadData(){
   const docs=snap.docs;
   $('st-count').textContent=docs.length;
   $('st-cloud').textContent='☁️ متصل - '+docs.length+' منتج';
-  $('productsList').innerHTML=docs.map(d=>{
+  // فلترة وتنظيف المنتجات الخاوية
+  let validDocs=docs.filter(d=>{const p=d.data(); return p.name && p.name!=='undefined' && p.price});
+  let invalidDocs=docs.filter(d=>{const p=d.data(); return !p.name || p.name==='undefined' || !p.price});
+  
+  if(invalidDocs.length>0){
+    console.warn('وجدنا منتجات خاوية:', invalidDocs.length);
+  }
+  
+  $('productsList').innerHTML=`
+    ${invalidDocs.length>0?`<div class="col-span-full mb-4 p-4 bg-red-50 border-2 border-red-200 rounded-[16px]"><p class="font-bold text-[13px] text-red-700">⚠️ وجدنا ${invalidDocs.length} منتجات خاوية (undefined) - اضغط لتنظيفها</p><button onclick="window.cleanInvalid()" class="mt-2 px-4 py-2 bg-red-600 text-white rounded-full text-[12px] font-bold">🗑️ حذف المنتجات الخاوية</button></div>`:''}
+    ${validDocs.map(d=>{
    const p=d.data();
-   return `<div class="card p-4 flex gap-3"><img src="${p.imageBase64||p.image||''}" class="w-16 h-16 object-contain bg-[#F7FFFD] rounded-xl border"><div class="flex-1 min-w-0"><p class="font-bold text-[14px] truncate">${p.name}</p><p class="text-[13px] font-bold text-[#0B7A6E]">${p.price} MAD ${p.bestseller?'🔥':''}</p><p class="text-[11px] text-zinc-500 truncate">${p.category||''}</p><div class="flex gap-2 mt-2"><button onclick="window.delProduct('${d.id}')" class="text-red-500 text-[11px] font-bold px-3 py-1 rounded-full bg-red-50">حذف</button><span class="text-[10px] text-green-600">☁️ يظهر في كل الأجهزة</span></div></div></div>`;
-  }).join('') || '<div class="col-span-full py-10 text-center text-zinc-400">لا يوجد عطور - أضف أول عطر</div>';
+   return `<div class="card p-4 flex gap-3"><img src="${p.imageBase64||p.image||''}" class="w-16 h-16 object-contain bg-[#F7FFFD] rounded-xl border"><div class="flex-1 min-w-0"><p class="font-bold text-[14px] truncate">${p.name}</p><p class="text-[13px] font-bold text-[#0B7A6E]">${p.price} MAD ${p.bestseller?'🔥':''}</p><p class="text-[11px] text-zinc-500 truncate">${p.category||''}</p><div class="flex gap-2 mt-2"><button onclick="window.delProduct('${d.id}')" class="text-red-500 text-[11px] font-bold px-3 py-1 rounded-full bg-red-50">حذف</button><span class="text-[10px] text-green-600">☁️ يظهر في كل الأجهزة ✅</span></div></div></div>`;
+  }).join('') || '<div class="col-span-full py-10 text-center text-zinc-400">لا يوجد عطور - أضف أول عطر. الصور المرفوعة ستظهر في الموقع في أي جهاز</div>'}
+  `
  });
 
  const cfgDoc=await getDoc(doc(db,'config','site')).catch(()=>null);
@@ -205,6 +216,19 @@ function renderSlider(){
 }
 
 window.delProduct=async(id)=>{if(confirm('حذف المنتج من السحابة؟ سيختفي من كل الأجهزة')) await deleteDoc(doc(db,'parfums',id));}
+window.cleanInvalid=async()=>{
+ if(!confirm('حذف جميع المنتجات الخاوية (undefined)؟')) return;
+ const snap = await (await import('firebase/firestore')).getDocs(collection(db,'parfums'));
+ let count=0;
+ for(const d of snap.docs){
+  const p=d.data();
+  if(!p.name || p.name==='undefined' || !p.price){
+   await deleteDoc(doc(db,'parfums',d.id));
+   count++;
+  }
+ }
+ alert(`تم حذف ${count} منتجات خاوية - الآن المتجر سيظهر المنتجات الصحيحة`);
+};
 window.removeSlide=i=>{siteConfig.slider.splice(i,1); renderSlider();}
 
 $('btnAddProduct')?.addEventListener('click', async()=>{
