@@ -1,188 +1,268 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Parfum LUXE | عطور فاخرة</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SENTEL LUXE - Parfums</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-<script type="importmap">
-{"imports":{"firebase/app":"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js","firebase/firestore":"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"}}
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
-*{font-family:'Outfit',system-ui} .amiri{font-family:'Amiri',serif}
-.glass{background:rgba(255,255,255,0.75);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.6)}
-.glass-card{background:rgba(255,255,255,0.85);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.7);box-shadow:0 8px 32px rgba(0,0,0,0.06)}
-.slider-dot.active{width:32px;background:#0d6d62}
-.offer-gradient{background: linear-gradient(135deg,#CFF5EB 0%, #B8EBD9 50%, #D4F5E9 100%)}
+*{font-family:'Inter',system-ui} .ar{font-family:'Tajawal',sans-serif}
+.glass{backdrop-filter:blur(22px); background:rgba(255,255,255,.78); border:1px solid rgba(255,255,255,.7); box-shadow:0 12px 40px rgba(0,0,0,.07)}
+.glass-strong{backdrop-filter:blur(28px); background:rgba(255,255,255,.92); border:1px solid rgba(255,255,255,.9); box-shadow:0 20px 60px rgba(0,0,0,.10)}
+.btn{border-radius:999px; height:48px; padding:0 28px; font-weight:800; font-size:13px; letter-spacing:.06em; text-transform:uppercase; transition:.25s}
+.btn:active{transform:scale(.97)}
+.marquee{animation:marquee var(--speed,28s) linear infinite}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.progress{animation:prog 4.5s linear; transform-origin:left}
+@keyframes prog{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+.card{border-radius:24px; transition:.35s cubic-bezier(.16,1,.3,1)}
+.card:hover{transform:translateY(-6px)}
 </style>
 </head>
-<body class="bg-[#FCFFFE] text-zinc-800 overflow-x-hidden">
-<!-- Header -->
-<header class="sticky top-0 z-40 glass border-b border-white/60">
-<div class="max-w-7xl mx-auto px-6 h-[78px] flex items-center justify-between">
-<div class="flex items-center gap-3">
-<img id="logoImg" class="h-10 w-auto hidden" alt="logo">
-<h1 id="logoText" class="text-[28px] font-black tracking-tight">Parfum <span class="font-light text-[#0d6d62]">LUXE</span></h1>
-</div>
-<div class="flex items-center gap-4">
-<button id="cartBtn" class="relative w-12 h-12 rounded-full bg-zinc-900 text-white grid place-items-center">
-<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-<span id="cartCount" class="absolute -top-1 -right-1 bg-[#0d6d62] text-white text-[11px] w-5 h-5 rounded-full grid place-items-center hidden">0</span>
-</button>
-</div>
-</div>
-</header>
+<body class="bg-[#F8FAFC] text-zinc-900 overflow-x-hidden selection:bg-black selection:text-white">
+<div id="app"></div>
+<script>
+const LS = {
+ get(k,f){try{let v=localStorage.getItem(k); return v?JSON.parse(v):f}catch{return f}},
+ set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
+}
+const DEFAULTS = {
+ lang:'FR',
+ site:'SENTEL',
+ top:{msg:{FR:'✦ LIVRAISON GRATUITE PARTOUT AU MAROC ✦ PAIEMENT À LA LIVRAISON ✦ -93% SUR LES GRANDES MARQUES ✦ +200 RÉFÉRENCES ✦',AR:'✦ توصيل مجاني في جميع أنحاء المغرب ✦ الدفع عند الاستلام ✦ خصم 93% على الماركات الكبرى ✦ +200 عطر ✦',EN:'✦ FREE DELIVERY ALL OVER MOROCCO ✦ CASH ON DELIVERY ✦ -93% ON LUXURY BRANDS ✦ +200 REFERENCES ✦'}, bg:'#0f172a', color:'#fff', speed:'28s', show:true},
+ footer:{about:{FR:"SENTEL Parfums - L'art du parfum à prix accessible. +200 références des grandes marques à -93%. Collections exclusives, tenue 12h, livraison gratuite.",AR:"SENTEL - فن العطر بسعر في متناول الجميع. +200 عطر من الماركات الكبرى بخصم 93%. ثبات 12 ساعة وتوصيل مجاني.",EN:"SENTEL Perfumes - The art of perfume at accessible price. +200 luxury refs at -93%. 12h longevity, free delivery."}, addr:'Casablanca, Maarif - Morocco', phone:'+212 6 12 34 56 78', email:'contact@sentel-luxe.com', map:'Kenitra, Morocco', showMap:true},
+ social:{fb:'#',ig:'#',tw:'#',tk:'#',wa:'212612345678', show:{fb:1,ig:1,tw:1,tk:1,wa:1}},
+ slider:[
+  {id:1, img:'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1600&q=90', bg:'linear-gradient(135deg,#0f172a,#334155)', FR:{small:'+200 RÉFÉRENCES', title:'ESSENCES RARES', btn:'Livraison gratuite'}, AR:{small:'+200 عطر', title:'جواهر نادرة', btn:'توصيل مجاني'}, EN:{small:'200+ REFS', title:'RARE ESSENCES', btn:'Free delivery'}},
+  {id:2, img:'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1600&q=90', bg:'linear-gradient(135deg,#134e4a,#14b8a6)', FR:{small:'PACK CLASSIC', title:'3 PARFUMS 200 DHS', btn:'Composer mon pack'}, AR:{small:'الباقة الكلاسيكية', title:'3 عطور 200 درهم', btn:'ركب باقتك'}, EN:{small:'CLASSIC PACK', title:'3 PERFUMES 200 MAD', btn:'Build pack'}},
+  {id:3, img:'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=1600&q=90', bg:'linear-gradient(135deg,#1e1b4b,#4338ca)', FR:{small:'NOUVEAUTÉ', title:'BRUMES PARFUMÉES', btn:'Découvrir'}, AR:{small:'جديد', title:'رذاذ معطر', btn:'اكتشف'}, EN:{small:'NEW', title:'SCENTED MISTS', btn:'Discover'}}
+ ],
+ products:[
+  {id:1,name:'Poison Girl',price:149,old:899,rating:4.9,insp:'Dior',stock:22,bg:'#fce7f3', img:'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=600&q=90'},
+  {id:2,name:'Paradoxe',price:149,old:899,rating:4.8,insp:'Prada',stock:18,bg:'#fef3c7', img:'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=600&q=90'},
+  {id:3,name:'Bleu De Chanel',price:149,old:899,rating:5,insp:'Chanel',stock:30,bg:'#dbeafe', img:'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=600&q=90'},
+  {id:4,name:'Sauvage',price:149,old:899,rating:4.9,insp:'Dior',stock:15,bg:'#e0e7ff', img:'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=600&q=90'},
+  {id:5,name:'Le Beau',price:149,old:899,rating:4.7,insp:'JPG',stock:20,bg:'#dcfce7', img:'https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=600&q=90'},
+  {id:6,name:'Kayali Vanilla',price:149,old:899,rating:4.9,insp:'Huda Beauty',stock:12,bg:'#ffedd5', img:'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=600&q=90'},
+ ],
+ orders:[]
+}
+let S = {
+ lang: LS.get('sentel_lang','FR'),
+ site: LS.get('sentel_site_name','SENTEL'),
+ top: LS.get('sentel_topbar', DEFAULTS.top),
+ footer: LS.get('sentel_footer', DEFAULTS.footer),
+ social: LS.get('sentel_social', DEFAULTS.social),
+ slider: LS.get('sentel_slider', DEFAULTS.slider),
+ products: LS.get('sentel_products', DEFAULTS.products),
+ orders: LS.get('sentel_orders', []),
+ logoTop: LS.get('sentel_logo_top', null),
+ logoFoot: LS.get('sentel_logo_footer', null),
+ cart:[], picks:[null,null,null], qty:1, slide:0, showCart:false, showCheckout:false, thank:null, admin:false, adminTab:'Produits', search:'', faq:0, showSearch:false, showMap: LS.get('sentel_show_map','true')!=='false'
+}
+const T = {
+ FR:{packTitle:'PACK CLASSIC', packSub:'50 ml + 50 ml + 50 ml', price:'200 dhs', desc:"Composez votre signature olfactive. Avec le pack SENTEL, choisissez librement 3 parfums parmi notre collection et créez une combinaison qui vous ressemble. 3 univers, 3 émotions, un seul coffret.", compose:'COMPOSEZ VOTRE PACK', hint:'Cliquez pour choisir 3 parfums parmi nos bestsellers. Mélangez frais, sucré, boisé.', free:'Livraison gratuite partout au Maroc', qty:'Quantité', addCart:'AJOUTER AU PANIER', buyNow:'ACHETER MAINTENANT', sig:"SENTEL, ce n'est pas seulement un parfum. C'est une signature.", best:'Nos Bestsellers', exp:'Expertise', expD:'Sélection premium', ship:'Livraison gratuite', shipD:'Partout au Maroc', refs:'+200 Références', refsD:'Grandes marques', disc:'-93% Grandes marques', discD:'Prix SENTEL', rev:'Avis clients', revG:'4.9 / 5 — Avis Google', revT:"“Livraison ultra rapide à Marrakech, pack magnifique et parfums qui tiennent toute la journée. Merci SENTEL !”", faq:'FAQ', cart:'Panier', empty:'Votre panier est vide', total:'Total', checkout:'Commander', fName:'Nom complet', phone:'Téléphone', city:'Ville', addr:'Adresse complète', confirm:'CONFIRMER LA COMMANDE', pay:'Paiement à la livraison • Livraison gratuite', searchPh:'Rechercher un parfum...', choose:'Choisir parfum', clear:'Retirer', inStock:'en stock', summary:'Résumé', art:'article(s)', thanks:'Merci !', order:'Commande', cont:'CONTINUER MES ACHATS', home:'RETOUR À L\'ACCUEIL'},
+ AR:{packTitle:'الباقة الكلاسيكية', packSub:'50 مل + 50 مل + 50 مل', price:'200 درهم', desc:'اصنع بصمتك العطرية. مع باقة SENTEL، اختر بحرية 3 عطور من مجموعتنا وابتكر تركيبة تشبهك. 3 عوالم، 3 مشاعر، علبة واحدة.', compose:'ركّب باقتك', hint:'اضغط لاختيار 3 عطور من الأكثر مبيعاً. امزج بين المنعش والحلو والخشبي.', free:'توصيل مجاني في جميع أنحاء المغرب', qty:'الكمية', addCart:'أضف إلى السلة', buyNow:'اشتر الآن', sig:'SENTEL، ليس مجرد عطر. إنه بصمتك.', best:'الأكثر مبيعاً', exp:'الخبرة', expD:'اختيار فاخر', ship:'توصيل مجاني', shipD:'في كل المغرب', refs:'+200 عطر', refsD:'ماركات كبرى', disc:'-93% ماركات كبرى', discD:'سعر SENTEL', rev:'آراء الزبناء', revG:'4.9 / 5 — تقييمات Google', revT:'“توصيل سريع جداً إلى مراكش، باقة رائعة وعطور تدوم طوال اليوم. شكراً SENTEL!”', faq:'الأسئلة الشائعة', cart:'السلة', empty:'سلتك فارغة', total:'المجموع', checkout:'إتمام الطلب', fName:'الاسم الكامل', phone:'رقم الهاتف', city:'المدينة', addr:'العنوان الكامل', confirm:'تأكيد الطلب', pay:'الدفع عند الاستلام • توصيل مجاني', searchPh:'ابحث عن عطر...', choose:'اختر عطراً', clear:'إزالة', inStock:'متوفر', summary:'الملخص', art:'منتج', thanks:'شكرا لك !', order:'الطلب', cont:'مواصلة التسوق', home:'العودة للرئيسية'},
+ EN:{packTitle:'CLASSIC PACK', packSub:'50 ml + 50 ml + 50 ml', price:'200 MAD', desc:"Create your olfactory signature. With the SENTEL pack, freely choose 3 perfumes from our collection and create a combination that suits you. 3 universes, 3 emotions, one box.", compose:'BUILD YOUR PACK', hint:'Click to choose 3 perfumes from our bestsellers. Mix fresh, sweet, woody.', free:'Free delivery all over Morocco', qty:'Quantity', addCart:'ADD TO CART', buyNow:'BUY NOW', sig:"SENTEL is not just a perfume. It's a signature.", best:'Our Bestsellers', exp:'Expertise', expD:'Premium selection', ship:'Free delivery', shipD:'All over Morocco', refs:'+200 Refs', refsD:'Luxury brands', disc:'-93% Luxury brands', discD:'SENTEL Price', rev:'Customer Reviews', revG:'4.9 / 5 — Google Reviews', revT:"“Super fast delivery to Marrakech, beautiful pack and perfumes that last all day. Thank you SENTEL!”", faq:'FAQ', cart:'Cart', empty:'Your cart is empty', total:'Total', checkout:'Checkout', fName:'Full name', phone:'Phone', city:'City', addr:'Full address', confirm:'CONFIRM ORDER', pay:'Cash on delivery • Free shipping', searchPh:'Search a perfume...', choose:'Choose perfume', clear:'Remove', inStock:'in stock', summary:'Summary', art:'item(s)', thanks:'Thank you!', order:'Order', cont:'CONTINUE SHOPPING', home:'BACK TO HOME'}
+}
+function tr(k){return (T[S.lang]&&T[S.lang][k])||T.FR[k]||k}
+function save(){LS.set('sentel_lang',S.lang); LS.set('sentel_site_name',S.site); LS.set('sentel_topbar',S.top); LS.set('sentel_footer',S.footer); LS.set('sentel_social',S.social); LS.set('sentel_slider',S.slider); LS.set('sentel_products',S.products); LS.set('sentel_orders',S.orders); if(S.logoTop) LS.set('sentel_logo_top',S.logoTop); if(S.logoFoot) LS.set('sentel_logo_footer',S.logoFoot); LS.set('sentel_show_map', S.showMap?'true':'false')}
 
-<!-- Slider -->
-<div class="relative mx-auto max-w-7xl mt-6 px-4">
-<div id="slider" class="relative h-[420px] md:h-[520px] rounded-[32px] overflow-hidden">
-<!-- slides injected -->
-</div>
-<div id="sliderDots" class="flex justify-center gap-2 mt-4"></div>
-</div>
+function render(){
+ const isAR=S.lang==='AR';
+ const txt=(o)=> o[S.lang]||o.FR||'';
+ const total=S.cart.reduce((a,b)=>a+b.price*b.qty,0)+ (S.picks.filter(Boolean).length===3?200*S.qty:0);
+ const cartCount=S.cart.reduce((a,b)=>a+b.qty,0)+(S.picks.filter(Boolean).length===3?1:0);
+ const app=document.getElementById('app');
+ if(S.thank){
+  app.innerHTML=`<div class="min-h-screen bg-[#F8FAFC] p-6 grid place-items-center"><div class="glass-strong rounded-[32px] p-10 max-w-[560px] w-full text-center ${isAR?'ar':''}"><div class="w-16 h-16 rounded-full bg-[#ccfbf1] border border-teal-200 mx-auto grid place-items-center text-2xl">✓</div><h1 class="text-[32px] font-[800] mt-6">${tr('thanks')}</h1><p class="mt-3 text-[14px] text-zinc-500 leading-relaxed">${isAR?'تم تسجيل طلبك وهو قيد التحضير. سيتم الاتصال بك هاتفياً لتأكيد التوصيل.':'Votre commande est enregistrée. Vous serez contacté pour confirmer la livraison.'}</p><div class="mt-6 glass rounded-[20px] p-5 text-left"><p class="text-[12px] font-bold">${tr('order')} ${S.thank.id}</p><p class="text-[13px] mt-2">${S.thank.products.map(p=>p.name+' x'+p.qty).join(', ')} — ${S.thank.total} MAD</p></div><button onclick="S.thank=null;render()" class="btn bg-black text-white w-full mt-6">${tr('cont')}</button></div></div>`;
+  return;
+ }
+ app.innerHTML=`
+ <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&family=Tajawal:wght@500;700;900&display=swap');</style>
+ ${S.top.show?`<div class="h-[36px] flex items-center overflow-hidden relative" style="background:${S.top.bg};color:${S.top.color}"><div class="flex marquee gap-12 text-[11px] font-bold tracking-[0.16em] uppercase whitespace-nowrap" style="--speed:${S.top.speed}"><span>${(S.top.msg[S.lang]||S.top.msg.FR)+' — '+ (S.top.msg[S.lang]||S.top.msg.FR)+' — '+ (S.top.msg[S.lang]||S.top.msg.FR)}</span><span>${(S.top.msg[S.lang]||S.top.msg.FR)+' — '+ (S.top.msg[S.lang]||S.top.msg.FR)+' — '+ (S.top.msg[S.lang]||S.top.msg.FR)}</span></div></div>`:''}
+ <header class="sticky top-0 z-40 glass border-b border-black/5">
+  <div class="max-w-[1280px] mx-auto px-4 h-[64px] flex items-center justify-between">
+   <div class="flex items-center gap-2">
+    <button onclick="document.getElementById('mob').classList.toggle('hidden')" class="w-10 h-10 rounded-full glass grid place-items-center">☰</button>
+    <div class="glass rounded-full p-1 flex h-[32px]">${['AR','FR','EN'].map(l=>`<button onclick="S.lang='${l}';save();render()" class="px-3 h-[24px] rounded-full text-[11px] font-bold ${S.lang===l?'bg-black text-white':''}">${l}</button>`).join('')}</div>
+   </div>
+   <div class="font-[800] text-[22px] tracking-[0.18em] cursor-pointer" onclick="window.scrollTo({top:0,behavior:'smooth'})">${S.logoTop?`<img src="${S.logoTop}" class="h-[32px] object-contain">`:`<span>${S.site}</span><span class="text-[9px] block tracking-[0.32em] -mt-1 text-zinc-500">PARFUMS</span>`}</div>
+   <div class="flex items-center gap-2">
+    <button onclick="S.showSearch=!S.showSearch;render()" class="w-10 h-10 rounded-full glass grid place-items-center">⌕</button>
+    <button onclick="S.showCart=true;render()" class="w-10 h-10 rounded-full glass grid place-items-center relative">👜 ${cartCount?`<span class="absolute -top-1 -right-1 bg-black text-white text-[10px] w-5 h-5 rounded-full grid place-items-center">${cartCount}</span>`:''}</button>
+   </div>
+  </div>
+  ${S.showSearch?`<div class="border-t p-3 bg-white/80 backdrop-blur"><div class="max-w-[1280px] mx-auto flex gap-2"><input id="sIn" value="${S.search}" oninput="S.search=this.value;render()" placeholder="${tr('searchPh')}" class="flex-1 h-[44px] rounded-full glass px-5 text-[14px] outline-none"><button onclick="S.showSearch=false;render()" class="w-11 h-11 rounded-full bg-black text-white grid place-items-center">✕</button></div></div>`:''}
+  <div id="mob" class="hidden border-t p-4 bg-white/90 text-[14px] space-y-2 ${isAR?'ar text-right':'text-left'}"><div>Collections</div><div>${tr('best')}</div><div>${tr('faq')}</div></div>
+ </header>
 
-<!-- Marquee phrases -->
-<div class="mt-8 bg-zinc-900 text-white py-3 overflow-hidden whitespace-nowrap">
-<div class="animate-[marquee_20s_linear_infinite] flex gap-12 text-sm tracking-widest">
-<span id="marqueeText">✦ لأنك تستحق الأفضل ✦ جاذبية لا تقاوم ✦ عطور تروي قصتك ✦ فخامة تدوم ✦</span>
-<span id="marqueeText2">✦ لأنك تستحق الأفضل ✦ جاذبية لا تقاوم ✦ عطور تروي قصتك ✦ فخامة تدوم ✦</span>
-</div>
-</div>
+ <!-- SLIDER GLASS -->
+ <section class="max-w-[1280px] mx-auto px-4 mt-4">
+  <div class="relative h-[420px] md:h-[520px] rounded-[28px] overflow-hidden glass shadow-xl">
+   ${S.slider.map((s,i)=>`
+    <div class="absolute inset-0 transition-all duration-700 ${i===S.slide?'opacity-100':'opacity-0 pointer-events-none'}">
+     ${s.img?`<img src="${s.img}" class="absolute inset-0 w-full h-full object-cover">`:`<div class="absolute inset-0" style="background:${s.bg}"></div>`}
+     <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent"></div>
+     <div class="absolute inset-0 p-8 md:p-12 flex items-center">
+      <div class="glass-strong rounded-[24px] p-7 max-w-[420px] ${isAR?'ar text-right':'text-left'}">
+       <div class="text-[11px] font-bold tracking-[0.18em] text-teal-700">${txt(s).small||s.FR.small}</div>
+       <h2 class="text-[32px] md:text-[36px] font-[800] leading-[0.95] mt-2">${txt(s).title||s.FR.title}</h2>
+       <div class="mt-4 inline-flex px-4 py-2 rounded-full bg-black text-white text-[12px] font-bold">${txt(s).btn||s.FR.btn}</div>
+      </div>
+     </div>
+    </div>`).join('')}
+   <div class="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-2">${S.slider.map((_,i)=>`<button onclick="S.slide=${i};render()" class="h-[6px] rounded-full overflow-hidden bg-white/40" style="width:${i===S.slide?48:20}px"><div class="${i===S.slide?'progress bg-white w-full h-full':''}"></div></button>`).join('')}</div>
+  </div>
+ </section>
 
-<!-- OFFER CARD EXACT LIKE IMAGE -->
-<section class="max-w-5xl mx-auto px-4 mt-12">
-<div class="offer-gradient rounded-[32px] p-8 md:p-10 shadow-[0_20px_60px_rgba(13,109,98,0.12)] border border-white/60">
-<div class="flex justify-between items-center mb-8">
-<h3 class="text-[22px] font-bold text-zinc-800">ركّب باقتك</h3>
-<span id="offerCounter" class="bg-white/80 backdrop-blur px-5 py-2 rounded-full text-sm font-bold border border-white">0/3</span>
-</div>
-<div id="offerSlots" class="grid grid-cols-3 gap-4 md:gap-6">
-<!-- 3 slots -->
-</div>
-<p class="text-center mt-8 text-[15px] text-[#0d5c52] font-medium">اضغط لاختيار 3 عطور من الأكثر مبيعاً. امزج بين المنعش والحلو والخشبي.</p>
-<div class="text-center mt-6">
-<button id="offerOrderBtn" disabled class="px-10 py-4 rounded-full bg-zinc-900 text-white font-bold disabled:opacity-30 disabled:cursor-not-allowed">اطلب باقة 3 بـ <span id="offerPrice">200</span> درهم ✨</button>
-</div>
-</div>
-</section>
+ <!-- PACK BUILDER - EXACT IMAGE STYLE -->
+ <section id="pack" class="max-w-[1280px] mx-auto px-4 mt-10">
+  <div class="grid md:grid-cols-[1.1fr_.9fr] gap-8 items-start">
+   <div class="${isAR?'ar text-right':'text-left'}">
+    <div class="flex items-baseline gap-3 flex-wrap"><h2 class="text-[28px] md:text-[34px] font-[800] tracking-tight">${tr('packTitle')}</h2><span class="text-[12px] border px-3 py-1 rounded-full bg-white">${tr('packSub')}</span><span class="text-[18px] font-bold">${tr('price')}</span></div>
+    <p class="mt-4 text-[14px] leading-[1.7] text-zinc-600 max-w-[56ch]">${tr('desc')}</p>
+    <div class="mt-6 flex items-center gap-4"><span class="text-[11px] font-bold tracking-widest text-zinc-500">${tr('qty')}</span><div class="glass rounded-full h-[44px] flex items-center px-1 gap-1"><button onclick="S.qty=Math.max(1,S.qty-1);render()" class="w-9 h-9 rounded-full bg-white shadow grid place-items-center">−</button><span class="w-10 text-center font-bold">${S.qty}</span><button onclick="S.qty++;render()" class="w-9 h-9 rounded-full bg-white shadow grid place-items-center">+</button></div></div>
+    <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3"><button onclick="addPack(false)" class="btn bg-black text-white">${tr('addCart')}</button><button onclick="addPack(true)" class="btn bg-white border">${tr('buyNow')}</button></div>
+    <div class="mt-8 glass rounded-[20px] p-4 flex gap-3"><div class="w-10 h-10 rounded-full bg-[#fef9c3] grid place-items-center">✨</div><p class="text-[13px] leading-[1.5] text-zinc-700 ${isAR?'ar':''}">${tr('sig')}</p></div>
+   </div>
+   <div>
+    <div class="rounded-[28px] p-6" style="background:linear-gradient(135deg,#ccfbf1 0%,#99f6e0 40%,#ffffff 100%); border:1px solid rgba(20,184,166,.2)">
+     <div class="flex items-center justify-between mb-4"><h3 class="text-[13px] font-bold tracking-[0.12em] uppercase">${tr('compose')}</h3><span class="text-[11px] px-3 py-1 rounded-full bg-white/80 border">${S.picks.filter(Boolean).length}/3</span></div>
+     <div class="grid grid-cols-3 gap-3">
+      ${[0,1,2].map(i=>{
+       const p=S.picks[i]?S.products.find(x=>x.id===S.picks[i]):null;
+       if(p) return `<div class="card glass bg-white p-2 aspect-[3/4] flex flex-col items-center text-center"><div class="w-full h-[68px] rounded-[12px] overflow-hidden bg-white"><img src="${p.img||''}" class="w-full h-full object-cover"></div><div class="text-[11px] font-bold mt-2 leading-tight">${p.name}</div><button onclick="S.picks[${i}]=null;render()" class="mt-2 text-[10px] text-red-500 font-bold">${tr('clear')}</button></div>`;
+       return `<button onclick="openPick(${i})" class="aspect-[3/4] rounded-[18px] border-2 border-dashed border-teal-600/30 bg-white/60 flex flex-col items-center justify-center p-2 hover:bg-white transition"><div class="w-10 h-10 rounded-full bg-white shadow grid place-items-center text-teal-600 text-xl">+</div><div class="mt-2 text-[10px] font-bold text-teal-700">${i+1}</div></button>`;
+      }).join('')}
+     </div>
+     <p class="mt-4 text-[11px] text-teal-700 font-medium ${isAR?'ar text-right':'text-left'}">${tr('hint')}</p>
+    </div>
+    <div class="glass rounded-[16px] p-3.5 flex items-center gap-3 mt-3 border border-teal-500/20 ${isAR?'ar text-right':''}"><div class="w-9 h-9 rounded-full bg-[#14b8a6] text-white grid place-items-center">🚚</div><div><div class="text-[12px] font-bold">${tr('free')}</div><div class="text-[11px] text-zinc-500">${tr('pay')}</div></div></div>
+   </div>
+  </div>
+ </section>
 
-<!-- Products -->
-<section class="max-w-7xl mx-auto px-6 mt-16">
-<div class="flex justify-between items-end mb-8">
-<h2 class="text-[32px] font-black">الأكثر مبيعاً</h2>
-<p class="text-zinc-500">فخامة لا تُقاوم</p>
-</div>
-<div id="productsGrid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
-</section>
+ <!-- PICK MODAL -->
+ <div id="pickModal" class="fixed inset-0 z-[70] hidden bg-black/30 backdrop-blur-sm p-4 grid place-items-center"><div class="glass-strong rounded-[24px] w-full max-w-[560px] p-5 max-h-[80vh] overflow-auto ${isAR?'ar text-right':'text-left'}"><div class="flex justify-between items-center mb-4"><h4 class="font-bold">${tr('choose')} #<span id="pickIdx"></span></h4><button onclick="closePick()" class="w-8 h-8 rounded-full bg-white shadow">✕</button></div><div class="grid grid-cols-2 gap-3">${S.products.map(p=>`<button onclick="pick(${p.id})" class="glass rounded-[16px] p-3 flex gap-3 items-center hover:bg-white text-left"><div class="w-12 h-12 rounded-[12px] overflow-hidden bg-white flex-shrink-0"><img src="${p.img}" class="w-full h-full object-cover"></div><div><div class="text-[13px] font-bold">${p.name}</div><div class="text-[11px] text-zinc-500">${p.insp}</div></div></button>`).join('')}</div><button onclick="clearPick()" class="mt-4 w-full h-[40px] rounded-full border text-[12px] font-bold">${tr('clear')}</button></div></div>
 
-<footer class="mt-20 border-t border-zinc-100 py-12 text-center">
-<p class="text-zinc-400 text-sm">Parfum LUXE © 2026 - لأنك تستحق الأفضل</p>
-<a href="admin.html" class="inline-block mt-4 text-[12px] tracking-widest text-zinc-400 hover:text-zinc-800 border-b">Admin</a>
-</footer>
+ <!-- PRODUCTS -->
+ <section class="max-w-[1280px] mx-auto px-4 mt-12">
+  <div class="flex items-baseline justify-between mb-5"><h2 class="text-[22px] md:text-[28px] font-bold ${isAR?'ar':''}">${tr('best')}</h2><span class="text-[11px] tracking-widest font-bold text-zinc-500">${S.products.length} parfums</span></div>
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+   ${(S.search?S.products.filter(p=>p.name.toLowerCase().includes(S.search.toLowerCase())||p.insp.toLowerCase().includes(S.search.toLowerCase())):S.products).map(p=>`
+    <div class="card glass overflow-hidden group">
+     <div class="relative aspect-[4/3] overflow-hidden bg-white"><img src="${p.img}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700"><span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black text-white text-[10px] font-bold">-${Math.round((1-p.price/p.old)*100)}%</span></div>
+     <div class="p-4 ${isAR?'ar text-right':'text-left'}">
+      <div class="flex justify-between"><div><div class="text-[13px] font-bold">${p.name}</div><div class="text-[11px] text-zinc-500">${p.insp} • ${p.stock} ${tr('inStock')}</div></div><div class="text-[11px] font-bold">★ ${p.rating}</div></div>
+      <div class="flex gap-2 mt-3 items-center"><span class="text-[14px] font-[800]">${p.price} MAD</span><span class="text-[11px] line-through text-zinc-400">${p.old}</span></div>
+      <button onclick="addProd(${p.id})" class="btn w-full mt-3 h-[40px] bg-black text-white text-[11px]">+ ${tr('addCart')}</button>
+     </div>
+    </div>`).join('')}
+  </div>
+ </section>
 
-<!-- Cart Drawer -->
-<div id="cartDrawer" class="fixed inset-0 z-50 hidden"><div class="absolute inset-0 bg-black/30" onclick="closeCart()"></div><div class="absolute right-0 top-0 h-full w-full max-w-[420px] bg-white p-6 overflow-y-auto"><h3 class="text-xl font-bold mb-6">سلة التسوق</h3><div id="cartItems"></div><button onclick="orderWhatsApp()" class="w-full mt-6 py-4 bg-[#0d6d62] text-white rounded-full font-bold">اطلب عبر واتساب</button></div></div>
+ <!-- TRUST -->
+ <section class="max-w-[1280px] mx-auto px-4 mt-10 grid grid-cols-2 md:grid-cols-4 gap-3">
+  ${[{t:tr('exp'),d:tr('expD'),i:'✦'},{t:tr('ship'),d:tr('shipD'),i:'🚚'},{t:tr('refs'),d:tr('refsD'),i:'✨'},{t:tr('disc'),d:tr('discD'),i:'🛡️'}].map(b=>`<div class="glass rounded-[18px] p-4 flex gap-3 items-start"><div class="w-10 h-10 rounded-full bg-white shadow grid place-items-center">${b.i}</div><div><div class="text-[12px] font-bold">${b.t}</div><div class="text-[11px] text-zinc-500">${b.d}</div></div></div>`).join('')}
+ </section>
 
-<script type="module">
-import {initializeApp} from 'firebase/app';
-import {getFirestore, collection, onSnapshot, doc, getDoc} from 'firebase/firestore';
-const firebaseConfig={apiKey:"AIzaSyDwrJ2FR0NVggoXeKchu2YGqqam5ZFMZXU",authDomain:"parfum-e53ad.firebaseapp.com",projectId:"parfum-e53ad",storageBucket:"parfum-e53ad.firebasestorage.app",messagingSenderId:"791467480753",appId:"1:791467480753:web:4c370b7e3635a37686f490"};
-let db; try{const app=initializeApp(firebaseConfig); db=getFirestore(app);}catch(e){console.log('offline')}
+ <!-- REVIEWS -->
+ <section class="max-w-[1280px] mx-auto px-4 mt-8">
+  <div class="glass rounded-[20px] p-5 flex flex-col md:flex-row gap-6 items-center">
+   <div class="flex items-center gap-3"><div class="w-12 h-12 rounded-full bg-white shadow grid place-items-center font-bold">G</div><div><div>★★★★★</div><div class="text-[13px] font-bold">${tr('revG')}</div></div></div>
+   <p class="flex-1 text-[13px] text-zinc-600 ${isAR?'ar text-right':''}">${tr('revT')} — <b>Fatima Z.</b></p>
+   <div class="flex -space-x-2"><div class="w-8 h-8 rounded-full bg-[#fde68a] border-2 border-white"></div><div class="w-8 h-8 rounded-full bg-[#bfdbfe] border-2 border-white"></div><div class="w-8 h-8 rounded-full bg-[#bbf7d0] border-2 border-white"></div><div class="w-8 h-8 rounded-full bg-white border grid place-items-center text-[10px] font-bold">+2k</div></div>
+  </div>
+ </section>
 
-let products=[]; let cart=[]; let offerSelection=[]; let siteConfig={offerPrice:200, offerTitle:'ركّب باقتك', logoText:'Parfum LUXE', logoImage:'', phrases:['لأنك تستحق الأفضل','جاذبية لا تقاوم'], slider:[
-{title:'عطرك.. بصمتك التي لا تُنسى', sub:'تشكيلة فاخرة تدوم 24 ساعة', img:'https://images.unsplash.com/photo-1541643600914-78b084683601?w=1200&q=80'},
-{title:'لمسة واحدة.. وتسحر القلوب', sub:'عطور أصلية 100% بثبات لا يقاوم', img:'https://images.unsplash.com/photo-1594035910387-fea47794261f?w=1200&q=80'},
-{title:'فخامة لا تقاوم', sub:'شحن مجاني لجميع المدن', img:'https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=1200&q=80'}
-]};
+ <!-- FAQ -->
+ <section class="max-w-[1280px] mx-auto px-4 mt-10">
+  <h2 class="text-[20px] font-bold mb-4 ${isAR?'ar':''}">${tr('faq')}</h2>
+  <div class="space-y-2">
+   ${[
+    {q:{FR:'Quelle est la contenance du PACK CLASSIC ?',AR:'ما هو حجم الباقة الكلاسيكية؟',EN:'What is size of CLASSIC PACK?'},a:{FR:'3 flacons de 50ml, soit 150ml au total.',AR:'3 عبوات 50 مل، المجموع 150 مل.',EN:'3x50ml = 150ml total.'}},
+    {q:{FR:'Livraison gratuite partout ?',AR:'هل التوصيل مجاني؟',EN:'Free delivery everywhere?'},a:{FR:'Oui, livraison gratuite partout au Maroc, paiement à la livraison.',AR:'نعم، توصيل مجاني لجميع المدن والدفع عند الاستلام.',EN:'Yes, free delivery all over Morocco, cash on delivery.'}},
+    {q:{FR:'Tenue des parfums ?',AR:'ثبات العطور؟',EN:'Longevity?'},a:{FR:'8-12h de tenue, extraits inspirés des grandes marques.',AR:'ثبات 8-12 ساعة.',EN:'8-12h longevity.'}},
+   ].map((f,i)=>`<div class="glass rounded-[16px] overflow-hidden"><button onclick="S.faq=${S.faq===i?null:i};render()" class="w-full flex justify-between p-4 text-left"><span class="text-[13px] font-semibold ${isAR?'ar':''}">${f.q[S.lang]||f.q.FR}</span><span>${S.faq===i?'−':'+'}</span></button>${S.faq===i?`<div class="px-4 pb-4 text-[13px] text-zinc-600 ${isAR?'ar text-right':''}">${f.a[S.lang]||f.a.FR}</div>`:''}</div>`).join('')}
+  </div>
+ </section>
 
-function renderSlider(){
- const container=document.getElementById('slider'); const dots=document.getElementById('sliderDots');
- container.innerHTML=siteConfig.slider.map((s,i)=>`
- <div class="slide absolute inset-0 transition-all duration-[1200ms] ${i===0?'opacity-100':'opacity-0'}" data-i="${i}">
- <img src="${s.img}" class="absolute inset-0 w-full h-full object-cover">
- <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
- <div class="absolute bottom-12 right-8 md:right-12 left-8">
- <h2 class="text-white text-[32px] md:text-[52px] font-black leading-[1.1] amiri">${s.title}</h2>
- <p class="text-white/80 mt-3 text-[18px]">${s.sub}</p>
+ <!-- FOOTER WITH MAP TOGGLE -->
+ <footer class="mt-14 border-t bg-white/70 backdrop-blur-xl">
+  <div class="max-w-[1280px] mx-auto px-4 py-10 grid md:grid-cols-[1.2fr_.8fr_1fr] gap-8">
+   <div class="${isAR?'ar text-right':''}">
+    <div onclick="S.admin=true;render()" class="cursor-pointer inline-block" title="Admin">${S.logoFoot?`<img src="${S.logoFoot}" class="h-[40px] object-contain">`:`<div class="text-[28px] font-[800] tracking-[0.18em]">${S.site}<div class="text-[10px] tracking-[0.32em] text-zinc-500 -mt-1">PARFUMS</div></div>`}</div>
+    <p class="mt-4 text-[13px] leading-[1.6] text-zinc-600 max-w-[36ch]">${S.footer.about[S.lang]||S.footer.about.FR}</p>
+    <div class="mt-4 text-[13px] text-zinc-700"><div>📍 ${S.footer.addr}</div><div>📞 ${S.footer.phone} • ${S.footer.email}</div></div>
+    <div class="mt-5 flex gap-2">${Object.entries({fb:'f',ig:'◎',tw:'𝕏',tk:'TK'}).map(([k,v])=> S.social.show[k]!==0?`<a href="${S.social[k]}" target="_blank" class="w-9 h-9 rounded-full glass grid place-items-center text-[12px] font-bold">${v}</a>`:'' ).join('')}<a href="https://wa.me/${S.social.wa}" target="_blank" class="w-9 h-9 rounded-full bg-[#25D366] text-white grid place-items-center">W</a></div>
+   </div>
+   <div class="${isAR?'ar text-right':''}"><div class="text-[11px] font-bold tracking-widest text-zinc-500 mb-3">NAVIGATION</div><div class="space-y-2 text-[13px]"><div>Collections</div><div>Packs</div><div>${tr('best')}</div><div>Contact</div><div>${tr('faq')}</div></div></div>
+   <div>
+    <div class="flex items-center justify-between mb-3"><div class="text-[11px] font-bold tracking-widest text-zinc-500">LOCALISATION</div><label class="flex items-center gap-2 text-[11px]"><input type="checkbox" ${S.showMap?'checked':''} onchange="S.showMap=this.checked;save();render()"> Afficher carte</label></div>
+    ${S.showMap?(S.footer.map?`<iframe src="https://www.google.com/maps?q=${encodeURIComponent(S.footer.map)}&z=14&output=embed" class="w-full h-[220px] rounded-[16px] border glass"></iframe>`:`<div class="h-[220px] rounded-[16px] border-2 border-dashed grid place-items-center text-[12px] text-zinc-400">Ajoutez une adresse dans Admin</div>`):`<div class="h-[100px] rounded-[16px] border border-dashed grid place-items-center text-[11px] text-zinc-400">Carte masquée</div>`}
+   </div>
+  </div>
+  <div class="border-t py-4 text-center text-[11px] tracking-widest text-zinc-400">© ${new Date().getFullYear()} ${S.site} PARFUMS — Tous droits réservés</div>
+ </footer>
+
+ <!-- CART DRAWER -->
+ <div class="${S.showCart?'':'hidden'} fixed inset-0 z-[60]"><div onclick="S.showCart=false;render()" class="absolute inset-0 bg-black/20 backdrop-blur-sm"></div><div class="absolute right-0 top-0 h-full w-[92%] max-w-[420px] glass-strong p-5 flex flex-col"><div class="flex justify-between items-center"><h3 class="font-bold">${tr('cart')} (${cartCount})</h3><button onclick="S.showCart=false;render()" class="w-9 h-9 rounded-full bg-white shadow">✕</button></div><div class="mt-5 flex-1 overflow-auto space-y-3">${S.cart.length===0 && S.picks.filter(Boolean).length!==3?`<div class="py-20 text-center text-[13px] text-zinc-500">${tr('empty')}</div>`:`${S.cart.map((c,i)=>`<div class="glass rounded-[16px] p-3 flex gap-3"><div class="w-14 h-14 rounded-[12px] bg-white grid place-items-center text-[10px] font-bold">${c.name.slice(0,4)}</div><div class="flex-1"><div class="text-[13px] font-bold">${c.name}</div><div class="text-[12px]">${c.price} MAD x${c.qty}</div></div><button onclick="S.cart.splice(${i},1);render()" class="w-8 h-8 rounded-full bg-white shadow">🗑</button></div>`).join('')}${S.picks.filter(Boolean).length===3?`<div class="glass rounded-[16px] p-3"><div class="text-[13px] font-bold">PACK CLASSIC x${S.qty}</div><div class="text-[11px] text-zinc-500">${S.picks.map(id=>S.products.find(p=>p.id===id)?.name).join(' + ')}</div><div class="text-[12px] font-bold mt-1">${200*S.qty} MAD</div></div>`:''}`}</div><div class="border-t pt-4 space-y-3"><div class="flex justify-between font-bold"><span>${tr('total')}</span><span>${total} MAD</span></div><button ${total===0?'disabled':''} onclick="S.showCart=false;S.showCheckout=true;render()" class="btn w-full bg-black text-white disabled:opacity-40">${tr('checkout')}</button></div></div></div>
+
+ <!-- CHECKOUT -->
+ <div class="${S.showCheckout?'':'hidden'} fixed inset-0 z-[65] bg-black/30 backdrop-blur-sm p-4 grid place-items-center"><div class="glass-strong rounded-[24px] w-full max-w-[480px] p-6 max-h-[90vh] overflow-auto ${isAR?'ar text-right':'text-left'}"><div class="flex justify-between items-center mb-5"><h3 class="font-bold">${tr('checkout')} — ${total} MAD</h3><button onclick="S.showCheckout=false;render()" class="w-9 h-9 rounded-full bg-white shadow">✕</button></div><div class="space-y-4"><input id="cName" placeholder="${tr('fName')}" class="w-full h-[48px] rounded-full glass px-5 text-[14px] outline-none"><input id="cPhone" placeholder="${tr('phone')}" class="w-full h-[48px] rounded-full glass px-5 text-[14px] outline-none"><select id="cCity" class="w-full h-[48px] rounded-full glass px-5 text-[14px] outline-none bg-white/70"><option>Casablanca</option><option>Rabat</option><option>Marrakech</option><option>Fès</option><option>Tanger</option><option>Kénitra</option><option>Agadir</option></select><textarea id="cAddr" placeholder="${tr('addr')}" class="w-full min-h-[80px] rounded-[18px] glass p-4 text-[14px] outline-none resize-none"></textarea><div class="glass rounded-[16px] p-3 text-[12px]"><div class="font-bold mb-1">${tr('summary')}: ${S.cart.length + (S.picks.filter(Boolean).length===3?1:0)} ${tr('art')} — ${total} MAD</div><div class="text-zinc-500">${[...S.cart.map(c=>c.name+' x'+c.qty), ...(S.picks.filter(Boolean).length===3?['PACK: '+S.picks.map(id=>S.products.find(p=>p.id===id)?.name).join(' + ')]:[])].join(' • ')}</div></div><button onclick="confirmOrder()" class="btn w-full bg-[#14b8a6] text-white">${tr('confirm')}</button><div class="text-center text-[11px] text-zinc-500">${tr('pay')}</div></div></div></div>
+
+ <!-- ADMIN -->
+ <div class="${S.admin?'':'hidden'} fixed inset-0 z-[90] bg-white overflow-auto p-6">
+  <div class="max-w-[1200px] mx-auto"><div class="flex justify-between items-center mb-6"><h2 class="text-[22px] font-bold">${S.site} Admin — Glass • Logos • Slider HD • Map ✅</h2><button onclick="S.admin=false;render()" class="w-10 h-10 rounded-full bg-black text-white">✕</button></div>
+  <div class="flex gap-2 overflow-auto pb-2 border-b mb-6">${['Logos','Slider','Produits','Commandes','Footer & Maps','Top Bar','Paramètres'].map(t=>`<button onclick="S.adminTab='${t}';render()" class="h-[40px] px-4 rounded-full text-[13px] font-bold border whitespace-nowrap ${S.adminTab===t?'bg-black text-white':'bg-white'}">${t}${t==='Commandes'?` (${S.orders.length})`:''}</button>`).join('')}</div>
+  <div id="adminContent"></div>
+  </div>
  </div>
- </div>`).join('');
- dots.innerHTML=siteConfig.slider.map((_,i)=>`<button class="slider-dot h-2 rounded-full bg-zinc-300 transition-all ${i===0?'active':''} w-2" onclick="goSlide(${i})"></button>`).join('');
- let cur=0; setInterval(()=>{cur=(cur+1)%siteConfig.slider.length; goSlide(cur)},4000);
- window.goSlide=(n)=>{document.querySelectorAll('.slide').forEach((el,idx)=>{el.style.opacity= idx===n? '1':'0'}); document.querySelectorAll('.slider-dot').forEach((d,idx)=>{d.classList.toggle('active', idx===n)}); cur=n;};
-}
-function renderOfferSlots(){
- const c=document.getElementById('offerSlots');
- c.innerHTML=[0,1,2].map(i=>{
-  const p=offerSelection[i];
-  if(p) return `<div class="bg-white rounded-[24px] p-3 aspect-[3/4] flex flex-col items-center justify-between shadow-sm"><img src="${p.imageBase64||p.image}" class="w-full h-24 object-contain"><p class="text-[13px] font-bold text-center leading-tight">${p.name}</p><button onclick="removeOffer(${i})" class="text-[11px] text-red-500">إزالة</button></div>`;
-  return `<button onclick="openProductPicker(${i})" class="bg-white/60 backdrop-blur border-2 border-dashed border-[#7FC8B6] rounded-[24px] aspect-[3/4] flex flex-col items-center justify-center gap-3 hover:bg-white transition"><div class="w-[64px] h-[64px] rounded-full bg-white shadow-[0_4px_16px_rgba(0,0,0,0.08)] grid place-items-center text-[#0d6d62] text-[28px]">+</div><span class="text-[#0d6d62] font-bold">${i+1}</span></button>`;
- }).join('');
- document.getElementById('offerCounter').textContent=`${offerSelection.length}/3`;
- document.getElementById('offerOrderBtn').disabled=offerSelection.length!==3;
-}
-window.removeOffer=(i)=>{offerSelection.splice(i,1); renderOfferSlots();}
-window.openProductPicker=(slot)=>{document.getElementById('productsGrid').scrollIntoView({behavior:'smooth'}); window._pickingSlot=slot;}
-
-function renderProducts(){
- const g=document.getElementById('productsGrid');
- g.innerHTML=products.map(p=>`
- <div class="glass-card rounded-[24px] p-4 group hover:-translate-y-1 transition duration-300">
- <div class="relative bg-[#F8FFFD] rounded-[18px] aspect-square grid place-items-center overflow-hidden">
- <img src="${p.imageBase64||p.image||'https://images.unsplash.com/photo-1541643600914-78b084683601?w=400'}" class="w-full h-full object-contain p-6 group-hover:scale-105 transition duration-500">
- ${p.bestseller?'<span class="absolute top-3 right-3 bg-zinc-900 text-white text-[10px] px-3 py-1 rounded-full">BEST</span>':''}
- </div>
- <h3 class="mt-4 font-bold text-[17px]">${p.name}</h3>
- <p class="text-zinc-500 text-[13px] line-clamp-1">${p.description||''}</p>
- <div class="flex items-center justify-between mt-4">
- <span class="font-black text-[18px]">${p.price} MAD</span>
- <button onclick="addToCart('${p.id}')" class="w-10 h-10 rounded-full bg-zinc-900 text-white grid place-items-center hover:bg-[#0d6d62] transition"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20l-5.447-.894A2 2 0 0 1 2 18.382V7.618a2 2 0 0 1 1.553-.724L9 6"/><path d="M15 6l5.447.894A2 2 0 0 1 22 7.618v10.764a2 2 0 0 1-1.553.724L15 20"/><path d="M12 6v14"/></svg></button>
- </div>
- <button onclick="pickForOffer('${p.id}')" class="w-full mt-3 py-2.5 rounded-full border border-[#0d6d62]/20 text-[13px] font-bold text-[#0d6d62] hover:bg-[#0d6d62] hover:text-white transition">أضف للباقة 3 بـ ${siteConfig.offerPrice}</button>
- </div>`).join('');
-}
-window.pickForOffer=(id)=>{
- const p=products.find(x=>x.id===id); if(!p) return;
- if(offerSelection.length>=3) return alert('الباقة كاملة - 3 فقط');
- if(offerSelection.find(x=>x.id===id)) return;
- offerSelection.push(p); renderOfferSlots();
-};
-window.addToCart=(id)=>{
- const p=products.find(x=>x.id===id); cart.push(p); updateCart();
-};
-function updateCart(){
- document.getElementById('cartCount').textContent=cart.length;
- document.getElementById('cartCount').classList.toggle('hidden', cart.length===0);
- document.getElementById('cartItems').innerHTML=cart.map(c=>`<div class="flex gap-3 py-3 border-b"><img src="${c.imageBase64||c.image}" class="w-14 h-14 object-contain bg-zinc-50 rounded"><div><p class="font-bold text-sm">${c.name}</p><p class="text-sm">${c.price} MAD</p></div></div>`).join('');
-}
-window.orderWhatsApp=()=>{
- if(offerSelection.length===3){const names=offerSelection.map(o=>o.name).join(' + '); window.open(`https://wa.me/212600000000?text=السلام، بغيت عرض 3 ب ${siteConfig.offerPrice} درهم: ${names}`,'_blank');}
- else if(cart.length){const names=cart.map(c=>c.name).join(', '); window.open(`https://wa.me/212600000000?text=بغيت نطلب: ${names}`,'_blank');}
-};
-document.getElementById('cartBtn').onclick=()=>{document.getElementById('cartDrawer').classList.remove('hidden')};
-window.closeCart=()=>document.getElementById('cartDrawer').classList.add('hidden');
-document.getElementById('offerOrderBtn').onclick=()=>orderWhatsApp();
-
-function applyConfig(){
- document.getElementById('offerPrice').textContent=siteConfig.offerPrice;
- if(siteConfig.logoImage){document.getElementById('logoImg').src=siteConfig.logoImage; document.getElementById('logoImg').classList.remove('hidden'); document.getElementById('logoText').classList.add('hidden');}
- else{document.getElementById('logoText').innerHTML=siteConfig.logoText||'Parfum <span class="font-light text-[#0d6d62]">LUXE</span>'}
- renderSlider(); renderOfferSlots();
- if(siteConfig.phrases){const t=siteConfig.phrases.map(p=>`✦ ${p}`).join('  '); document.getElementById('marqueeText').textContent=t; document.getElementById('marqueeText2').textContent=t;}
+ `
+ // attach events
+ setTimeout(()=>{
+  // slider auto
+  if(!S._timer){S._timer=setInterval(()=>{S.slide=(S.slide+1)%S.slider.length; const el=document.querySelector('[class*="progress"]'); if(el){} render();},4500)}
+  // admin content
+  const ac=document.getElementById('adminContent');
+  if(ac){
+   if(S.adminTab==='Logos'){
+    ac.innerHTML=`<div class="grid md:grid-cols-2 gap-6">
+     <div class="border rounded-[20px] p-5 space-y-4"><h3 class="font-bold">🖼️ لوغو الأعلى - Header (كبير وواضح 44px)</h3><div class="h-[100px] rounded-[16px] border-2 border-dashed grid place-items-center bg-white">${S.logoTop?`<img src="${S.logoTop}" class="h-[60px]">`:`<span class="text-[12px] text-zinc-400">Aucun — texte ${S.site}</span>`}</div><label class="btn bg-black text-white w-full grid place-items-center cursor-pointer"><input type="file" accept="image/*" class="hidden" onchange="uploadLogo(this,'top')">رفع لوغو الأعلى HD</label>${S.logoTop?`<button onclick="S.logoTop=null;LS.set('sentel_logo_top',null);save();render()" class="btn w-full bg-red-50 text-red-600 border">حذف</button>`:''}<p class="text-[11px] text-zinc-500">PNG شفاف، 400px عرض، يظهر 44px كبير وواضح</p></div>
+     <div class="border rounded-[20px] p-5 space-y-4"><h3 class="font-bold">🏛️ لوغو الفوتر - Footer (كبير وواضح)</h3><div class="h-[100px] rounded-[20px] border-2 border-dashed grid place-items-center bg-white">${S.logoFoot?`<img src="${S.logoFoot}" class="h-[60px]">`:`<span class="text-[12px] text-zinc-400">Aucun — texte ${S.site}</span>`}</div><label class="btn bg-black text-white w-full grid place-items-center cursor-pointer"><input type="file" accept="image/*" class="hidden" onchange="uploadLogo(this,'foot')">رفع لوغو الفوتر HD</label>${S.logoFoot?`<button onclick="S.logoFoot=null;LS.set('sentel_logo_footer',null);save();render()" class="btn w-full bg-red-50 text-red-600 border">حذف</button>`:''}</div>
+     <div class="md:col-span-2 border rounded-[20px] p-5"><h3 class="font-bold mb-3">اسم الموقع</h3><div class="flex gap-3"><input value="${S.site}" oninput="S.site=this.value" class="flex-1 h-[44px] rounded-full border px-4"><button onclick="save();render();alert('تم')" class="h-[44px] px-6 rounded-full bg-black text-white text-[12px] font-bold">حفظ</button></div></div>
+    </div>`
+   } else if(S.adminTab==='Slider'){
+    ac.innerHTML=`<div class="grid md:grid-cols-3 gap-4">${S.slider.map((s,i)=>`<div class="border rounded-[16px] p-4 space-y-2"><div class="h-[120px] rounded-[12px] overflow-hidden bg-zinc-100">${s.img?`<img src="${s.img}" class="w-full h-full object-cover">`:`<div class="w-full h-full grid place-items-center text-zinc-400">No image</div>`}</div><label class="btn bg-white border w-full h-[36px] text-[11px] grid place-items-center cursor-pointer"><input type="file" accept="image/*" class="hidden" onchange="uploadSlide(this,${i})">رفع صورة HD 1600px</label><input value="${s.FR.small}" oninput="S.slider[${i}].FR.small=this.value;save()" class="w-full h-[36px] rounded-full border px-3 text-[12px]" placeholder="Small FR"><input value="${s.FR.title}" oninput="S.slider[${i}].FR.title=this.value;save()" class="w-full h-[36px] rounded-full border px-3 text-[12px]" placeholder="Title FR"><input value="${s.AR.title}" oninput="S.slider[${i}].AR.title=this.value;save()" class="w-full h-[36px] rounded-full border px-3 text-[12px]" placeholder="Title AR"><input value="${s.FR.btn}" oninput="S.slider[${i}].FR.btn=this.value;save()" class="w-full h-[36px] rounded-full border px-3 text-[12px]" placeholder="Btn"></div>`).join('')}<div><button onclick="save();render();alert('Slider saved')" class="btn bg-black text-white px-8 mt-4">حفظ السلايدر</button></div></div>`
+   } else if(S.adminTab==='Produits'){
+    ac.innerHTML=`<div class="grid md:grid-cols-3 gap-4">${S.products.map((p,i)=>`<div class="border rounded-[16px] p-4 space-y-2"><div class="h-[120px] rounded-[12px] overflow-hidden bg-zinc-50"><img src="${p.img}" class="w-full h-full object-cover"></div><label class="btn bg-white border w-full h-[32px] text-[10px] grid place-items-center cursor-pointer"><input type="file" accept="image/*" class="hidden" onchange="uploadProd(this,${i})">رفع صورة HD</label><input value="${p.name}" oninput="S.products[${i}].name=this.value;save()" class="w-full h-[36px] rounded-full border px-3 text-[12px]"><div class="grid grid-cols-2 gap-2"><input type="number" value="${p.price}" oninput="S.products[${i}].price=Number(this.value);save()" class="h-[36px] rounded-full border px-3 text-[12px]"><input type="number" value="${p.old}" oninput="S.products[${i}].old=Number(this.value);save()" class="h-[36px] rounded-full border px-3 text-[12px]"></div><input value="${p.insp}" oninput="S.products[${i}].insp=this.value;save()" class="w-full h-[36px] rounded-full border px-3 text-[12px]" placeholder="Inspiration"><button onclick="S.products.splice(${i},1);save();render()" class="btn w-full bg-red-50 text-red-600 border h-[36px] text-[11px]">حذف</button></div>`).join('')}<div class="mt-4 flex gap-2"><button onclick="S.products.push({id:Date.now(),name:'Nouveau',price:149,old:899,rating:4.9,insp:'Inspiration',stock:10,bg:'#fce7f3',img:'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=600&q=90'});save();render()" class="btn bg-white border">+ منتج</button><button onclick="save();alert('تم')" class="btn bg-black text-white">حفظ</button></div></div>`
+   } else if(S.adminTab==='Commandes'){
+    ac.innerHTML=`<div class="flex gap-2 mb-4"><button onclick="navigator.clipboard.writeText(JSON.stringify(S.orders));alert('copied')" class="h-[36px] px-4 rounded-full bg-white border text-[12px] font-bold">Export JSON</button><button onclick="if(confirm('Effacer tout ?')){S.orders=[];save();render()}" class="h-[36px] px-4 rounded-full bg-red-50 border border-red-200 text-red-600 text-[12px] font-bold">Effacer</button></div><div class="overflow-auto border rounded-[16px]"><table class="w-full text-[12px]"><thead class="bg-black text-white"><tr><th class="p-2 text-left">N°</th><th class="p-2">Date</th><th class="p-2">Client</th><th class="p-2">Tel</th><th class="p-2">Ville</th><th class="p-2">Total</th><th class="p-2">Statut</th></tr></thead><tbody>${S.orders.length===0?`<tr><td colspan="7" class="p-8 text-center text-zinc-400">Aucune commande</td></tr>`:S.orders.map(o=>`<tr class="border-t"><td class="p-2 font-bold">${o.id}</td><td class="p-2">${o.date}</td><td class="p-2">${o.client}</td><td class="p-2">${o.phone}</td><td class="p-2">${o.city}</td><td class="p-2 font-bold">${o.total} MAD</td><td class="p-2"><select onchange="S.orders.find(x=>x.id==='${o.id}').status=this.value;save()" class="h-[28px] rounded-full border px-2 text-[11px]"><option ${o.status==='En attente'?'selected':''}>En attente</option><option ${o.status==='Confirmée'?'selected':''}>Confirmée</option><option ${o.status==='Livrée'?'selected':''}>Livrée</option></select></td></tr>`).join('')}</tbody></table></div>`
+   } else if(S.adminTab==='Footer & Maps'){
+    ac.innerHTML=`<div class="grid md:grid-cols-2 gap-6"><div class="space-y-3"><label class="text-[12px] font-bold">About FR</label><textarea oninput="S.footer.about.FR=this.value;save()" class="w-full min-h-[80px] rounded-[12px] border p-3 text-[13px]">${S.footer.about.FR}</textarea><label class="text-[12px] font-bold">About AR</label><textarea oninput="S.footer.about.AR=this.value;save()" class="w-full min-h-[80px] rounded-[12px] border p-3 text-[13px]">${S.footer.about.AR}</textarea><input value="${S.footer.addr}" oninput="S.footer.addr=this.value;save()" class="w-full h-[44px] rounded-full border px-4 text-[13px]" placeholder="Adresse"><div class="grid grid-cols-2 gap-2"><input value="${S.footer.phone}" oninput="S.footer.phone=this.value;save()" class="h-[44px] rounded-full border px-4 text-[13px]" placeholder="Phone"><input value="${S.footer.email}" oninput="S.footer.email=this.value;save()" class="h-[44px] rounded-full border px-4 text-[13px]" placeholder="Email"></div><div class="border rounded-[16px] p-4 bg-[#f8fafc] space-y-2"><label class="text-[12px] font-bold">🗺️ Google Maps - عنوان أو رابط</label><input value="${S.footer.map}" oninput="S.footer.map=this.value;save();render()" class="w-full h-[44px] rounded-full border px-4 text-[13px]" placeholder="Kenitra, Morocco أو رابط embed"><label class="flex items-center gap-2 text-[12px] font-bold"><input type="checkbox" ${S.showMap?'checked':''} onchange="S.showMap=this.checked;save();render()"> إظهار الخريطة فالفوتر</label><p class="text-[11px] text-zinc-500">اكتب فقط المدينة: Kenitra, Morocco وغادي تولي خريطة أوتوماتيك</p></div><button onclick="save();alert('Footer saved')" class="btn bg-black text-white">حفظ الفوتر والخريطة</button></div><div><div class="text-[12px] font-bold mb-2">معاينة الخريطة الحية 300px</div>${S.showMap?(S.footer.map?`<iframe src="https://www.google.com/maps?q=${encodeURIComponent(S.footer.map)}&z=14&output=embed" class="w-full h-[300px] rounded-[16px] border"></iframe>`:`<div class="h-[300px] rounded-[16px] border-2 border-dashed grid place-items-center text-zinc-400">أضف عنوان</div>`):`<div class="h-[100px] rounded-[16px] border border-dashed grid place-items-center text-zinc-400">مخفية</div>`}</div></div>`
+   } else if(S.adminTab==='Top Bar'){
+    ac.innerHTML=`<div class="grid md:grid-cols-2 gap-6"><div class="space-y-3"><label class="text-[12px] font-bold">Messages FR</label><textarea oninput="S.top.msg.FR=this.value;save()" class="w-full min-h-[80px] rounded-[12px] border p-3 text-[13px]">${S.top.msg.FR}</textarea><label class="text-[12px] font-bold">Messages AR</label><textarea oninput="S.top.msg.AR=this.value;save()" class="w-full min-h-[80px] rounded-[12px] border p-3 text-[13px]">${S.top.msg.AR}</textarea><div class="grid grid-cols-2 gap-2"><input type="color" value="${S.top.bg}" oninput="S.top.bg=this.value;save();render()" class="w-full h-[48px] rounded-[12px]"><input type="color" value="${S.top.color}" oninput="S.top.color=this.value;save();render()" class="w-full h-[48px] rounded-[12px]"></div><label class="flex items-center gap-2 text-[12px]"><input type="checkbox" ${S.top.show?'checked':''} onchange="S.top.show=this.checked;save();render()"> إظهار الشريط</label><button onclick="save();render();alert('Top saved')" class="btn bg-black text-white">حفظ Top Bar</button></div><div><div class="h-[36px] rounded-[12px] flex items-center overflow-hidden" style="background:${S.top.bg};color:${S.top.color}"><div class="marquee whitespace-nowrap text-[11px] font-bold tracking-widest uppercase" style="--speed:${S.top.speed}">${S.top.msg[S.lang]} — ${S.top.msg[S.lang]}</div></div></div></div>`
+   } else if(S.adminTab==='Paramètres'){
+    ac.innerHTML=`<div class="space-y-4 max-w-[600px]"><div class="border rounded-[16px] p-4"><h3 class="font-bold mb-2">🌐 اللغة الافتراضية</h3><div class="flex gap-2">${['FR','AR','EN'].map(l=>`<button onclick="S.lang='${l}';save();render()" class="h-[36px] px-4 rounded-full border text-[12px] font-bold ${S.lang===l?'bg-black text-white':''}">${l}</button>`).join('')}</div></div><div class="border rounded-[16px] p-4 bg-[#f8fafc]"><h3 class="font-bold mb-2">⚙️ معلومات عامة</h3><div class="grid grid-cols-2 gap-2 text-[11px]"><div class="p-2 rounded-[10px] bg-white border">Logo Top: ${S.logoTop?'✅':'❌'}</div><div class="p-2 rounded-[10px] bg-white border">Logo Foot: ${S.logoFoot?'✅':'❌'}</div><div class="p-2 rounded-[10px] bg-white border">Map: ${S.footer.map?'✅':''} ${S.showMap?'Visible':'Masquée'}</div><div class="p-2 rounded-[10px] bg-white border">Langue: ${S.lang}</div></div></div><div class="border rounded-[16px] p-4"><h3 class="font-bold mb-2 text-red-600">Danger zone</h3><button onclick="if(confirm('مسح كل شيء ؟')){localStorage.clear();location.reload()}" class="h-[40px] px-4 rounded-full bg-red-600 text-white text-[12px] font-bold">مسح كل البيانات</button></div></div>`
+   }
+  }
+ },0)
 }
 
-// Load
-if(db){
- onSnapshot(collection(db,'parfums'), snap=>{products=snap.docs.map(d=>({id:d.id,...d.data()})); if(products.length===0){products=[
- {id:'1',name:'Sauvage Elixir',price:299,description:'عطر فخم رجالي',bestseller:true,image:'https://images.unsplash.com/photo-1541643600914-78b084683601?w=400'},
- {id:'2',name:'Jadore Dior',price:349,description:'أنثوي جذاب',bestseller:true,image:'https://images.unsplash.com/photo-1594035910387-fea47794261f?w=400'},
- {id:'3',name:'Bleu de Chanel',price:279,description:'انتعاش يدوم',image:'https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=400'}
- ];} renderProducts(); renderOfferSlots();});
- onSnapshot(doc(db,'config','site'), snap=>{if(snap.exists()){siteConfig={...siteConfig,...snap.data()}; applyConfig();} else applyConfig();});
-}else{
- applyConfig(); products=[{id:'1',name:'Sauvage',price:299,description:'فخم',bestseller:true,image:'https://images.unsplash.com/photo-1541643600914-78b084683601?w=400'}]; renderProducts();
-}
+let pickIdx=null;
+window.openPick=i=>{pickIdx=i; S.picks._idx=i; document.getElementById('pickIdx').textContent=i+1; document.getElementById('pickModal').classList.remove('hidden')}
+window.closePick=()=>document.getElementById('pickModal').classList.add('hidden')
+window.pick=id=>{if(pickIdx!==null){S.picks[pickIdx]=id; closePick(); render()}}
+window.clearPick=()=>{if(pickIdx!==null){S.picks[pickIdx]=null; closePick(); render()}}
+window.addPack=buy=>{if(S.picks.filter(Boolean).length!==3){alert(S.lang==='AR'?'اختر 3 عطور أولا':'Choisissez 3 parfums'); return} S.showCart=false; if(buy){S.showCheckout=true} else { S.cart.push({id:'pack-'+Date.now(), name:'PACK CLASSIC', price:200*S.qty, qty:1, type:'pack', detail:S.picks.map(id=>S.products.find(p=>p.id===id)?.name).join(' + ')}); S.showCart=true} render()}
+window.addProd=id=>{const p=S.products.find(x=>x.id===id); const ex=S.cart.find(x=>x.id===p.id); if(ex) ex.qty++; else S.cart.push({id:p.id,name:p.name,price:p.price,qty:1}); S.showCart=true; render()}
+window.confirmOrder=()=>{const name=document.getElementById('cName').value, phone=document.getElementById('cPhone').value, city=document.getElementById('cCity').value, addr=document.getElementById('cAddr').value; if(!name||!phone||!addr){alert('املأ جميع الحقول / Remplissez tous les champs'); return} const total=S.cart.reduce((a,b)=>a+b.price*b.qty,0)+(S.picks.filter(Boolean).length===3?200*S.qty:0); const order={id:'#'+Math.floor(10000+Math.random()*90000), date:new Date().toLocaleString(), client:name, phone, city, address:addr, products:[...S.cart, ...(S.picks.filter(Boolean).length===3?[{name:'PACK CLASSIC ('+S.picks.map(id=>S.products.find(p=>p.id===id)?.name).join(' + ')+')', qty:S.qty, price:200*S.qty}]:[])], total, status:'En attente'}; S.orders.unshift(order); S.thank=order; S.cart=[]; S.picks=[null,null,null]; S.showCheckout=false; save(); render(); window.scrollTo({top:0,behavior:'smooth'})}
+window.uploadLogo=(inp,type)=>{const f=inp.files[0]; if(!f) return; const r=new FileReader(); r.onload=e=>{if(type==='top'){S.logoTop=e.target.result; LS.set('sentel_logo_top',S.logoTop)} else {S.logoFoot=e.target.result; LS.set('sentel_logo_footer',S.logoFoot)} save(); render()}; r.readAsDataURL(f)}
+window.uploadSlide=(inp,i)=>{const f=inp.files[0]; if(!f) return; const r=new FileReader(); r.onload=e=>{S.slider[i].img=e.target.result; save(); render()}; r.readAsDataURL(f)}
+window.uploadProd=(inp,i)=>{const f=inp.files[0]; if(!f) return; const r=new FileReader(); r.onload=e=>{S.products[i].img=e.target.result; save(); render()}; r.readAsDataURL(f)}
+
+render();
 </script>
-<style>@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}</style>
 </body>
 </html>
