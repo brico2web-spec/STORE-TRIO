@@ -1,16 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>React Artifact</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SENTEL PARFUMS</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  
-  <script type="module" src="app.js"></script>
-  <script>(function(){function m(a){var h=a.getAttribute("href");if(!h)return;try{var u=new URL(h,document.baseURI);if((u.protocol==="http:"||u.protocol==="https:")&&u.host!==location.host){a.target="_blank";a.rel="noopener noreferrer";}}catch(e){}}function s(){document.querySelectorAll("a[href]").forEach(m);}if(document.readyState!=="loading"){s();}else{document.addEventListener("DOMContentLoaded",s);}document.addEventListener("click",function(e){var a=e.target&&e.target.closest&&e.target.closest("a[href]");if(a){m(a);}},true);})();</script>
-  
+<div class="topbar" id="topbar">🔥 OFFRE CHOC 3 PARFUMS = 200 MAD SEULEMENT • ⚡ LIVRAISON 24H GRATUITE • 💎 +5000 CLIENTS SATISFAITS</div>
+<header class="header"><div class="wrap"><div class="logo"><img id="header-logo" src="" style="height:36px;display:none"><span id="logo-text">SENTEL<span>PARFUMS</span></span></div><div>📦 <span id="cart">0</span></div></div></header>
+<main class="wrap">
+<div class="hero" id="hero">
+<img class="bg" id="hero-bg" src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=1200">
+<div class="veil"></div>
+<div class="content"><div><div class="badge">SENTEL • PARFUMS</div><div class="stitle" id="hero-title">ESSENCES<br>RARES</div><div class="ssub" id="hero-sub">L'art qui enflamme vos sens — Collection exclusive inspirée des plus grandes maisons. Tenue 12H+.</div><div style="margin-top:20px;display:flex;gap:10px"><a class="btn" href="#parfums">Nos Parfums</a><a class="btn btn-gold" href="#pack">Pack 200 MAD 🔥</a></div></div><img class="simg" id="hero-simg" src="https://images.unsplash.com/photo-1541643600914-78b084683601?w=600"></div>
+</div>
+<div class="offer" id="pack"><div style="flex:1;min-width:280px"><div class="badge">🔥 OFFRE EXPLOSIVE</div><div class="offer-title" id="offer-title">PACK CHOC - 3 PARFUMS = 200 MAD</div><div class="offer-sub" id="offer-sub">Au lieu de 597 MAD — Vous économisez 397 MAD ! ⏰ Plus que 17 packs</div><div class="mini-pics"><img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=200"><img src="https://images.unsplash.com/photo-1541643600914-78b084683601?w=200"><img src="https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=200"></div></div><div><div style="font-size:12px;font-weight:700;color:#92400e">⚡ OFFRE LIMITÉE</div><div style="font-size:36px;font-weight:900">200 MAD</div><div style="font-size:12px;color:#64748b;text-decoration:line-through">597 MAD</div><div style="margin-top:12px"><a class="btn btn-gold">👉 JE PROFITE</a></div></div></div>
+<div id="parfums" style="margin-top:28px"><div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:800">💎 NOS PÉPITES</div><div class="pgrid" id="products"></div></div>
+<div class="features"><div class="feat"><div class="ico">⚡</div><div class="t">Livraison 24H</div><div class="d">Partout au Maroc</div></div><div class="feat"><div class="ico">🔒</div><div class="t">Paiement à la livraison</div><div class="d">Sans risque</div></div><div class="feat"><div class="ico">✨</div><div class="t">Sillage 12H+</div><div class="d">Tient toute la journée</div></div><div class="feat"><div class="ico">💯</div><div class="t">Satisfait ou Remboursé</div><div class="d">14 jours</div></div></div>
+</main>
+<footer class="footer"><div class="wrap"><div class="grid"><div><div class="foot-logo"><img id="footer-logo" src="" style="height:32px;display:none"><span id="footer-logo-text">SENTEL<span style="font-weight:400;color:#64748b">PARFUMS</span></span></div><div style="font-size:12px;color:#64748b;margin-top:8px">L'art qui enflamme vos sens</div></div><div><div style="font-weight:800">Liens</div><div style="font-size:12px;color:#64748b;margin-top:8px">Parfums<br>Pack 200 MAD</div></div><div><div style="font-weight:800">Contact</div><div style="font-size:12px;color:#64748b;margin-top:8px">WhatsApp: 06 12 34 56 78</div></div></div><div style="margin-top:20px;padding-top:16px;border-top:1px solid #e2e8f0;display:flex;justify-content:space-between"><div style="font-size:11px;color:#94a3b8">© 2025 SENTEL</div><a href="admin.html" style="font-size:11px;opacity:.6;text-decoration:underline">Admin</a></div></div></footer>
+<script>
+// Lire localStorage sans toucher app.js - tout est ici dans HTML
+const logo=localStorage.getItem('sentel_logo');
+if(logo){
+ document.getElementById('header-logo').src=logo;document.getElementById('header-logo').style.display='block';document.getElementById('logo-text').style.display='none';
+ document.getElementById('footer-logo').src=logo;document.getElementById('footer-logo').style.display='block';document.getElementById('footer-logo-text').style.display='none';
+}
+const slides=JSON.parse(localStorage.getItem('sentel_slides')||'null');
+if(slides && slides[0]){
+ document.getElementById('hero-bg').src=slides[0].img;
+ document.getElementById('hero-simg').src=slides[0].img;
+ if(slides[0].title) document.getElementById('hero-title').innerHTML=slides[0].title;
+ if(slides[0].sub) document.getElementById('hero-sub').innerHTML=slides[0].sub;
+}
+const texts=JSON.parse(localStorage.getItem('sentel_texts')||'null');
+if(texts){
+ if(texts.topbar) document.getElementById('topbar').innerText=texts.topbar;
+ if(texts.offerTitle) document.getElementById('offer-title').innerText=texts.offerTitle;
+ if(texts.offerSub) document.getElementById('offer-sub').innerText=texts.offerSub;
+}
+const defaultProds=[
+{name:"SENTEL N°5",price:"199",insp:"J'adore",img:"https://images.unsplash.com/photo-1594035910387-fea47794261f?w=400"},
+{name:"Oud Royal",price:"249",insp:"Oud Wood",img:"https://images.unsplash.com/photo-1541643600914-78b084683601?w=400"},
+{name:"Fresh Aqua",price:"179",insp:"Bleu",img:"https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=400"},
+{name:"Vanille Intense",price:"219",insp:"Tobacco",img:"https://images.unsplash.com/photo-1594035910387-fea47794261f?w=400"},
+{name:"Musk Blanc",price:"189",insp:"Musk",img:"https://images.unsplash.com/photo-1594035910387-fea47794261f?w=400"},
+{name:"Nuit d'Amour",price:"229",insp:"La Nuit",img:"https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=400"},
+];
+const savedProds=JSON.parse(localStorage.getItem('sentel_products')||'null')||defaultProds;
+document.getElementById('products').innerHTML=savedProds.map(p=>`<div class="card"><div class="thumb"><img src="${p.img}"></div><div class="body"><div class="name">${p.name}</div><div class="insp">${p.insp}</div><div class="price">${p.price} MAD</div></div></div>`).join('');
+</script>
 </body>
 </html>

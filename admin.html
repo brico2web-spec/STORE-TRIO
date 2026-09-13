@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin Dashboard - SENTEL</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,sans-serif;background:#f8fafc;color:#0f172a}
+.wrap{max-width:900px;margin:0 auto;padding:20px}
+.header{background:#fff;border-bottom:1px solid #e2e8f0;padding:16px 0;position:sticky;top:0;z-index:10}
+.logo{font-weight:900;letter-spacing:.16em;font-size:20px}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:18px;margin-top:16px;box-shadow:0 4px 16px rgba(0,0,0,.04)}
+.card h3{margin:0 0 12px;font-size:14px;font-weight:800;letter-spacing:.02em}
+.input{width:100%;padding:10px 12px;border:1px solid #e2e8f0;border-radius:10px;font-size:13px;margin-top:6px}
+.btn{background:#000;color:#fff;border:0;border-radius:999px;padding:10px 18px;font-weight:700;font-size:12px;cursor:pointer}
+.btn-gold{background:linear-gradient(135deg,#d4af37,#f8e8a0);color:#000}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+.preview{width:100%;height:140px;object-fit:cover;border-radius:12px;border:1px solid #e2e8f0;margin-top:8px;background:#f8fafc}
+.badge{font-size:10px;font-weight:800;padding:4px 8px;border-radius:999px;background:#dcfce7;color:#166534;display:inline-block}
+</style>
+</head>
+<body>
+<div class="header"><div class="wrap" style="display:flex;justify-content:space-between;align-items:center"><div class="logo">SENTEL<span style="font-weight:400;color:#64748b;margin-left:6px">ADMIN</span></div><a href="index.html" class="btn">← Retour au site</a></div></div>
+<div class="wrap">
+
+<div class="card">
+<h3>🔥 Logo du site</h3>
+<div style="font-size:12px;color:#64748b">Le logo s'affiche dans header et footer. Upload PNG/JPG, sera compressé automatiquement.</div>
+<img id="logo-preview" class="preview" style="height:80px;object-fit:contain" src="https://via.placeholder.com/200x80?text=SENTEL+PARFUMS">
+<input type="file" id="logo-file" accept="image/*" class="input">
+<div style="margin-top:10px;display:flex;gap:8px"><button class="btn" onclick="saveLogo()">💾 Sauvegarder Logo</button><button class="btn" style="background:#e2e8f0;color:#000" onclick="clearLogo()">Effacer</button><span id="logo-status"></span></div>
+</div>
+
+<div class="card">
+<h3>🎠 Images Slider (3 slides)</h3>
+<div class="grid">
+<div><b style="font-size:12px">Slide 1 - ESSENCES RARES</b><img id="slide1-preview" class="preview" src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=400"><input type="file" id="slide1-file" accept="image/*" class="input"><input id="slide1-title" class="input" placeholder="Titre slide 1" value="ESSENCES RARES"><input id="slide1-sub" class="input" placeholder="Sous-titre" value="Collection exclusive"></div>
+<div><b style="font-size:12px">Slide 2 - COLLECTION FEMME</b><img id="slide2-preview" class="preview" src="https://images.unsplash.com/photo-1541643600914-78b084683601?w=400"><input type="file" id="slide2-file" accept="image/*" class="input"><input id="slide2-title" class="input" placeholder="Titre" value="COLLECTION POUR FEMME"><input id="slide2-sub" class="input" placeholder="Sous-titre" value="Floral, rosé, musqué"></div>
+<div><b style="font-size:12px">Slide 3 - COLLECTION HOMME</b><img id="slide3-preview" class="preview" src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=400"><input type="file" id="slide3-file" accept="image/*" class="input"><input id="slide3-title" class="input" placeholder="Titre" value="COLLECTION POUR HOMME"><input id="slide3-sub" class="input" placeholder="Sous-titre" value="Boisé, frais, intense"></div>
+</div>
+<div style="margin-top:12px"><button class="btn btn-gold" onclick="saveSlides()">💾 Sauvegarder Slider</button><span id="slides-status"></span></div>
+</div>
+
+<div class="card">
+<h3>💎 Produits (6 produits)</h3>
+<div id="products-admin"></div>
+<div style="margin-top:12px"><button class="btn btn-gold" onclick="saveProducts()">💾 Sauvegarder Produits</button><span id="products-status"></span></div>
+</div>
+
+<div class="card">
+<h3>⚙️ Textes du site (sans toucher JS)</h3>
+<div class="grid">
+<div><label style="font-size:11px;font-weight:700">Topbar marquee</label><textarea id="topbar-text" class="input" rows="2">🔥 OFFRE CHOC 3 PARFUMS = 200 MAD SEULEMENT • ⚡ LIVRAISON 24H GRATUITE • 💎 +5000 CLIENTS SATISFAITS</textarea></div>
+<div><label style="font-size:11px;font-weight:700">Titre offre 3=200</label><input id="offer-title" class="input" value="PACK CHOC - 3 PARFUMS = 200 MAD"><label style="font-size:11px;font-weight:700">Sous-titre offre</label><input id="offer-sub" class="input" value="Au lieu de 597 MAD — Vous économisez 397 MAD !"></div>
+</div>
+<div style="margin-top:12px"><button class="btn" onclick="saveTexts()">💾 Sauvegarder Textes</button><span id="texts-status"></span></div>
+</div>
+
+<div class="card" style="background:#fffbeb;border-color:#fde68a">
+<h3>🔥 Firebase Status</h3>
+<div id="firebase-status" style="font-size:12px">Connexion...</div>
+<div style="margin-top:10px"><button class="btn" style="background:#ef4444" onclick="clearAll()">🗑️ Tout effacer (localStorage)</button></div>
+</div>
+
+</div>
+
+<script type="module">
+// Firebase keep exact trioparfum-7a2c3
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getFirestore,doc,setDoc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const cfg={apiKey:"AIzaSyA2daZ7FWckKStgUvZyRbYDT6ZyRbYDT6ZAYDz_5A",authDomain:"trioparfum-7a2c3.firebaseapp.com",projectId:"trioparfum-7a2c3",storageBucket:"trioparfum-7a2c3.firebasestorage.app",messagingSenderId:"938937787112",appId:"1:938937787112:web:90ccff1fbb9d26a8df5d"};
+let db=null;
+try{const app=initializeApp(cfg);db=getFirestore(app);document.getElementById('firebase-status').innerHTML='✅ Connecté à Firebase <b>trioparfum-7a2c3</b> - Les images seront sauvegardées aussi dans Firestore';}catch(e){document.getElementById('firebase-status').innerHTML='⚠️ Firebase offline - Sauvegarde locale seulement: '+e.message;}
+
+function compress(file,maxW,qual){return new Promise(res=>{const r=new FileReader();r.onload=e=>{const img=new Image();img.onload=()=>{const c=document.createElement('canvas');const s=Math.min(1,maxW/img.width);c.width=img.width*s;c.height=img.height*s;c.getContext('2d').drawImage(img,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',qual));};img.src=e.target.result;};r.readAsDataURL(file);});}
+
+function previewFile(input,imgId){const f=input.files[0];if(!f)return;compress(f,800,0.7).then(d=>{document.getElementById(imgId).src=d;input.dataset.base64=d;});}
+document.getElementById('logo-file').addEventListener('change',e=>previewFile(e.target,'logo-preview'));
+document.getElementById('slide1-file').addEventListener('change',e=>previewFile(e.target,'slide1-preview'));
+document.getElementById('slide2-file').addEventListener('change',e=>previewFile(e.target,'slide2-preview'));
+document.getElementById('slide3-file').addEventListener('change',e=>previewFile(e.target,'slide3-preview'));
+
+// Products admin dynamic
+const defaultProducts=[
+{name:"SENTEL N°5 - Rose Élite",price:"199",insp:"Inspiré de J'adore • Floral",img:"https://images.unsplash.com/photo-1594035910387-fea47794261f?w=400"},
+{name:"SENTEL Oud Royal",price:"249",insp:"Inspiré de Oud Wood • Boisé",img:"https://images.unsplash.com/photo-1541643600914-78b084683601?w=400"},
+{name:"SENTEL Fresh Aqua",price:"179",insp:"Inspiré de Bleu de Chanel • Frais",img:"https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=400"},
+{name:"SENTEL Vanille Intense",price:"219",insp:"Inspiré de Tobacco Vanille • Gourmand",img:"https://images.unsplash.com/photo-1594035910387-fea47794261f?w=400"},
+{name:"SENTEL Musk Blanc",price:"189",insp:"Inspiré de Musk • Doux",img:"https://images.unsplash.com/photo-1541643600914-78b084683601?w=400"},
+{name:"SENTEL Nuit d'Amour",price:"229",insp:"Inspiré de La Nuit • Sensuel",img:"https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=400"},
+];
+function renderProductsAdmin(){
+const saved=JSON.parse(localStorage.getItem('sentel_products')||'null')||defaultProducts;
+let h='';
+saved.forEach((p,i)=>{
+h+=`<div style="border:1px solid #e2e8f0;border-radius:12px;padding:10px;margin-top:8px"><div style="display:flex;gap:10px"><img id="p${i}-preview" src="${p.img}" style="width:80px;height:80px;object-fit:cover;border-radius:10px"><div style="flex:1"><input id="p${i}-name" class="input" value="${p.name}" placeholder="Nom"><input id="p${i}-price" class="input" value="${p.price}" placeholder="Prix"><input id="p${i}-insp" class="input" value="${p.insp}" placeholder="Inspiration"><input type="file" id="p${i}-file" accept="image/*" class="input"></div></div></div>`;
+});
+document.getElementById('products-admin').innerHTML=h;
+saved.forEach((_,i)=>{
+const inp=document.getElementById(`p${i}-file`);
+if(inp) inp.addEventListener('change',e=>{
+const f=e.target.files[0];if(!f)return;
+compress(f,600,0.7).then(d=>{document.getElementById(`p${i}-preview`).src=d;inp.dataset.base64=d;});
+});
+});
+}
+renderProductsAdmin();
+
+// Load saved
+const savedLogo=localStorage.getItem('sentel_logo');
+if(savedLogo) document.getElementById('logo-preview').src=savedLogo;
+const savedSlides=JSON.parse(localStorage.getItem('sentel_slides')||'null');
+if(savedSlides){savedSlides.forEach((s,i)=>{const idx=i+1;const pre=document.getElementById(`slide${idx}-preview`);if(pre&&s.img)pre.src=s.img;const t=document.getElementById(`slide${idx}-title`);if(t&&s.title)t.value=s.title;const su=document.getElementById(`slide${idx}-sub`);if(su&&s.sub)su.value=s.sub;});}
+const savedTexts=JSON.parse(localStorage.getItem('sentel_texts')||'null');
+if(savedTexts){if(savedTexts.topbar)document.getElementById('topbar-text').value=savedTexts.topbar;if(savedTexts.offerTitle)document.getElementById('offer-title').value=savedTexts.offerTitle;if(savedTexts.offerSub)document.getElementById('offer-sub').value=savedTexts.offerSub;}
+
+window.saveLogo=async()=>{
+const b64=document.getElementById('logo-file').dataset.base64||document.getElementById('logo-preview').src;
+localStorage.setItem('sentel_logo',b64);
+document.getElementById('logo-status').innerHTML='<span class="badge">✅ Logo sauvegardé - Rechargez index.html</span>';
+if(db){try{await setDoc(doc(db,'settings','site'),{logoUrl:b64}, {merge:true});}catch(e){console.log(e);}}
+}
+window.clearLogo=()=>{localStorage.removeItem('sentel_logo');document.getElementById('logo-preview').src='https://via.placeholder.com/200x80?text=SENTEL+PARFUMS';document.getElementById('logo-status').innerHTML='Effacé';}
+
+window.saveSlides=async()=>{
+const slides=[1,2,3].map(i=>{const f=document.getElementById(`slide${i}-file`);return{img:f.dataset.base64||document.getElementById(`slide${i}-preview`).src,title:document.getElementById(`slide${i}-title`).value,sub:document.getElementById(`slide${i}-sub`).value};});
+localStorage.setItem('sentel_slides',JSON.stringify(slides));
+document.getElementById('slides-status').innerHTML='<span class="badge">✅ Slider sauvegardé</span>';
+if(db){for(let i=0;i<slides.length;i++){try{await setDoc(doc(db,'slider',`slide${i+1}`),slides[i],{merge:true});}catch(e){}}}
+}
+window.saveProducts=async()=>{
+const prods=[];
+for(let i=0;i<6;i++){
+const f=document.getElementById(`p${i}-file`);
+prods.push({name:document.getElementById(`p${i}-name`).value,price:document.getElementById(`p${i}-price`).value,insp:document.getElementById(`p${i}-insp`).value,img:f.dataset.base64||document.getElementById(`p${i}-preview`).src});
+}
+localStorage.setItem('sentel_products',JSON.stringify(prods));
+document.getElementById('products-status').innerHTML='<span class="badge">✅ Produits sauvegardés - Rechargez index.html</span>';
+if(db){for(let i=0;i<prods.length;i++){try{await setDoc(doc(db,'products',`p${i+1}`),prods[i],{merge:true});}catch(e){}}}
+}
+window.saveTexts=async()=>{
+const texts={topbar:document.getElementById('topbar-text').value,offerTitle:document.getElementById('offer-title').value,offerSub:document.getElementById('offer-sub').value};
+localStorage.setItem('sentel_texts',JSON.stringify(texts));
+document.getElementById('texts-status').innerHTML='<span class="badge">✅ Textes sauvegardés</span>';
+if(db){try{await setDoc(doc(db,'settings','site'),{texts}, {merge:true});}catch(e){}}
+}
+window.clearAll=()=>{if(confirm('Effacer tout le localStorage?')){localStorage.clear();location.reload();}}
+</script>
+</body>
+</html>
