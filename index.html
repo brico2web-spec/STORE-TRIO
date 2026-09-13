@@ -3,241 +3,100 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>SENTEL LUXE - Parfum LUXE</title>
+<title>TRIO PARFUM - Glass Modern Big Logo</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 <script type="importmap">{"imports":{"firebase/app":"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js","firebase/firestore":"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"}}</script>
-<style>
-*{font-family:'Tajawal',sans-serif; box-sizing:border-box}
-.display{font-family:'Space Grotesk','Tajawal',sans-serif}
-.glass{background:rgba(255,255,255,0.88);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.9);box-shadow:0 12px 40px rgba(0,0,0,.06)}
-.card{border-radius:24px;background:white;box-shadow:0 12px 40px rgba(0,0,0,0.06);border:1px solid rgba(0,0,0,0.04);transition:.4s}
-.card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.1)}
-.btn{border-radius:999px;font-weight:800;transition:.25s;white-space:nowrap}
-.mint{background:linear-gradient(135deg,#D6FFF1 0%,#B6F2DD 40%,#E2FFF6 100%)}
-.marquee{animation:marquee 28s linear infinite}
-@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-img{max-width:100%;height:auto}
-</style>
 </head>
-<body class="bg-[#FBFFFE] text-zinc-900 overflow-x-hidden">
-
-<div id="topBar" class="h-[40px] bg-zinc-900 text-white flex items-center overflow-hidden"><div class="flex marquee gap-12 text-[12px] font-bold whitespace-nowrap"><span id="mqTop">✦ توصيل مجاني ✦ الدفع عند الاستلام ✦ خصم 93% ✦ +200 عطر ✦ ثبات 24 ساعة ✦</span><span>✦ توصيل مجاني ✦ الدفع عند الاستلام ✦ خصم 93% ✦ +200 عطر ✦ ثبات 24 ساعة ✦</span></div></div>
-
-<header class="sticky top-0 z-40 glass border-b">
-<div class="max-w-[1320px] mx-auto px-4 h-[68px] flex items-center justify-between">
-<div class="flex items-center gap-3">
-<img id="logoImg" class="h-10 hidden object-contain max-w-[180px]" alt="">
-<div id="logoText" class="display text-[26px] font-[800]">SENTEL<span class="font-normal text-[#0B7A6E]">LUXE</span></div>
+<body class="overflow-x-hidden">
+<!-- Top Bar -->
+<div class="h-[48px] glass-dark text-white flex items-center overflow-hidden sticky top-0 z-[60]">
+  <div class="flex marquee gap-12 text-[13px] font-bold whitespace-nowrap">
+    <span id="mqTop">✦ توصيل مجاني ✦ الدفع عند الاستلام ✦ خصم 93% ✦ +200 عطر ✦ ثبات 24 ساعة ✦</span>
+    <span>✦ توصيل مجاني ✦ الدفع عند الاستلام ✦ خصم 93% ✦ +200 عطر ✦ ثبات 24 ساعة ✦</span>
+  </div>
 </div>
-<button id="cartBtn" class="w-[52px] h-[52px] rounded-full bg-zinc-900 text-white grid place-items-center relative">👜<span id="cartCount" class="absolute -top-1 -right-1 bg-[#0B7A6E] text-white text-[12px] w-6 h-6 rounded-full grid place-items-center hidden">0</span></button>
-</div>
+
+<!-- Header with BIG LOGO -->
+<header class="sticky top-[48px] z-40 glass-strong border-b border-white/60">
+  <div class="max-w-[1320px] mx-auto px-4 h-[96px] sm:h-[116px] flex items-center justify-between">
+    <div class="flex items-center">
+      <!-- Logo PNG big and clear -->
+      <img id="logoImg" class="logo-big hidden" alt="TRIO PARFUM LOGO">
+      <div id="logoText" class="text-[38px] sm:text-[48px] font-[900] leading-none">TRIÖ<span class="font-[500] text-[#0B7A6E] text-[32px] sm:text-[40px]"> PARFUM</span></div>
+    </div>
+    <button id="cartBtn" class="w-[64px] h-[64px] rounded-full glass-dark grid place-items-center relative shadow-xl hover:scale-105 transition">
+      <!-- Modern bag icon SVG -->
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <span id="cartCount" class="absolute -top-1 -right-1 bg-[#0B7A6E] text-white text-[13px] font-bold w-7 h-7 rounded-full grid place-items-center hidden border-2 border-white">0</span>
+    </button>
+  </div>
 </header>
 
-<div class="max-w-[1320px] mx-auto px-3 mt-4">
-<div id="slider" class="relative h-[380px] sm:h-[500px] rounded-[24px] overflow-hidden bg-zinc-900 shadow-xl">
-<div class="absolute inset-0 grid place-items-center text-white"><div class="text-center"><div class="w-10 h-10 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto"></div><p class="mt-3 text-[13px]">جاري تحميل السلايدر...</p></div></div>
-</div>
-<div id="dots" class="flex justify-center gap-2 mt-4"></div>
+<!-- Slider -->
+<div class="max-w-[1320px] mx-auto px-3 mt-6">
+  <div id="slider" class="relative h-[460px] sm:h-[620px] rounded-[32px] overflow-hidden glass shadow-xl border border-white/70">
+    <div class="absolute inset-0 grid place-items-center">
+      <div class="glass-strong rounded-[20px] px-10 py-8 text-center">
+        <div class="w-12 h-12 border-[3px] border-zinc-900 border-t-transparent rounded-full animate-spin mx-auto"></div>
+        <p class="mt-4 font-bold">جاري تحميل السلايدر من السحابة...</p>
+      </div>
+    </div>
+  </div>
+  <div id="dots" class="flex justify-center gap-3 mt-6"></div>
 </div>
 
-<div class="mt-6 bg-zinc-900 text-white py-3 overflow-hidden"><div class="flex marquee gap-12 text-[14px] font-bold whitespace-nowrap"><span>✦ لأنك تستحق الأفضل ✦ جاذبية لا تقاوم ✦ ثبات 24 ساعة ✦ فخامة لا تُنسى ✦</span><span>✦ لأنك تستحق الأفضل ✦ جاذبية لا تقاوم ✦ ثبات 24 ساعة ✦ فخامة لا تُنسى ✦</span></div></div>
-
-<section class="max-w-[1040px] mx-auto px-3 mt-10">
-<div class="mint rounded-[32px] p-6 md:p-10 shadow-lg">
-<div class="flex justify-between items-center mb-8"><h3 class="display text-[26px] font-[800]">ركّب باقتك ✨</h3><span id="offerCounter" class="bg-white px-5 py-2 rounded-full font-bold">0/3</span></div>
-<div id="offerSlots" class="grid grid-cols-3 gap-4"></div>
-<p id="offerDesc" class="text-center mt-8 text-[16px] font-medium text-[#0B5A51]">اضغط لاختيار 3 عطور</p>
-<button id="offerOrderBtn" disabled class="btn w-full sm:w-auto mx-auto block mt-6 px-10 py-4 bg-zinc-900 text-white disabled:opacity-30">اطلب الباقة بـ <span id="offerPrice">200</span> درهم ✨</button>
-</div>
+<!-- Offer Bundle -->
+<section class="max-w-[1080px] mx-auto px-3 mt-12">
+  <div class="mint-glass rounded-[36px] p-7 sm:p-12 shadow-xl relative overflow-hidden">
+    <div class="flex flex-col sm:flex-row justify-between gap-4 mb-10">
+      <div><h3 class="text-[34px] sm:text-[42px] font-[800] leading-none">ركّب باقتك الخاصة ✨</h3><p class="text-[16px] text-[#0B5A51] font-[600] mt-3">اختر 3 عطور واصنع بصمتك الفريدة</p></div>
+      <div class="glass-strong px-7 py-3.5 rounded-full font-[800] text-[20px] shadow-xl flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-[#0B7A6E] animate-pulse"></span><span id="offerCounter">0/3</span></div>
+    </div>
+    <div id="offerSlots" class="grid grid-cols-3 gap-4"></div>
+    <p id="offerDesc" class="text-center mt-10 text-[17px] font-[700] text-[#0B5A51]">اضغط لاختيار 3 عطور من الأكثر مبيعاً</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center mt-10">
+      <button id="offerOrderBtn" disabled class="btn-modern px-10 py-5 text-white text-[18px] disabled:opacity-30 shadow-xl">اطلب الباقة بـ <span id="offerPrice">200</span> درهم ✨</button>
+      <button onclick="clearPicks()" class="btn-outline px-8 py-5 text-[16px]">مسح الباقة</button>
+    </div>
+  </div>
 </section>
 
-<section class="max-w-[1320px] mx-auto px-4 mt-12">
-<div class="flex justify-between items-center mb-8"><h2 class="display text-[32px] md:text-[44px] font-[800]">الأكثر مبيعاً 🔥</h2><span id="prodCount" class="text-[13px] text-zinc-500">جاري التحميل...</span></div>
-<div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-<div class="col-span-full py-20 text-center"><div class="w-10 h-10 border-2 border-zinc-900 border-t-transparent rounded-full animate-spin mx-auto"></div><p class="mt-4 text-zinc-500">جاري تحميل المنتجات من السحابة...</p><p class="text-[11px] text-zinc-400 mt-2">إذا لم تظهر المنتجات، تأكد من أنك أضفتها في الأدمن</p></div>
-</div>
+<!-- Products -->
+<section class="max-w-[1320px] mx-auto px-4 mt-16">
+  <div class="flex flex-col sm:flex-row justify-between gap-4 mb-10">
+    <div><h2 class="text-[42px] sm:text-[58px] font-[800] leading-[0.9]">الأكثر مبيعاً 🔥</h2><p class="text-[16px] text-zinc-600 font-[600] mt-3">عطور أصلية • ثبات 24 ساعة • توصيل مجاني</p></div>
+    <span id="prodCount" class="glass px-6 py-3 rounded-full text-[14px] font-bold">تحميل من السحابة...</span>
+  </div>
+  <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7"></div>
 </section>
 
-<footer class="mt-20 border-t py-10 text-center"><p class="text-[12px] text-zinc-400">© 2026 SENTEL LUXE - ☁️ الصور محفوظة في السحابة</p><a href="admin.html" class="text-[11px] font-bold underline mt-3 inline-block">ADMIN</a><div id="debug" class="mt-4 text-[10px] text-zinc-400 max-w-[600px] mx-auto px-4 text-left ltr"></div></footer>
+<!-- Footer with modern icons -->
+<footer class="mt-24 glass border-t border-white/60 py-14 text-center">
+  <div class="max-w-[600px] mx-auto px-6">
+    <div class="text-[34px] font-[800]">TRIÖ<span class="text-[#0B7A6E] font-[400]"> PARFUM</span></div>
+    <p class="text-[15px] text-zinc-600 mt-4">فن العطر بسعر في متناول الجميع - 200+ عطر فاخر</p>
+    <div class="mt-8 flex justify-center gap-4">
+      <a href="#" class="w-12 h-12 rounded-full icon-glass grid place-items-center hover:scale-110 transition">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+      <a href="#" class="w-12 h-12 rounded-full icon-glass grid place-items-center hover:scale-110 transition">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="6"/><circle cx="12" cy="12" r="5"/><circle cx="18" cy="6" r="1.5" fill="black"/></svg>
+      </a>
+      <a href="#" class="w-12 h-12 rounded-full bg-[#25D366] grid place-items-center hover:scale-110 transition shadow-lg">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M19.11 4.93C16.63 2.44 13.27 1 9.75 1S2.87 2.44 0.39 4.93A13.37 13.37 0 0 0 0 9.88c0 2.45.66 4.84 1.91 6.94L0 24l7.35-1.91A13.36 13.36 0 0 0 9.75 23c3.52 0 6.88-1.44 9.36-3.92a13.38 13.38 0 0 0 3.92-9.36 13.38 13.38 0 0 0-3.92-4.79z"/></svg>
+      </a>
+    </div>
+    <p class="text-[11px] text-zinc-400 mt-10">© 2026 TRIO PARFUM - الصور محفوظة في السحابة وتظهر في أي جهاز</p>
+    <a href="admin.html" class="text-[11px] font-bold underline mt-2 inline-block">ADMIN CLOUD</a>
+  </div>
+</footer>
 
-<div id="drawer" class="fixed inset-0 z-50 hidden"><div class="absolute inset-0 bg-black/30" onclick="closeDrawer()"></div><div class="absolute left-0 top-0 h-full w-[92%] max-w-[420px] bg-white p-6 overflow-auto rounded-l-[24px]"><h3 class="text-[20px] font-bold mb-6">السلة</h3><div id="cartList"></div><button onclick="order()" class="btn w-full mt-6 py-4 bg-[#0B7A6E] text-white">اطلب عبر واتساب</button></div></div>
+<!-- Drawer & Modal -->
+<div id="drawer" class="fixed inset-0 z-50 hidden"><div class="absolute inset-0 bg-black/20 backdrop-blur-xl" onclick="closeDrawer()"></div><div class="absolute left-0 top-0 h-full w-[94%] max-w-[440px] glass-strong p-7 overflow-auto rounded-l-[32px] shadow-2xl"><div class="flex justify-between items-center mb-8"><h3 class="text-[26px] font-[800]">السلة 👜</h3><button onclick="closeDrawer()" class="w-12 h-12 rounded-full glass grid place-items-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div><div id="cartList"></div><div class="mt-8 border-t pt-6"><div class="flex justify-between font-[800] text-[20px] mb-6"><span>المجموع</span><span id="cartTotal" class="text-[#0B7A6E]">0 MAD</span></div><button onclick="order()" class="btn-modern w-full py-5 text-white text-[18px]">اطلب عبر واتساب ✨</button></div></div></div>
+<div id="pickModal" class="fixed inset-0 z-[70] hidden bg-black/30 backdrop-blur-2xl p-4 grid place-items-center"><div class="glass-strong rounded-[32px] w-full max-w-[640px] p-8 max-h-[85vh] overflow-auto"><div class="flex justify-between items-center mb-6"><h4 class="font-[800] text-[22px]">اختر عطر للباقة ✨</h4><button onclick="closePick()" class="w-12 h-12 rounded-full glass grid place-items-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div><div id="pickGrid" class="grid gap-3"></div></div></div>
 
-<div id="pickModal" class="fixed inset-0 z-[60] hidden bg-black/40 p-4 grid place-items-center"><div class="bg-white rounded-[24px] w-full max-w-[600px] p-6 max-h-[80vh] overflow-auto"><h4 class="font-bold mb-4">اختر عطر</h4><div id="pickGrid" class="grid gap-3"></div><button onclick="closePick()" class="mt-4 w-full py-3 rounded-full bg-zinc-100">إغلاق</button></div></div>
-
-<script type="module">
-import {initializeApp} from 'firebase/app';
-import {getFirestore, collection, onSnapshot, doc} from 'firebase/firestore';
-
-const firebaseConfig={apiKey:"AIzaSyDwrJ2FR0NVggoXeKchu2YGqqam5ZFMZXU",authDomain:"parfum-e53ad.firebaseapp.com",projectId:"parfum-e53ad",storageBucket:"parfum-e53ad.firebasestorage.app",messagingSenderId:"791467480753",appId:"1:791467480753:web:4c370b7e3635a37686f490"};
-let db;
-try{db=getFirestore(initializeApp(firebaseConfig));}catch(e){console.error('Firebase init failed',e)}
-
-let products=[], cart=[], picks=[], cfg={offerPrice:200, slider:[
-{title:'عطرك.. بصمتك التي لا تُنسى ✨', sub:'ثبات يدوم 24 ساعة • تركيز عالي', img:'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1600&q=80'},
-{title:'لمسة واحدة.. وتسحر القلوب 💖', sub:'تشكيلة 2026 فاخرة', img:'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1600&q=80'},
-{title:'فخامة لا تقاوم 🔥', sub:'شحن مجاني لكل المدن', img:'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=1600&q=80'}
-]};
-
-const $=id=>document.getElementById(id);
-function debug(msg){console.log(msg); const d=$('debug'); if(d) d.innerHTML+=msg+'<br>';}
-
-function isValid(p){
- if(!p) return false;
- const name = (p.name||'').toString().trim();
- if(!name || name==='undefined' || name.length<2) return false;
- const price = Number(p.price);
- if(!price || isNaN(price) || price<=0) return false;
- const img = p.imageBase64||p.image||p.img||'';
- if(!img || img.length<10) return false;
- return true;
-}
-
-function getImage(p){
- let img = p.imageBase64||p.image||p.img||'';
- // إصلاح الصور: إذا كانت رابط http عادي أو base64
- if(img.startsWith('http') || img.startsWith('data:')) return img;
- return 'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=800&q=80';
-}
-
-function productCard(p){
- const img = getImage(p);
- return `
- <div class="card p-4 group">
- <div class="bg-[#F7FFFD] rounded-[16px] aspect-square overflow-hidden grid place-items-center relative">
- <img src="${img}" class="w-full h-full object-contain p-5 group-hover:scale-105 transition duration-500" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=800&q=80'">
- ${p.bestseller?'<span class="absolute top-3 right-3 bg-zinc-900 text-white text-[10px] px-3 py-1 rounded-full">BESTSELLER</span>':''}
- </div>
- <div class="mt-4">
- <h3 class="font-bold text-[16px] leading-tight">${p.name}</h3>
- <p class="text-[12px] text-zinc-500 mt-1 line-clamp-1">${p.description||'عطر فاخر بثبات 24 ساعة'}</p>
- <div class="flex justify-between items-center mt-4">
- <span class="font-bold text-[18px]">${p.price} MAD</span>
- <button onclick="add('${p.id}')" class="w-10 h-10 rounded-full bg-zinc-900 text-white grid place-items-center hover:bg-black">+</button>
- </div>
- <button onclick="pick('${p.id}')" class="btn w-full mt-3 py-3 border-2 border-zinc-900 text-[13px] font-bold hover:bg-zinc-900 hover:text-white">أضف للباقة ${cfg.offerPrice} درهم ✨</button>
- </div>
- </div>`;
-}
-
-function renderProducts(){
- const grid=$('grid');
- const count=$('prodCount');
- if(!products.length){
-  grid.innerHTML=`<div class="col-span-full py-16 text-center"><p class="font-bold text-[16px]">لا توجد منتجات بعد</p><p class="text-[13px] text-zinc-500 mt-2">اذهب للأدمن وأضف منتجات - تأكد أنك تملأ الاسم والثمن والصورة</p><a href="admin.html" class="mt-4 inline-block px-6 py-3 bg-zinc-900 text-white rounded-full text-[13px] font-bold">افتح الأدمن</a></div>`;
-  count.textContent='0 منتجات';
-  return;
- }
- count.textContent=products.length+' منتجات (من السحابة ☁️)';
- grid.innerHTML=products.map(p=>productCard(p)).join('');
- debug(`تم عرض ${products.length} منتجات`);
-}
-
-function renderSlider(){
- const el=$('slider');
- const dots=$('dots');
- if(!cfg.slider || !cfg.slider.length){
-  cfg.slider=[
-   {title:'عطرك.. بصمتك التي لا تُنسى ✨', sub:'ثبات يدوم 24 ساعة', img:'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1600&q=80'},
-   {title:'فخامة لا تقاوم 🔥', sub:'+200 عطر فاخر', img:'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1600&q=80'}
-  ];
- }
- // فلترة السلايدر - إزالة الشرائح الخاوية
- let validSlides = cfg.slider.filter(s=> s && (s.img||s.image) && s.title);
- if(!validSlides.length) validSlides=cfg.slider;
-
- el.innerHTML=validSlides.map((s,i)=>`
- <div class="slide absolute inset-0 transition-opacity duration-700 ${i===0?'opacity-100':'opacity-0'}" data-i="${i}">
- <img src="${s.img||s.image}" class="absolute inset-0 w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1600&q=80'">
- <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
- <div class="absolute bottom-6 left-4 right-4 md:bottom-12 md:left-12">
- <h2 class="text-white text-[28px] md:text-[52px] font-[800] leading-[0.95] max-w-[14ch]">${s.title||'عطر فاخر'}</h2>
- <p class="text-white/80 mt-3 text-[14px] md:text-[18px]">${s.sub||''}</p>
- </div>
- </div>`).join('');
-
- dots.innerHTML=validSlides.map((_,i)=>`<button onclick="goSlide(${i})" class="dot h-2 rounded-full transition-all ${i===0?'w-8 bg-zinc-900':'w-2 bg-zinc-300'}"></button>`).join('');
-
- let cur=0;
- window.goSlide=n=>{
-  document.querySelectorAll('.slide').forEach((e,i)=>e.style.opacity=i===n?'1':'0');
-  document.querySelectorAll('.dot').forEach((d,i)=>{d.className=`dot h-2 rounded-full transition-all ${i===n?'w-8 bg-zinc-900':'w-2 bg-zinc-300'}`});
-  cur=n;
- };
- setInterval(()=>{cur=(cur+1)%validSlides.length; goSlide(cur);},4000);
- debug(`السلايدر: ${validSlides.length} شرائح`);
-}
-
-function renderPicks(){
- $('offerSlots').innerHTML=[0,1,2].map(i=>{
-  const p=picks[i];
-  if(p) return `<div class="card p-3 aspect-[4/5] flex flex-col"><img src="${getImage(p)}" class="flex-1 object-contain p-2"><p class="font-bold text-[13px] text-center mt-2">${p.name}</p><button onclick="picks.splice(${i},1);renderPicks()" class="text-[11px] text-red-500 mt-2">إزالة</button></div>`;
-  return `<button onclick="openPick(${i})" class="rounded-[20px] aspect-[4/5] border-2 border-dashed border-[#8ED4BE] bg-white/60 grid place-items-center hover:bg-white"><div class="text-center"><div class="w-12 h-12 rounded-full bg-white shadow mx-auto grid place-items-center text-[#0B7A6E] text-[20px]">+</div><div class="font-bold mt-2">${i+1}</div></div></button>`;
- }).join('');
- $('offerCounter').textContent=`${picks.length}/3`;
- $('offerOrderBtn').disabled=picks.length!==3;
-}
-
-window.openPick=i=>{window.pickIdx=i; $('pickModal').classList.remove('hidden'); $('pickGrid').innerHTML=products.map(p=>`<button onclick="pick('${p.id}')" class="flex gap-3 p-3 border rounded-xl hover:bg-zinc-50 w-full text-right"><img src="${getImage(p)}" class="w-14 h-14 rounded-lg object-contain bg-zinc-50"><div><div class="font-bold text-[13px]">${p.name}</div><div class="text-[11px] text-zinc-500">${p.price} MAD</div></div></button>`).join('');}
-window.closePick=()=>$('pickModal').classList.add('hidden');
-window.pick=id=>{
- const p=products.find(x=>x.id===id);
- if(picks.length>=3) return alert('الباقة مكتملة');
- if(picks.find(x=>x.id===id)) return alert('موجود في الباقة');
- picks.push(p); renderPicks(); closePick();
-};
-window.add=id=>{const p=products.find(x=>x.id===id); cart.push(p); updateCart();};
-function updateCart(){
- $('cartCount').textContent=cart.length;
- $('cartCount').classList.toggle('hidden', cart.length===0);
- $('cartList').innerHTML=cart.map((x,i)=>`<div class="flex gap-3 py-3 border-b"><img src="${getImage(x)}" class="w-12 h-12 rounded-lg bg-zinc-50 object-contain"><div class="flex-1"><p class="font-bold text-[13px]">${x.name}</p><p class="text-[12px]">${x.price} MAD</p></div><button onclick="cart.splice(${i},1);updateCart()" class="text-zinc-400">✕</button></div>`).join('') || '<div class="py-10 text-center text-zinc-400">السلة فارغة</div>';
-}
-window.order=()=>{
- let txt=picks.length===3?`بغيت الباقة 3 ب ${cfg.offerPrice} درهم: ${picks.map(p=>p.name).join(' + ')}`:`بغيت نطلب: ${cart.map(c=>c.name).join(', ')}`;
- window.open(`https://wa.me/212612345678?text=${encodeURIComponent(txt)}`,'_blank');
-};
-$('cartBtn').onclick=()=>$('drawer').classList.remove('hidden');
-window.closeDrawer=()=>$('drawer').classList.add('hidden');
-$('offerOrderBtn').onclick=()=>{if(picks.length===3) order()};
-
-function applyConfig(){
- $('offerPrice').textContent=cfg.offerPrice||200;
- $('offerDesc').textContent=cfg.offerDesc||'اضغط لاختيار 3 عطور';
- if(cfg.logoImage){$('logoImg').src=cfg.logoImage; $('logoImg').classList.remove('hidden'); $('logoText').classList.add('hidden');}
- else{$('logoText').innerHTML=cfg.logoText||'SENTEL<span class="font-normal text-[#0B7A6E]">LUXE</span>';}
- $('mqTop').textContent=(cfg.phrases||['توصيل مجاني','الدفع عند الاستلام']).join(' ✦ ');
- renderSlider(); renderPicks();
-}
-
-if(db){
- debug('جاري الاتصال بـ Firebase...');
- onSnapshot(collection(db,'parfums'), s=>{
-  const all=s.docs.map(d=>({id:d.id, ...d.data()}));
-  debug(`Firebase: وجد ${all.length} وثائق`);
-  const valid=all.filter(isValid);
-  debug(`صالحة: ${valid.length} - خاوية: ${all.length-valid.length}`);
-  if(valid.length>0){
-   products=valid;
-   debug(`✅ عرض ${valid.length} منتجات من السحابة`);
-  }else{
-   debug('⚠️ لا توجد منتجات صالحة - نعرض رسالة');
-   products=[];
-  }
-  renderProducts();
- }, err=>{
-  debug('❌ خطأ Firebase: '+err.message);
-  products=[];
-  renderProducts();
- });
-
- onSnapshot(doc(db,'config','site'), s=>{
-  if(s.exists()){cfg={...cfg, ...s.data()}; debug('تم تحميل إعدادات الموقع'); applyConfig();}
- }, err=>{debug('خطأ تحميل الإعدادات: '+err.message); applyConfig();});
-}else{
- debug('❌ Firebase غير متصل - نعرض بيانات افتراضية');
- applyConfig();
- renderProducts();
-}
-</script>
+<script type="module" src="app.js"></script>
 </body>
 </html>
