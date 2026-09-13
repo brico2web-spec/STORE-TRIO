@@ -1,261 +1,122 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Admin - SENTEL LUXE ☁️</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script type="importmap">{"imports":{"firebase/app":"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js","firebase/firestore":"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"}}</script>
-<style>
-*{font-family:system-ui; box-sizing:border-box}
-.glass{background:rgba(255,255,255,.92);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.9);box-shadow:0 12px 40px rgba(0,0,0,.06)}
-.card{border-radius:20px;background:white;box-shadow:0 8px 32px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.05);transition:.3s}
-.btn{border-radius:999px;font-weight:800;transition:.2s;white-space:nowrap}
-.btn:active{scale:.97}
-@media(max-width:640px){.card{border-radius:16px}}
-</style>
+<style>.glass{background:rgba(255,255,255,.92);backdrop-filter:blur(24px);box-shadow:0 12px 40px rgba(0,0,0,.06)} .card{border-radius:18px;background:white;box-shadow:0 8px 24px rgba(0,0,0,.06)} .btn{border-radius:999px;font-weight:800}</style>
 </head>
-<body class="bg-[#F6FFFE] min-h-screen overflow-x-hidden">
-
-<!-- LOGIN - يعمل 100% بدون Firebase -->
-<div id="loginScreen" class="min-h-screen grid place-items-center p-4 bg-gradient-to-br from-zinc-900 via-zinc-800 to-[#0B7A6E]">
-<div class="glass rounded-[28px] p-8 w-full max-w-[400px] text-center shadow-2xl">
-<div class="text-[28px] font-black tracking-tight">SENTEL<span class="font-normal text-[#0B7A6E]">LUXE</span><span class="block text-[11px] tracking-[0.3em] text-zinc-500">ADMIN CLOUD ☁️</span></div>
-<div class="mt-4 bg-[#0B7A6E]/10 border border-[#0B7A6E]/20 rounded-[14px] p-3 text-[11px] text-right leading-relaxed">☁️ الصور ترفع للسحابة وتظهر في أي جهاز - هاتف، تابلت، PC</div>
-<input id="passInput" type="password" placeholder="كلمة السر: admin123" class="w-full mt-6 border-2 rounded-full px-6 py-4 text-[16px] outline-none focus:border-zinc-900 text-center">
-<button id="loginBtn" class="w-full mt-4 py-4 bg-zinc-900 text-white rounded-full font-bold text-[16px] hover:bg-black transition">دخول ☁️</button>
-<p id="loginMsg" class="mt-3 text-[12px] text-red-500 hidden"></p>
-<a href="index.html" class="block text-center mt-4 text-[12px] font-bold underline">← رجوع للمتجر</a>
-</div>
+<body class="bg-[#F6FFFE] min-h-screen">
+<div id="loginScreen" class="min-h-screen grid place-items-center p-4 bg-gradient-to-br from-zinc-900 to-[#0B7A6E]">
+<div class="glass rounded-[24px] p-8 w-full max-w-[380px] text-center"><div class="text-[26px] font-black">SENTEL<span class="text-[#0B7A6E]">LUXE</span> <span class="block text-[10px] tracking-widest">ADMIN</span></div><input id="passInput" type="password" placeholder="admin123" class="w-full mt-6 border-2 rounded-full px-5 py-3 text-center"><button id="loginBtn" class="w-full mt-4 py-3 bg-zinc-900 text-white rounded-full font-bold">دخول</button><a href="index.html" class="block mt-4 text-[11px] underline">المتجر</a></div>
 </div>
 
-<!-- PANEL -->
-<div id="panelScreen" class="hidden max-w-[1320px] mx-auto p-4 sm:p-6">
-<header class="flex flex-wrap justify-between items-center gap-4 mb-6 sm:mb-8">
-<div><h1 class="text-[22px] sm:text-[30px] font-black">لوحة التحكم ☁️</h1><p class="text-[11px] sm:text-[12px] text-green-600 font-bold">✅ الصور السحابية تظهر في أي جهاز تفتحه</p></div>
-<div class="flex gap-2"><a href="index.html" target="_blank" class="px-4 sm:px-5 h-[40px] rounded-full bg-white border grid place-items-center text-[12px] sm:text-[13px] font-bold shadow-sm">👁️ المتجر</a><button onclick="location.reload()" class="w-10 h-10 rounded-full bg-zinc-900 text-white grid place-items-center">↻</button></div>
-</header>
+<div id="panelScreen" class="hidden max-w-[1200px] mx-auto p-4">
+<header class="flex justify-between items-center mb-6"><h1 class="text-[24px] font-black">لوحة التحكم ☁️</h1><a href="index.html" target="_blank" class="px-4 py-2 bg-white border rounded-full text-[12px]">المتجر</a></header>
 
-<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-<div class="glass rounded-[18px] p-4"><div class="text-[11px] text-zinc-500">☁️ عطور سحابية</div><div id="st-count" class="text-[26px] font-black">0</div><div class="text-[10px] text-green-600">يظهر في كل الأجهزة ✅</div></div>
-<div class="glass rounded-[18px] p-4"><div class="text-[11px] text-zinc-500">الباقة</div><div id="st-offer" class="text-[18px] font-bold">200 MAD</div></div>
-<div class="glass rounded-[18px] p-4"><div class="text-[11px] text-zinc-500">اللوغو</div><div id="st-logo" class="text-[12px] font-bold truncate">—</div></div>
-<div class="glass rounded-[18px] p-4"><div class="text-[11px] text-zinc-500">السحابة</div><div id="st-cloud" class="text-[11px] font-bold text-amber-600">⏳...</div></div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+<div class="glass rounded-[16px] p-4"><div class="text-[11px] text-zinc-500">المنتجات السحابية</div><div id="st-count" class="text-[22px] font-black">0</div></div>
+<div class="glass rounded-[16px] p-4"><div class="text-[11px] text-zinc-500">صالحة</div><div id="st-valid" class="text-[18px] font-bold text-green-600">0</div></div>
+<div class="glass rounded-[16px] p-4"><div class="text-[11px] text-zinc-500">خاوية</div><div id="st-invalid" class="text-[18px] font-bold text-red-600">0</div></div>
 </div>
 
-<div class="flex gap-2 mb-6 sm:mb-8 overflow-auto pb-2 scrollbar-hide">
-<button onclick="switchTab('products')" id="btn-products" class="tabBtn px-6 py-3 rounded-full bg-zinc-900 text-white font-bold text-[14px] whitespace-nowrap">🧴 العطور ☁️</button>
-<button onclick="switchTab('logo')" id="btn-logo" class="tabBtn px-6 py-3 rounded-full bg-white border font-bold text-[14px] whitespace-nowrap">🖼️ اللوغو</button>
-<button onclick="switchTab('slider')" id="btn-slider" class="tabBtn px-6 py-3 rounded-full bg-white border font-bold text-[14px] whitespace-nowrap">🎞️ السلايدر</button>
-<button onclick="switchTab('offer')" id="btn-offer" class="tabBtn px-6 py-3 rounded-full bg-white border font-bold text-[14px] whitespace-nowrap">🎁 العرض</button>
-<button onclick="switchTab('phrases')" id="btn-phrases" class="tabBtn px-6 py-3 rounded-full bg-white border font-bold text-[14px] whitespace-nowrap">✨ العبارات</button>
+<div class="flex gap-2 overflow-auto mb-6">
+<button onclick="switchTab('products')" id="btn-products" class="px-6 py-3 rounded-full bg-zinc-900 text-white font-bold text-[13px] whitespace-nowrap">🧴 العطور</button>
+<button onclick="switchTab('slider')" id="btn-slider" class="px-6 py-3 rounded-full bg-white border font-bold text-[13px] whitespace-nowrap">🎞️ السلايدر</button>
+<button onclick="switchTab('logo')" id="btn-logo" class="px-6 py-3 rounded-full bg-white border font-bold text-[13px] whitespace-nowrap">🖼️ اللوغو</button>
 </div>
 
-<!-- PRODUCTS -->
 <div id="tab-products" class="tabView">
-<div class="card p-5 sm:p-7 mb-6 border-2 border-[#0B7A6E]/20 bg-gradient-to-br from-white to-[#F0FFF9]">
-<h3 class="font-black text-[18px] mb-1">إضافة عطر جديد - رفع سحابي مباشر ☁️</h3>
-<p class="text-[11px] text-zinc-500 mb-5">الصورة ترفع من هاتفك → السحابة → تظهر في الموقع في أي جهاز</p>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-<input id="p-name" placeholder="الاسم - Poison Girl" class="border-2 rounded-2xl px-5 py-4 text-[15px] bg-white outline-none focus:border-zinc-900">
-<input id="p-price" type="number" placeholder="الثمن 149" class="border-2 rounded-2xl px-5 py-4 text-[15px] bg-white outline-none focus:border-zinc-900">
-<input id="p-cat" placeholder="التصنيف Femme/Homme" class="border-2 rounded-2xl px-5 py-4 text-[14px] bg-white">
-<label class="flex items-center gap-3 text-[14px] font-bold border-2 rounded-2xl px-5 py-4 bg-white cursor-pointer"><input id="p-best" type="checkbox" class="w-5 h-5"> 🔥 Bestseller</label>
-<textarea id="p-desc" placeholder="الوصف - عطر فاخر بثبات 24 ساعة..." class="sm:col-span-2 border-2 rounded-2xl px-5 py-4 text-[14px] min-h-[80px] bg-white outline-none focus:border-zinc-900"></textarea>
-<div class="sm:col-span-2"><label class="block text-[12px] font-bold mb-2">📸 صورة العطر - تظهر في كل الأجهزة ☁️</label><input id="p-image" type="file" accept="image/*" class="w-full text-[13px] border-2 border-dashed rounded-2xl p-4 bg-white"><img id="p-preview" class="mt-4 w-32 h-32 object-contain hidden rounded-xl bg-zinc-50 border"></div>
+<div class="card p-5 mb-6 border-2 border-green-200"><h3 class="font-bold mb-3">إضافة عطر - يجب ملء الاسم والثمن والصورة</h3>
+<div class="grid sm:grid-cols-2 gap-3">
+<input id="p-name" placeholder="الاسم * مطلوب" class="border-2 rounded-xl px-4 py-3 text-[14px] bg-white">
+<input id="p-price" type="number" placeholder="الثمن * مطلوب 149" class="border-2 rounded-xl px-4 py-3 text-[14px] bg-white">
+<input id="p-cat" placeholder="التصنيف" class="border rounded-xl px-4 py-3 text-[13px] bg-white">
+<label class="flex items-center gap-2 border rounded-xl px-4 py-3 bg-white"><input id="p-best" type="checkbox"> Bestseller</label>
+<textarea id="p-desc" placeholder="الوصف" class="sm:col-span-2 border rounded-xl px-4 py-3 text-[13px] bg-white"></textarea>
+<div class="sm:col-span-2"><input id="p-image" type="file" accept="image/*" class="w-full border-2 border-dashed rounded-xl p-3 bg-white"><img id="p-preview" class="mt-3 w-24 h-24 object-contain hidden rounded-xl bg-zinc-50 border"></div>
 </div>
-<button id="btnAddProduct" class="mt-6 w-full py-4 bg-[#0B7A6E] text-white rounded-full font-black text-[16px] shadow-lg">☁️ رفع للسحابة + إضافة</button>
-</div>
-<div id="productsList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+<button id="btnAdd" class="mt-4 w-full py-3 bg-[#0B7A6E] text-white rounded-full font-bold">☁️ رفع للسحابة</button>
+<p class="text-[10px] text-zinc-500 mt-2">⚠️ يجب ملء الاسم والثمن - وإلا سيظهر undefined</p>
 </div>
 
-<!-- LOGO -->
-<div id="tab-logo" class="tabView hidden"><div class="card p-6 sm:p-8 max-w-[600px] border-2 border-green-200"><h3 class="font-black text-[20px] mb-2">اللوغو - كبير وواضح ☁️</h3><input id="logoTextInput" class="w-full border-2 rounded-2xl px-5 py-4 text-[18px] mb-4 bg-white" placeholder="SENTEL LUXE"><input id="logoImageInput" type="file" accept="image/*" class="w-full border-2 border-dashed rounded-2xl p-4 bg-white mb-4"><img id="logoPreview" class="h-20 hidden object-contain border rounded-xl p-2 bg-white"><button id="btnSaveLogo" class="w-full mt-4 py-4 bg-zinc-900 text-white rounded-full font-bold text-[16px]">☁️ حفظ اللوغو في السحابة</button><p id="logoStatus" class="mt-3 text-[11px] text-zinc-500"></p></div></div>
+<div id="invalidBox" class="hidden mb-4 p-4 bg-red-50 border-2 border-red-200 rounded-[16px]"><p class="font-bold text-[13px] text-red-700">⚠️ يوجد <span id="invalidCount">0</span> منتجات خاوية تمنع ظهور المتجر</p><button onclick="cleanInvalid()" class="mt-2 px-5 py-2 bg-red-600 text-white rounded-full text-[12px] font-bold">🗑️ حذف الخاوية الآن</button></div>
 
-<!-- SLIDER -->
-<div id="tab-slider" class="tabView hidden"><div class="card p-5 sm:p-6"><h3 class="font-bold text-[18px] mb-4">السلايدر - صور سحابية HD</h3><div id="sliderEdits" class="space-y-4"></div><div class="flex gap-3 mt-6"><button id="btnAddSlide" class="px-6 py-3 rounded-full bg-white border font-bold">+ شريحة</button><button id="btnSaveSlider" class="flex-1 py-3 bg-zinc-900 text-white rounded-full font-bold">💾 حفظ في السحابة</button></div></div></div>
-
-<!-- OFFER -->
-<div id="tab-offer" class="tabView hidden"><div class="card p-6 max-w-xl"><h3 class="font-bold text-[18px] mb-4">إعدادات الباقة 3 بـ 200</h3><input id="offerTitle" class="w-full border-2 rounded-2xl px-5 py-4 mb-3 text-[16px] bg-white" placeholder="عنوان الباقة"><input id="offerPriceInput" type="number" class="w-full border-2 rounded-2xl px-5 py-4 mb-3 text-[16px] bg-white" placeholder="الثمن 200"><textarea id="offerDesc" class="w-full border-2 rounded-2xl px-5 py-4 min-h-[100px] text-[14px] bg-white" placeholder="وصف الباقة"></textarea><button id="btnSaveOffer" class="w-full mt-4 py-3 bg-zinc-900 text-white rounded-full font-bold">حفظ</button></div></div>
-
-<!-- PHRASES -->
-<div id="tab-phrases" class="tabView hidden"><div class="card p-6 max-w-xl"><h3 class="font-bold text-[18px] mb-4">العبارات المتحركة ✨</h3><textarea id="phrasesInput" rows="5" class="w-full border-2 rounded-2xl px-5 py-4 text-[14px] bg-white" placeholder="كل عبارة في سطر - مثال: توصيل مجاني"></textarea><button id="btnSavePhrases" class="w-full mt-4 py-3 bg-[#0B7A6E] text-white rounded-full font-bold">💾 حفظ العبارات</button></div></div>
-
+<div id="productsList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
 </div>
 
-<!-- NON-MODULE LOGIN SCRIPT - يعمل حتى لو Firebase فشل -->
+<div id="tab-slider" class="tabView hidden"><div class="card p-5"><div id="sliderEdits"></div><div class="flex gap-2 mt-4"><button id="btnAddSlide" class="px-5 py-2 bg-white border rounded-full">+ شريحة</button><button id="btnSaveSlider" class="flex-1 py-2 bg-zinc-900 text-white rounded-full">حفظ السلايدر</button></div></div></div>
+<div id="tab-logo" class="tabView hidden"><div class="card p-6 max-w-[500px]"><input id="logoTextInput" class="w-full border rounded-xl px-4 py-3 mb-3" placeholder="SENTEL LUXE"><input id="logoImageInput" type="file" accept="image/*" class="w-full border-2 border-dashed rounded-xl p-3 mb-3"><img id="logoPreview" class="h-16 hidden"><button id="btnSaveLogo" class="w-full py-3 bg-zinc-900 text-white rounded-full">حفظ اللوغو</button></div></div>
+</div>
+
 <script>
-(function(){
-  const passEl=document.getElementById('passInput');
-  const loginBtn=document.getElementById('loginBtn');
-  const msg=document.getElementById('loginMsg');
-  function doLogin(){
-    const v=(passEl.value||'').trim();
-    if(v==='admin123'){
-      document.getElementById('loginScreen').classList.add('hidden');
-      document.getElementById('panelScreen').classList.remove('hidden');
-      localStorage.setItem('sentel_admin_ok','1');
-      if(window.afterLogin) window.afterLogin();
-    }else{
-      msg.textContent='كلمة السر خطأ - جرب admin123';
-      msg.classList.remove('hidden');
-      passEl.classList.add('border-red-500');
-      setTimeout(()=>{msg.classList.add('hidden'); passEl.classList.remove('border-red-500')},2500);
-    }
-  }
-  loginBtn.addEventListener('click', doLogin);
-  passEl.addEventListener('keydown', e=>{if(e.key==='Enter') doLogin()});
-  // auto-login if already
-  if(localStorage.getItem('sentel_admin_ok')==='1'){
-    passEl.value='admin123';
-    // لا تدخل تلقائي - خليه يضغط
-  }
-  window.switchTab=function(name){
-    document.querySelectorAll('.tabView').forEach(v=>v.classList.add('hidden'));
-    const target=document.getElementById('tab-'+name);
-    if(target) target.classList.remove('hidden');
-    document.querySelectorAll('.tabBtn').forEach(b=>{b.classList.remove('bg-zinc-900','text-white'); b.classList.add('bg-white','border')});
-    const btn=document.getElementById('btn-'+name);
-    if(btn){btn.classList.add('bg-zinc-900','text-white'); btn.classList.remove('bg-white','border')}
-  }
-})();
+document.getElementById('loginBtn').onclick=()=>{if(document.getElementById('passInput').value==='admin123'){document.getElementById('loginScreen').classList.add('hidden'); document.getElementById('panelScreen').classList.remove('hidden'); if(window.afterLogin) afterLogin();}else alert('admin123')};
+document.getElementById('passInput').onkeydown=e=>{if(e.key==='Enter') document.getElementById('loginBtn').click()};
+window.switchTab=n=>{document.querySelectorAll('.tabView').forEach(v=>v.classList.add('hidden')); document.getElementById('tab-'+n).classList.remove('hidden'); document.querySelectorAll('[id^="btn-"]').forEach(b=>{b.classList.remove('bg-zinc-900','text-white'); b.classList.add('bg-white','border')}); document.getElementById('btn-'+n).classList.add('bg-zinc-900','text-white'); document.getElementById('btn-'+n).classList.remove('bg-white','border')};
 </script>
 
-<!-- FIREBASE MODULE -->
 <script type="module">
 import {initializeApp} from 'firebase/app';
-import {getFirestore, collection, addDoc, deleteDoc, doc, setDoc, onSnapshot, getDoc} from 'firebase/firestore';
-
+import {getFirestore, collection, addDoc, deleteDoc, doc, setDoc, onSnapshot, getDoc, getDocs} from 'firebase/firestore';
 const firebaseConfig={apiKey:"AIzaSyDwrJ2FR0NVggoXeKchu2YGqqam5ZFMZXU",authDomain:"parfum-e53ad.firebaseapp.com",projectId:"parfum-e53ad",storageBucket:"parfum-e53ad.firebasestorage.app",messagingSenderId:"791467480753",appId:"1:791467480753:web:4c370b7e3635a37686f490"};
-let db;
-try{db=getFirestore(initializeApp(firebaseConfig)); document.getElementById('st-cloud').textContent='☁️ متصل';}catch(e){document.getElementById('st-cloud').textContent='❌ خطأ Firebase'; console.error(e)}
-
-let siteConfig={}; let currentImageBase64=''; let logoBase64='';
-
-function toBase64(file, max=700){
- return new Promise(res=>{
-  const r=new FileReader(); r.onload=e=>{
-   const img=new Image(); img.onload=()=>{
-    const c=document.createElement('canvas'); let w=img.width, h=img.height;
-    if(w>max){h=h*max/w; w=max;} c.width=w; c.height=h;
-    c.getContext('2d').drawImage(img,0,0,w,h); res(c.toDataURL('image/jpeg',0.85));
-   }; img.src=e.target.result;
-  }; r.readAsDataURL(file);
- });
-}
-
+const db=getFirestore(initializeApp(firebaseConfig));
+let siteConfig={}, curImg='', logoImg='';
 const $=id=>document.getElementById(id);
+const toB=(f,m=600)=>new Promise(r=>{const fr=new FileReader(); fr.onload=e=>{const im=new Image(); im.onload=()=>{const c=document.createElement('canvas'); let w=im.width,h=im.height; if(w>m){h=h*m/w; w=m;} c.width=w; c.height=h; c.getContext('2d').drawImage(im,0,0,w,h); r(c.toDataURL('image/jpeg',0.8));}; im.src=e.target.result;}; fr.readAsDataURL(f);});
 
-$('p-image')?.addEventListener('change', async e=>{
- const f=e.target.files[0]; if(!f) return;
- $('p-preview').classList.remove('hidden');
- $('p-preview').src=URL.createObjectURL(f);
- currentImageBase64=await toBase64(f, 600);
- $('p-preview').src=currentImageBase64;
-});
+$('p-image').addEventListener('change', async e=>{const f=e.target.files[0]; if(!f) return; curImg=await toB(f,600); $('p-preview').src=curImg; $('p-preview').classList.remove('hidden');});
+$('logoImageInput').addEventListener('change', async e=>{logoImg=await toB(e.target.files[0],400); $('logoPreview').src=logoImg; $('logoPreview').classList.remove('hidden');});
 
-$('logoImageInput')?.addEventListener('change', async e=>{
- logoBase64=await toBase64(e.target.files[0], 400);
- $('logoPreview').src=logoBase64; $('logoPreview').classList.remove('hidden');
-});
-
-async function loadData(){
- if(!db) return;
+window.afterLogin=()=>{
  onSnapshot(collection(db,'parfums'), snap=>{
-  const docs=snap.docs;
-  $('st-count').textContent=docs.length;
-  $('st-cloud').textContent='☁️ متصل - '+docs.length+' منتج';
-  // فلترة وتنظيف المنتجات الخاوية
-  let validDocs=docs.filter(d=>{const p=d.data(); return p.name && p.name!=='undefined' && p.price});
-  let invalidDocs=docs.filter(d=>{const p=d.data(); return !p.name || p.name==='undefined' || !p.price});
-  
-  if(invalidDocs.length>0){
-    console.warn('وجدنا منتجات خاوية:', invalidDocs.length);
-  }
-  
-  $('productsList').innerHTML=`
-    ${invalidDocs.length>0?`<div class="col-span-full mb-4 p-4 bg-red-50 border-2 border-red-200 rounded-[16px]"><p class="font-bold text-[13px] text-red-700">⚠️ وجدنا ${invalidDocs.length} منتجات خاوية (undefined) - اضغط لتنظيفها</p><button onclick="window.cleanInvalid()" class="mt-2 px-4 py-2 bg-red-600 text-white rounded-full text-[12px] font-bold">🗑️ حذف المنتجات الخاوية</button></div>`:''}
-    ${validDocs.map(d=>{
+  const all=snap.docs;
+  const valid=all.filter(d=>{const p=d.data(); return p.name && p.name!=='undefined' && p.name.trim().length>1 && p.price});
+  const invalid=all.filter(d=>{const p=d.data(); return !p.name || p.name==='undefined' || !p.price});
+  $('st-count').textContent=all.length;
+  $('st-valid').textContent=valid.length;
+  $('st-invalid').textContent=invalid.length;
+  if(invalid.length>0){$('invalidBox').classList.remove('hidden'); $('invalidCount').textContent=invalid.length;}else{$('invalidBox').classList.add('hidden');}
+  $('productsList').innerHTML=valid.map(d=>{
    const p=d.data();
-   return `<div class="card p-4 flex gap-3"><img src="${p.imageBase64||p.image||''}" class="w-16 h-16 object-contain bg-[#F7FFFD] rounded-xl border"><div class="flex-1 min-w-0"><p class="font-bold text-[14px] truncate">${p.name}</p><p class="text-[13px] font-bold text-[#0B7A6E]">${p.price} MAD ${p.bestseller?'🔥':''}</p><p class="text-[11px] text-zinc-500 truncate">${p.category||''}</p><div class="flex gap-2 mt-2"><button onclick="window.delProduct('${d.id}')" class="text-red-500 text-[11px] font-bold px-3 py-1 rounded-full bg-red-50">حذف</button><span class="text-[10px] text-green-600">☁️ يظهر في كل الأجهزة ✅</span></div></div></div>`;
-  }).join('') || '<div class="col-span-full py-10 text-center text-zinc-400">لا يوجد عطور - أضف أول عطر. الصور المرفوعة ستظهر في الموقع في أي جهاز</div>'}
-  `
+   return `<div class="card p-3 flex gap-3"><img src="${p.imageBase64||p.image||''}" class="w-14 h-14 object-contain bg-zinc-50 rounded-lg border"><div class="flex-1"><p class="font-bold text-[13px]">${p.name}</p><p class="text-[12px] text-[#0B7A6E]">${p.price} MAD</p><button onclick="del('${d.id}')" class="text-[11px] text-red-500 mt-1">حذف</button></div></div>`;
+  }).join('') || '<div class="py-10 text-center text-zinc-400">لا يوجد منتجات صالحة - أضف منتجات بالاسم والثمن</div>';
  });
+ getDoc(doc(db,'config','site')).then(s=>{if(s.exists()){siteConfig=s.data(); $('logoTextInput').value=siteConfig.logoText||''; renderSlider();}});
+};
 
- const cfgDoc=await getDoc(doc(db,'config','site')).catch(()=>null);
- if(cfgDoc && cfgDoc.exists()){
-  siteConfig=cfgDoc.data();
-  $('logoTextInput').value=siteConfig.logoText||'';
-  $('offerTitle').value=siteConfig.offerTitle||'ركّب باقتك';
-  $('offerPriceInput').value=siteConfig.offerPrice||200;
-  $('offerDesc').value=siteConfig.offerDesc||'';
-  $('phrasesInput').value=(siteConfig.phrases||[]).join('\n');
-  $('st-offer').textContent=(siteConfig.offerPrice||200)+' MAD';
-  $('st-logo').textContent=siteConfig.logoText? '✅ '+siteConfig.logoText.slice(0,15) : (siteConfig.logoImage?'✅ صورة':'❌');
-  renderSlider();
- }
-}
+window.del=async id=>{if(confirm('حذف؟')) await deleteDoc(doc(db,'parfums',id));};
+window.cleanInvalid=async()=>{
+ if(!confirm(`حذف ${$('st-invalid').textContent} منتجات خاوية؟`)) return;
+ const snap=await getDocs(collection(db,'parfums'));
+ let c=0;
+ for(const d of snap.docs){const p=d.data(); if(!p.name || p.name==='undefined' || !p.price){await deleteDoc(doc(db,'parfums',d.id)); c++;}}
+ alert(`تم حذف ${c} منتجات خاوية`);
+};
+
+$('btnAdd').onclick=async()=>{
+ const name=$('p-name').value.trim(), price=Number($('p-price').value), cat=$('p-cat').value, desc=$('p-desc').value, best=$('p-best').checked;
+ if(!name){alert('❌ الاسم مطلوب - اكتب اسم العطر'); return;}
+ if(!price){alert('❌ الثمن مطلوب'); return;}
+ if(!curImg){alert('❌ الصورة مطلوبة'); return;}
+ $('btnAdd').textContent='⏳ جاري الرفع...'; $('btnAdd').disabled=true;
+ try{
+  await addDoc(collection(db,'parfums'),{name, price, category:cat, description:desc, bestseller:best, imageBase64:curImg, image:curImg, created:Date.now()});
+  alert('✅ تم - المنتج الآن يظهر في المتجر في أي جهاز');
+  $('p-name').value=''; $('p-price').value=''; curImg=''; $('p-preview').classList.add('hidden'); $('p-image').value='';
+ }catch(e){alert('خطأ: '+e.message);}
+ $('btnAdd').textContent='☁️ رفع للسحابة'; $('btnAdd').disabled=false;
+};
 
 function renderSlider(){
  const slider=siteConfig.slider||[];
- $('sliderEdits').innerHTML=slider.map((sl,i)=>`
-  <div class="border-2 rounded-2xl p-4 bg-white"><div class="flex justify-between mb-2"><p class="font-bold text-[13px]">شريحة ${i+1}</p><button onclick="window.removeSlide(${i})" class="text-red-500 text-[11px]">حذف</button></div>
-  <input data-i="${i}" data-k="title" value="${(sl.title||'').replace(/"/g,'&quot;')}" class="w-full border-2 rounded-xl px-4 py-3 mb-2 text-[14px] font-bold" placeholder="العنوان">
-  <input data-i="${i}" data-k="sub" value="${(sl.sub||'').replace(/"/g,'&quot;')}" class="w-full border-2 rounded-xl px-4 py-3 mb-2 text-[12px]" placeholder="الوصف">
-  <div class="flex gap-2 items-center"><input type="file" data-i="${i}" class="sliderFile flex-1 text-[11px] border-2 border-dashed rounded-xl p-2"><img src="${sl.img||''}" class="h-12 w-20 object-cover rounded-lg border"></div>
-  </div>`).join('');
- document.querySelectorAll('.sliderFile').forEach(inp=>{
-  inp.addEventListener('change', async e=>{
-   const b=await toBase64(e.target.files[0], 1200);
-   siteConfig.slider[e.target.dataset.i].img=b;
-   e.target.nextElementSibling.src=b;
-  });
- });
- document.querySelectorAll('#sliderEdits input[data-k]').forEach(inp=>{
-  inp.addEventListener('input', e=>{siteConfig.slider[e.target.dataset.i][e.target.dataset.k]=e.target.value});
- });
+ $('sliderEdits').innerHTML=slider.map((sl,i)=>`<div class="border rounded-xl p-3 mb-3 bg-white"><input data-i="${i}" data-k="title" value="${sl.title||''}" class="w-full border rounded px-3 py-2 mb-2 text-[13px]"><input data-i="${i}" data-k="sub" value="${sl.sub||''}" class="w-full border rounded px-3 py-2 mb-2 text-[12px]"><div class="flex gap-2"><input type="file" data-i="${i}" class="slFile flex-1 text-[11px] border-2 border-dashed rounded p-2"><img src="${sl.img||''}" class="h-10 w-16 object-cover rounded border"></div></div>`).join('');
+ document.querySelectorAll('.slFile').forEach(inp=>{inp.addEventListener('change', async e=>{const b=await toB(e.target.files[0],1200); siteConfig.slider[e.target.dataset.i].img=b; e.target.nextElementSibling.src=b;});});
+ document.querySelectorAll('#sliderEdits input[data-k]').forEach(inp=>{inp.addEventListener('input', e=>{siteConfig.slider[e.target.dataset.i][e.target.dataset.k]=e.target.value});});
 }
-
-window.delProduct=async(id)=>{if(confirm('حذف المنتج من السحابة؟ سيختفي من كل الأجهزة')) await deleteDoc(doc(db,'parfums',id));}
-window.cleanInvalid=async()=>{
- if(!confirm('حذف جميع المنتجات الخاوية (undefined)؟')) return;
- const snap = await (await import('firebase/firestore')).getDocs(collection(db,'parfums'));
- let count=0;
- for(const d of snap.docs){
-  const p=d.data();
-  if(!p.name || p.name==='undefined' || !p.price){
-   await deleteDoc(doc(db,'parfums',d.id));
-   count++;
-  }
- }
- alert(`تم حذف ${count} منتجات خاوية - الآن المتجر سيظهر المنتجات الصحيحة`);
-};
-window.removeSlide=i=>{siteConfig.slider.splice(i,1); renderSlider();}
-
-$('btnAddProduct')?.addEventListener('click', async()=>{
- const name=$('p-name').value.trim(), price=Number($('p-price').value), cat=$('p-cat').value.trim(), desc=$('p-desc').value.trim(), best=$('p-best').checked;
- if(!name||!price){alert('املأ الاسم والثمن'); return}
- const btn=$('btnAddProduct'); const old=btn.textContent; btn.textContent='⏳ جاري الرفع للسحابة...'; btn.disabled=true;
- try{
-  await addDoc(collection(db,'parfums'),{name, price, category:cat, description:desc, bestseller:best, imageBase64:currentImageBase64, image:currentImageBase64, created:Date.now()});
-  alert('✅ تم الرفع للسحابة! يظهر الآن في الموقع في أي جهاز');
-  $('p-name').value=''; $('p-price').value=''; $('p-cat').value=''; $('p-desc').value=''; $('p-best').checked=false; currentImageBase64=''; $('p-preview').classList.add('hidden'); $('p-image').value='';
- }catch(e){alert('خطأ: '+e.message)}
- btn.textContent=old; btn.disabled=false;
-});
-
-$('btnSaveLogo')?.addEventListener('click', async()=>{
- const text=$('logoTextInput').value.trim();
- const update={logoText:text}; if(logoBase64) update.logoImage=logoBase64;
- $('logoStatus').textContent='⏳ جاري الحفظ في السحابة...';
- try{await setDoc(doc(db,'config','site'), {...siteConfig, ...update}, {merge:true}); $('logoStatus').textContent='✅ تم الحفظ - يظهر في كل الأجهزة'; alert('✅ تم حفظ اللوغو - يظهر كبير وواضح');}catch(e){$('logoStatus').textContent='❌ خطأ: '+e.message}
-});
-
-$('btnAddSlide')?.addEventListener('click', ()=>{siteConfig.slider=siteConfig.slider||[]; siteConfig.slider.push({title:'عنوان جديد ✨', sub:'وصف جذاب', img:'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1600&q=90'}); renderSlider();});
-$('btnSaveSlider')?.addEventListener('click', async()=>{await setDoc(doc(db,'config','site'), {slider: siteConfig.slider}, {merge:true}); alert('✅ تم حفظ السلايدر');});
-$('btnSaveOffer')?.addEventListener('click', async()=>{const t=$('offerTitle').value, p=Number($('offerPriceInput').value), d=$('offerDesc').value; await setDoc(doc(db,'config','site'), {offerTitle:t, offerPrice:p, offerDesc:d}, {merge:true}); alert('✅ تم حفظ العرض');});
-$('btnSavePhrases')?.addEventListener('click', async()=>{const arr=$('phrasesInput').value.split('\n').filter(x=>x.trim()); await setDoc(doc(db,'config','site'), {phrases:arr}, {merge:true}); alert('✅ تم حفظ العبارات');});
-
-window.afterLogin=()=>{loadData();};
+$('btnAddSlide').onclick=()=>{siteConfig.slider=siteConfig.slider||[]; siteConfig.slider.push({title:'عنوان جديد', sub:'وصف', img:'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1600&q=80'}); renderSlider();};
+$('btnSaveSlider').onclick=async()=>{await setDoc(doc(db,'config','site'),{slider:siteConfig.slider},{merge:true}); alert('تم حفظ السلايدر');};
+$('btnSaveLogo').onclick=async()=>{const u={logoText:$('logoTextInput').value}; if(logoImg) u.logoImage=logoImg; await setDoc(doc(db,'config','site'),{...siteConfig,...u},{merge:true}); alert('تم حفظ اللوغو');};
 </script>
 </body>
 </html>

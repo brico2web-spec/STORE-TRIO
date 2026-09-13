@@ -11,320 +11,233 @@
 *{font-family:'Tajawal',sans-serif; box-sizing:border-box}
 .display{font-family:'Space Grotesk','Tajawal',sans-serif}
 .glass{background:rgba(255,255,255,0.88);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.9);box-shadow:0 12px 40px rgba(0,0,0,.06)}
-.glass-strong{background:rgba(255,255,255,0.96);backdrop-filter:blur(28px);border:1px solid #fff;box-shadow:0 20px 60px rgba(0,0,0,.10)}
-.card{border-radius:24px;background:white;box-shadow:0 12px 40px rgba(0,0,0,0.06);border:1px solid rgba(0,0,0,0.04);transition:.4s cubic-bezier(.16,1,.3,1)}
-.card:hover{transform:translateY(-8px) scale(1.01);box-shadow:0 24px 64px rgba(0,0,0,0.12)}
-.btn{border-radius:999px;font-weight:800;letter-spacing:-.02em;transition:.25s;white-space:nowrap}
-.btn:active{scale:.97}
-.mint{background:linear-gradient(135deg,#D6FFF1 0%,#B6F2DD 40%,#E2FFF6 100%); border:1px solid rgba(11,122,110,.15)}
-.mint-dark{background:linear-gradient(135deg,#0B7A6E 0%,#14B8A6 100%)}
-.shine{position:relative;overflow:hidden}
-.shine:after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.4) 50%,transparent 70%);transform:rotate(25deg) translateX(-100%);animation:shine 4s infinite}
-@keyframes shine{0%{transform:rotate(25deg) translateX(-100%)}60%{transform:rotate(25deg) translateX(100%)}100%{transform:rotate(25deg) translateX(100%)}}
+.card{border-radius:24px;background:white;box-shadow:0 12px 40px rgba(0,0,0,0.06);border:1px solid rgba(0,0,0,0.04);transition:.4s}
+.card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.1)}
+.btn{border-radius:999px;font-weight:800;transition:.25s;white-space:nowrap}
+.mint{background:linear-gradient(135deg,#D6FFF1 0%,#B6F2DD 40%,#E2FFF6 100%)}
 .marquee{animation:marquee 28s linear infinite}
 @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.float{animation:float 6s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-.progress{animation:prog 4.5s linear; transform-origin:left}
-@keyframes prog{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}
-@media(max-width:640px){
-  .card{border-radius:18px}
-  .card:hover{transform:translateY(-4px) scale(1)}
-}
-img{max-width:100%; height:auto}
+img{max-width:100%;height:auto}
 </style>
 </head>
-<body class="bg-[#FBFFFE] text-zinc-900 selection:bg-[#0d6d62] selection:text-white overflow-x-hidden">
+<body class="bg-[#FBFFFE] text-zinc-900 overflow-x-hidden">
 
-<!-- TOP BAR - إثارة -->
-<div id="topBar" class="h-[36px] sm:h-[40px] bg-zinc-900 text-white flex items-center overflow-hidden relative z-50">
-  <div class="flex marquee gap-8 sm:gap-12 text-[10px] sm:text-[12px] font-bold tracking-widest whitespace-nowrap">
-    <span id="mq-top-1">✦ توصيل مجاني لجميع المدن ✦ الدفع عند الاستلام ✦ خصم 93% على الماركات العالمية ✦ +200 عطر فاخر ✦ ثبات 24 ساعة ✦</span>
-    <span id="mq-top-2">✦ توصيل مجاني لجميع المدن ✦ الدفع عند الاستلام ✦ خصم 93% على الماركات العالمية ✦ +200 عطر فاخر ✦ ثبات 24 ساعة ✦</span>
-  </div>
-</div>
+<div id="topBar" class="h-[40px] bg-zinc-900 text-white flex items-center overflow-hidden"><div class="flex marquee gap-12 text-[12px] font-bold whitespace-nowrap"><span id="mqTop">✦ توصيل مجاني ✦ الدفع عند الاستلام ✦ خصم 93% ✦ +200 عطر ✦ ثبات 24 ساعة ✦</span><span>✦ توصيل مجاني ✦ الدفع عند الاستلام ✦ خصم 93% ✦ +200 عطر ✦ ثبات 24 ساعة ✦</span></div></div>
 
-<header class="sticky top-0 z-40 glass border-b border-black/5">
-<div class="max-w-[1320px] mx-auto px-4 sm:px-6 md:px-8 h-[64px] sm:h-[84px] flex items-center justify-between">
+<header class="sticky top-0 z-40 glass border-b">
+<div class="max-w-[1320px] mx-auto px-4 h-[68px] flex items-center justify-between">
 <div class="flex items-center gap-3">
-<img id="logoImg" class="h-8 sm:h-11 hidden object-contain max-w-[140px] sm:max-w-[200px]" alt="">
-<div id="logoText" class="display text-[22px] sm:text-[30px] md:text-[34px] font-[800] tracking-[-0.04em] leading-none">SENTEL<span class="font-[400] text-[#0B7A6E]">LUXE</span></div>
-<div class="hidden md:flex items-center gap-2 ml-4 glass rounded-full p-1 h-[32px]"><button onclick="setLang('AR')" id="lang-ar" class="px-3 h-[24px] rounded-full text-[11px] font-bold bg-zinc-900 text-white">AR</button><button onclick="setLang('FR')" id="lang-fr" class="px-3 h-[24px] rounded-full text-[11px] font-bold">FR</button><button onclick="setLang('EN')" id="lang-en" class="px-3 h-[24px] rounded-full text-[11px] font-bold">EN</button></div>
+<img id="logoImg" class="h-10 hidden object-contain max-w-[180px]" alt="">
+<div id="logoText" class="display text-[26px] font-[800]">SENTEL<span class="font-normal text-[#0B7A6E]">LUXE</span></div>
 </div>
-<div class="flex items-center gap-2 sm:gap-3">
-<button onclick="toggleSearch()" class="w-10 h-10 sm:w-[52px] sm:h-[52px] rounded-full glass grid place-items-center hover:bg-white transition text-[18px]">⌕</button>
-<button id="cartBtn" class="w-10 h-10 sm:w-[52px] sm:h-[52px] rounded-full bg-zinc-900 text-white grid place-items-center relative shadow-[0_8px_24px_rgba(0,0,0,.15)] hover:bg-black transition">
-<svg width="20" height="20" class="sm:w-[24px] sm:h-[24px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-<span id="cartCount" class="absolute -top-1 -right-1 bg-[#0B7A6E] text-white text-[11px] sm:text-[12px] font-bold w-5 h-5 sm:w-6 sm:h-6 rounded-full grid place-items-center hidden">0</span>
-</button>
+<button id="cartBtn" class="w-[52px] h-[52px] rounded-full bg-zinc-900 text-white grid place-items-center relative">👜<span id="cartCount" class="absolute -top-1 -right-1 bg-[#0B7A6E] text-white text-[12px] w-6 h-6 rounded-full grid place-items-center hidden">0</span></button>
 </div>
-</div>
-<div id="searchBar" class="hidden border-t p-3 bg-white/90 backdrop-blur"><div class="max-w-[1320px] mx-auto flex gap-2"><input id="searchIn" oninput="filterProducts(this.value)" placeholder="ابحث عن عطر... Dior, Chanel, Sauvage..." class="flex-1 h-[44px] rounded-full glass px-5 text-[14px] outline-none"><button onclick="toggleSearch()" class="w-11 h-11 rounded-full bg-zinc-900 text-white">✕</button></div></div>
 </header>
 
-<!-- HERO SLIDER HD - إثارة عالية -->
-<div class="max-w-[1320px] mx-auto px-3 sm:px-4 md:px-6 mt-3 sm:mt-6">
-<div id="slider" class="relative h-[380px] sm:h-[480px] md:h-[600px] rounded-[24px] sm:rounded-[36px] overflow-hidden bg-zinc-900 shadow-[0_24px_80px_rgba(0,0,0,.18)]"></div>
-<div id="dots" class="flex justify-center gap-2 sm:gap-2.5 mt-4 sm:mt-5"></div>
+<div class="max-w-[1320px] mx-auto px-3 mt-4">
+<div id="slider" class="relative h-[380px] sm:h-[500px] rounded-[24px] overflow-hidden bg-zinc-900 shadow-xl">
+<div class="absolute inset-0 grid place-items-center text-white"><div class="text-center"><div class="w-10 h-10 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto"></div><p class="mt-3 text-[13px]">جاري تحميل السلايدر...</p></div></div>
+</div>
+<div id="dots" class="flex justify-center gap-2 mt-4"></div>
 </div>
 
-<div class="mt-6 sm:mt-10 bg-zinc-900 text-white py-3 sm:py-4 overflow-hidden relative">
-<div class="absolute inset-0 mint-dark opacity-20"></div>
-<div class="flex marquee whitespace-nowrap gap-10 sm:gap-16 text-[13px] sm:text-[15px] font-bold tracking-wide relative z-10">
-<span id="mq1">✦ لأنك تستحق الأفضل ✦ جاذبية لا تقاوم ✦ ثبات 24 ساعة ✦ فخامة لا تُنسى ✦ عطور أصلية ✦</span>
-<span id="mq2">✦ لأنك تستحق الأفضل ✦ جاذبية لا تقاوم ✦ ثبات 24 ساعة ✦ فخامة لا تُنسى ✦ عطور أصلية ✦</span>
-</div>
-</div>
+<div class="mt-6 bg-zinc-900 text-white py-3 overflow-hidden"><div class="flex marquee gap-12 text-[14px] font-bold whitespace-nowrap"><span>✦ لأنك تستحق الأفضل ✦ جاذبية لا تقاوم ✦ ثبات 24 ساعة ✦ فخامة لا تُنسى ✦</span><span>✦ لأنك تستحق الأفضل ✦ جاذبية لا تقاوم ✦ ثبات 24 ساعة ✦ فخامة لا تُنسى ✦</span></div></div>
 
-<!-- OFFER - الأكثر إثارة -->
-<section class="max-w-[1040px] mx-auto px-3 sm:px-4 mt-8 sm:mt-14">
-<div class="mint rounded-[28px] sm:rounded-[40px] p-5 sm:p-7 md:p-12 shadow-[0_20px_80px_rgba(11,122,110,.18)] relative overflow-hidden">
-<div class="absolute -top-20 -right-20 w-64 h-64 bg-white/30 rounded-full blur-3xl"></div>
-<div class="absolute -bottom-20 -left-20 w-64 h-64 bg-[#0B7A6E]/10 rounded-full blur-3xl"></div>
-<div class="flex items-center justify-between mb-6 sm:mb-10 relative z-10">
-<h3 class="display text-[22px] sm:text-[28px] md:text-[34px] font-[800] tracking-[-0.03em]">ركّب باقتك الخاصة ✨</h3>
-<span id="offerCounter" class="bg-white/90 backdrop-blur px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-[14px] sm:text-[16px] font-[800] shadow-sm border">0/3</span>
-</div>
-<div id="offerSlots" class="grid grid-cols-3 gap-3 sm:gap-5 md:gap-8 relative z-10"></div>
-<p id="offerDescText" class="text-center mt-6 sm:mt-10 text-[14px] sm:text-[18px] font-[600] text-[#0B5A51] leading-relaxed px-2">اضغط لاختيار 3 عطور من الأكثر مبيعاً. امزج بين المنعش والحلو والخشبي واصنع بصمتك!</p>
-<div class="flex flex-col sm:flex-row justify-center gap-3 mt-6 sm:mt-8 relative z-10">
-<button id="offerOrderBtn" disabled class="btn shine px-8 sm:px-12 py-4 sm:py-5 text-[16px] sm:text-[18px] bg-zinc-900 text-white disabled:opacity-30 shadow-[0_10px_30px_rgba(0,0,0,.2)] w-full sm:w-auto">اطلب الباقة بـ <span id="offerPrice" class="text-[20px] sm:text-[22px]">200</span> درهم ✨</button>
-<button onclick="clearPicks()" class="btn px-6 sm:px-8 py-4 sm:py-5 text-[14px] bg-white border-2 border-zinc-900 w-full sm:w-auto">مسح الباقة</button>
-</div>
+<section class="max-w-[1040px] mx-auto px-3 mt-10">
+<div class="mint rounded-[32px] p-6 md:p-10 shadow-lg">
+<div class="flex justify-between items-center mb-8"><h3 class="display text-[26px] font-[800]">ركّب باقتك ✨</h3><span id="offerCounter" class="bg-white px-5 py-2 rounded-full font-bold">0/3</span></div>
+<div id="offerSlots" class="grid grid-cols-3 gap-4"></div>
+<p id="offerDesc" class="text-center mt-8 text-[16px] font-medium text-[#0B5A51]">اضغط لاختيار 3 عطور</p>
+<button id="offerOrderBtn" disabled class="btn w-full sm:w-auto mx-auto block mt-6 px-10 py-4 bg-zinc-900 text-white disabled:opacity-30">اطلب الباقة بـ <span id="offerPrice">200</span> درهم ✨</button>
 </div>
 </section>
 
-<!-- TRUST BADGES - احترافية -->
-<section class="max-w-[1320px] mx-auto px-3 sm:px-4 md:px-6 mt-8 sm:mt-12 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-<div class="glass rounded-[18px] sm:rounded-[22px] p-4 sm:p-5 flex gap-3 items-center"><div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#0B7A6E] text-white grid place-items-center text-[18px]">✦</div><div><div class="font-bold text-[12px] sm:text-[13px]">خبرة 10 سنوات</div><div class="text-[10px] sm:text-[11px] text-zinc-500">انتقاء فاخر</div></div></div>
-<div class="glass rounded-[18px] sm:rounded-[22px] p-4 sm:p-5 flex gap-3 items-center"><div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-zinc-900 text-white grid place-items-center">🚚</div><div><div class="font-bold text-[12px] sm:text-[13px]">توصيل مجاني</div><div class="text-[10px] sm:text-[11px] text-zinc-500">لكل المدن</div></div></div>
-<div class="glass rounded-[18px] sm:rounded-[22px] p-4 sm:p-5 flex gap-3 items-center"><div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#D6FFF1] grid place-items-center">✨</div><div><div class="font-bold text-[12px] sm:text-[13px]">+200 عطر</div><div class="text-[10px] sm:text-[11px] text-zinc-500">ماركات عالمية</div></div></div>
-<div class="glass rounded-[18px] sm:rounded-[22px] p-4 sm:p-5 flex gap-3 items-center"><div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-amber-400 grid place-items-center">🛡️</div><div><div class="font-bold text-[12px] sm:text-[13px]">خصم 93%</div><div class="text-[10px] sm:text-[11px] text-zinc-500">سعر SENTEL</div></div></div>
-</section>
-
-<!-- PRODUCTS - شبكة احترافية Responsive -->
-<section class="max-w-[1320px] mx-auto px-4 sm:px-6 mt-10 sm:mt-20">
-<div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 mb-6 sm:mb-10">
-<h2 class="display text-[28px] sm:text-[40px] md:text-[52px] font-[800] tracking-[-0.04em] leading-none">الأكثر مبيعاً 🔥</h2>
-<p class="text-[14px] sm:text-[18px] text-zinc-500 font-medium">عطور أصلية • ثبات 24 ساعة • توصيل مجاني</p>
-</div>
-<div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-7"></div>
-</section>
-
-<!-- REVIEWS - إثارة اجتماعية -->
-<section class="max-w-[1320px] mx-auto px-4 sm:px-6 mt-10 sm:mt-16">
-<div class="glass rounded-[20px] sm:rounded-[28px] p-5 sm:p-8 flex flex-col md:flex-row gap-6 items-start md:items-center">
-<div class="flex items-center gap-4"><div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-zinc-900 text-white grid place-items-center font-bold text-[18px]">4.9</div><div><div class="font-bold">★★★★★</div><div class="text-[13px] font-bold">4.9/5 - 2,847 تقييم</div></div></div>
-<p class="flex-1 text-[13px] sm:text-[15px] text-zinc-600 leading-relaxed">“توصيل سريع لمراكش في أقل من 24 ساعة، الباقة وصلت مغلفة بعناية والعطور ثباتها خيالي! SENTEL غير مفهوم الفخامة” — <b>فاطمة الزهراء، مراكش</b></p>
-<div class="flex -space-x-2"><div class="w-8 h-8 rounded-full bg-[#fde68a] border-2 border-white"></div><div class="w-8 h-8 rounded-full bg-[#bfdbfe] border-2 border-white"></div><div class="w-8 h-8 rounded-full bg-[#bbf7d0] border-2 border-white"></div><div class="w-8 h-8 rounded-full bg-white border-2 border-zinc-200 grid place-items-center text-[10px] font-bold">+2k</div></div>
+<section class="max-w-[1320px] mx-auto px-4 mt-12">
+<div class="flex justify-between items-center mb-8"><h2 class="display text-[32px] md:text-[44px] font-[800]">الأكثر مبيعاً 🔥</h2><span id="prodCount" class="text-[13px] text-zinc-500">جاري التحميل...</span></div>
+<div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<div class="col-span-full py-20 text-center"><div class="w-10 h-10 border-2 border-zinc-900 border-t-transparent rounded-full animate-spin mx-auto"></div><p class="mt-4 text-zinc-500">جاري تحميل المنتجات من السحابة...</p><p class="text-[11px] text-zinc-400 mt-2">إذا لم تظهر المنتجات، تأكد من أنك أضفتها في الأدمن</p></div>
 </div>
 </section>
 
-<footer class="mt-16 sm:mt-24 border-t bg-white/80 backdrop-blur">
-<div class="max-w-[1320px] mx-auto px-4 sm:px-6 py-10 sm:py-14 grid grid-cols-1 md:grid-cols-3 gap-8">
-<div><div class="display text-[26px] sm:text-[30px] font-[800]">SENTEL<span class="font-[400] text-[#0B7A6E]">LUXE</span></div><p class="mt-3 text-[13px] sm:text-[14px] text-zinc-500 leading-relaxed max-w-[32ch]">فن العطر بسعر في متناول الجميع. +200 عطر من الماركات الكبرى بخصم 93% - ثبات 12 ساعة وتوصيل مجاني لكل المغرب.</p><div class="mt-4 flex gap-2"><div class="w-9 h-9 rounded-full bg-zinc-900 text-white grid place-items-center text-[12px]">f</div><div class="w-9 h-9 rounded-full bg-zinc-900 text-white grid place-items-center">◎</div><div class="w-9 h-9 rounded-full bg-[#25D366] text-white grid place-items-center">W</div></div></div>
-<div><div class="font-bold text-[13px] tracking-widest text-zinc-400 mb-4">تواصل معنا</div><div class="space-y-2 text-[13px]"><div>📍 الدار البيضاء، المعاريف - المغرب</div><div>📞 +212 6 12 34 56 78</div><div>✉️ contact@sentel-luxe.com</div></div></div>
-<div><div class="font-bold text-[13px] tracking-widest text-zinc-400 mb-4">خريطة</div><iframe id="footerMap" src="https://www.google.com/maps?q=Kenitra,Morocco&z=13&output=embed" class="w-full h-[180px] rounded-[16px] border"></iframe></div>
-</div>
-<div class="border-t py-4 text-center text-[11px] text-zinc-400">© 2026 SENTEL LUXE - كل الحقوق محفوظة - ☁️ الصور محفوظة في السحابة وتظهر في أي جهاز</div>
-<div class="text-center pb-6"><a href="admin.html" class="text-[11px] font-bold tracking-widest text-zinc-300 hover:text-zinc-600 border-b">ADMIN CLOUD</a></div>
-</footer>
+<footer class="mt-20 border-t py-10 text-center"><p class="text-[12px] text-zinc-400">© 2026 SENTEL LUXE - ☁️ الصور محفوظة في السحابة</p><a href="admin.html" class="text-[11px] font-bold underline mt-3 inline-block">ADMIN</a><div id="debug" class="mt-4 text-[10px] text-zinc-400 max-w-[600px] mx-auto px-4 text-left ltr"></div></footer>
 
-<div id="drawer" class="fixed inset-0 z-50 hidden"><div class="absolute inset-0 bg-zinc-900/30 backdrop-blur-sm" onclick="closeDrawer()"></div><div class="absolute left-0 sm:right-0 top-0 h-full w-[92%] sm:w-full max-w-[460px] bg-white p-5 sm:p-7 overflow-auto rounded-l-[24px] sm:rounded-[32px] shadow-2xl"><div class="flex justify-between items-center mb-6"><h3 class="display text-[22px] sm:text-[26px] font-bold">السلة 👜</h3><button onclick="closeDrawer()" class="w-10 h-10 rounded-full bg-zinc-100 grid place-items-center">✕</button></div><div id="cartList" class="space-y-3"></div><div class="mt-6 border-t pt-6"><div class="flex justify-between font-bold text-[16px] mb-4"><span>المجموع</span><span id="cartTotal">0 MAD</span></div><button onclick="order()" class="btn w-full py-4 sm:py-5 bg-[#0B7A6E] text-white text-[16px] sm:text-[18px] shadow-lg">اطلب عبر واتساب ✨</button><p class="text-center text-[11px] text-zinc-500 mt-3">الدفع عند الاستلام • توصيل مجاني</p></div></div></div>
+<div id="drawer" class="fixed inset-0 z-50 hidden"><div class="absolute inset-0 bg-black/30" onclick="closeDrawer()"></div><div class="absolute left-0 top-0 h-full w-[92%] max-w-[420px] bg-white p-6 overflow-auto rounded-l-[24px]"><h3 class="text-[20px] font-bold mb-6">السلة</h3><div id="cartList"></div><button onclick="order()" class="btn w-full mt-6 py-4 bg-[#0B7A6E] text-white">اطلب عبر واتساب</button></div></div>
 
-<!-- PICK MODAL -->
-<div id="pickModal" class="fixed inset-0 z-[70] hidden bg-black/40 backdrop-blur-md p-3 sm:p-6 grid place-items-center"><div class="glass-strong rounded-[20px] sm:rounded-[28px] w-full max-w-[720px] p-5 sm:p-7 max-h-[85vh] overflow-auto"><div class="flex justify-between items-center mb-5"><h4 class="font-bold text-[18px]">اختر عطر للباقة #<span id="pickIdx">1</span></h4><button onclick="closePick()" class="w-10 h-10 rounded-full bg-zinc-100 grid place-items-center">✕</button></div><div id="pickGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div></div></div>
+<div id="pickModal" class="fixed inset-0 z-[60] hidden bg-black/40 p-4 grid place-items-center"><div class="bg-white rounded-[24px] w-full max-w-[600px] p-6 max-h-[80vh] overflow-auto"><h4 class="font-bold mb-4">اختر عطر</h4><div id="pickGrid" class="grid gap-3"></div><button onclick="closePick()" class="mt-4 w-full py-3 rounded-full bg-zinc-100">إغلاق</button></div></div>
 
 <script type="module">
 import {initializeApp} from 'firebase/app';
 import {getFirestore, collection, onSnapshot, doc} from 'firebase/firestore';
-const firebaseConfig={apiKey:"AIzaSyDwrJ2FR0NVggoXeKchu2YGqqam5ZFMZXU",authDomain:"parfum-e53ad.firebaseapp.com",projectId:"parfum-e53ad",storageBucket:"parfum-e53ad.firebasestorage.app",messagingSenderId:"791467480753",appId:"1:791467480753:web:4c370b7e3635a37686f490"};
-let db; try{db=getFirestore(initializeApp(firebaseConfig))}catch{}
-let products=[], cart=[], picks=[], cfg={offerPrice:200, offerTitle:'ركّب باقتك', logoText:'SENTEL LUXE', slider:[
-{title:'عطرك.. بصمتك التي لا تُنسى ✨', sub:'ثبات يدوم 24 ساعة • تركيز عالي • فخامة لا تقاوم', img:'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1600&q=90'},
-{title:'لمسة واحدة.. وتسحر القلوب 💖', sub:'تشكيلة 2026 فاخرة وحصرية - أكثر من 200 عطر', img:'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1600&q=90'},
-{title:'فخامة لا تقاوم - الآن ب 149 درهم 🔥', sub:'شحن مجاني لكل المدن المغربية • دفع عند الاستلام', img:'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=1600&q=90'}
-], phrases:['توصيل مجاني لجميع المدن','الدفع عند الاستلام','خصم 93% على الماركات العالمية','ثبات 24 ساعة','عطور أصلية'], offerDesc:'اضغط لاختيار 3 عطور من الأكثر مبيعاً. امزج بين المنعش والحلو والخشبي واصنع بصمتك الخاصة!'};
 
-let currentLang='AR';
-window.setLang=l=>{
- currentLang=l;
- document.querySelectorAll('[id^="lang-"]').forEach(b=>{b.classList.remove('bg-zinc-900','text-white'); b.classList.add('bg-white','text-zinc-900')});
- const active=document.getElementById('lang-'+l.toLowerCase()); if(active){active.classList.add('bg-zinc-900','text-white'); active.classList.remove('bg-white')};
- renderProducts();
+const firebaseConfig={apiKey:"AIzaSyDwrJ2FR0NVggoXeKchu2YGqqam5ZFMZXU",authDomain:"parfum-e53ad.firebaseapp.com",projectId:"parfum-e53ad",storageBucket:"parfum-e53ad.firebasestorage.app",messagingSenderId:"791467480753",appId:"1:791467480753:web:4c370b7e3635a37686f490"};
+let db;
+try{db=getFirestore(initializeApp(firebaseConfig));}catch(e){console.error('Firebase init failed',e)}
+
+let products=[], cart=[], picks=[], cfg={offerPrice:200, slider:[
+{title:'عطرك.. بصمتك التي لا تُنسى ✨', sub:'ثبات يدوم 24 ساعة • تركيز عالي', img:'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1600&q=80'},
+{title:'لمسة واحدة.. وتسحر القلوب 💖', sub:'تشكيلة 2026 فاخرة', img:'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1600&q=80'},
+{title:'فخامة لا تقاوم 🔥', sub:'شحن مجاني لكل المدن', img:'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=1600&q=80'}
+]};
+
+const $=id=>document.getElementById(id);
+function debug(msg){console.log(msg); const d=$('debug'); if(d) d.innerHTML+=msg+'<br>';}
+
+function isValid(p){
+ if(!p) return false;
+ const name = (p.name||'').toString().trim();
+ if(!name || name==='undefined' || name.length<2) return false;
+ const price = Number(p.price);
+ if(!price || isNaN(price) || price<=0) return false;
+ const img = p.imageBase64||p.image||p.img||'';
+ if(!img || img.length<10) return false;
+ return true;
 }
 
-window.toggleSearch=()=>{document.getElementById('searchBar').classList.toggle('hidden')};
-window.filterProducts=q=>{
- if(!q){renderProducts(); return}
- const f=products.filter(p=>p.name.toLowerCase().includes(q.toLowerCase())||(p.category||'').toLowerCase().includes(q.toLowerCase()));
- document.getElementById('grid').innerHTML=f.map(p=>productCard(p)).join('')||'<div class="col-span-full py-20 text-center text-zinc-400">لا يوجد نتائج</div>';
+function getImage(p){
+ let img = p.imageBase64||p.image||p.img||'';
+ // إصلاح الصور: إذا كانت رابط http عادي أو base64
+ if(img.startsWith('http') || img.startsWith('data:')) return img;
+ return 'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=800&q=80';
 }
 
 function productCard(p){
+ const img = getImage(p);
  return `
- <div class="card p-4 sm:p-5 group relative overflow-hidden">
- <div class="absolute top-3 left-3 z-10 flex gap-2">${p.bestseller?'<span class="bg-zinc-900 text-white text-[10px] sm:text-[11px] font-bold px-3 py-1.5 rounded-full">BESTSELLER 🔥</span>':''}<span class="bg-[#0B7A6E] text-white text-[10px] font-bold px-2.5 py-1 rounded-full">-${Math.round((1-p.price/(p.old||p.oldPrice||899))*100)}%</span></div>
- <div class="relative bg-[#F7FFFD] rounded-[16px] sm:rounded-[20px] aspect-square overflow-hidden grid place-items-center">
- <img src="${p.imageBase64||p.img||p.image}" class="w-full h-full object-contain p-6 sm:p-7 group-hover:scale-[1.12] transition duration-[700ms] float" loading="lazy">
+ <div class="card p-4 group">
+ <div class="bg-[#F7FFFD] rounded-[16px] aspect-square overflow-hidden grid place-items-center relative">
+ <img src="${img}" class="w-full h-full object-contain p-5 group-hover:scale-105 transition duration-500" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=800&q=80'">
+ ${p.bestseller?'<span class="absolute top-3 right-3 bg-zinc-900 text-white text-[10px] px-3 py-1 rounded-full">BESTSELLER</span>':''}
  </div>
- <div class="mt-4 sm:mt-5">
- <h3 class="font-[800] text-[16px] sm:text-[20px] leading-tight tracking-[-0.02em]">${p.name}</h3>
- <p class="text-[12px] sm:text-[14px] text-zinc-500 mt-1 line-clamp-1 font-medium">${p.description||'عطر فاخر بثبات يدوم 24 ساعة'}</p>
- <div class="flex items-center justify-between mt-4 sm:mt-5">
- <div><span class="display text-[20px] sm:text-[24px] font-[700]">${p.price} MAD</span><span class="text-[12px] text-zinc-400 line-through ml-2">${p.old||p.oldPrice||899} MAD</span></div>
- <button onclick="add('${p.id}')" class="w-[44px] h-[44px] sm:w-[48px] sm:h-[48px] rounded-full bg-zinc-900 text-white grid place-items-center hover:bg-black hover:scale-110 transition shadow-lg">+</button>
+ <div class="mt-4">
+ <h3 class="font-bold text-[16px] leading-tight">${p.name}</h3>
+ <p class="text-[12px] text-zinc-500 mt-1 line-clamp-1">${p.description||'عطر فاخر بثبات 24 ساعة'}</p>
+ <div class="flex justify-between items-center mt-4">
+ <span class="font-bold text-[18px]">${p.price} MAD</span>
+ <button onclick="add('${p.id}')" class="w-10 h-10 rounded-full bg-zinc-900 text-white grid place-items-center hover:bg-black">+</button>
  </div>
- <button onclick="pick('${p.id}')" class="btn w-full mt-3 sm:mt-4 py-3 sm:py-3.5 border-2 border-zinc-900 text-[13px] sm:text-[14px] font-[800] hover:bg-zinc-900 hover:text-white">أضف للباقة 3 بـ ${cfg.offerPrice} درهم ✨</button>
+ <button onclick="pick('${p.id}')" class="btn w-full mt-3 py-3 border-2 border-zinc-900 text-[13px] font-bold hover:bg-zinc-900 hover:text-white">أضف للباقة ${cfg.offerPrice} درهم ✨</button>
  </div>
  </div>`;
 }
 
+function renderProducts(){
+ const grid=$('grid');
+ const count=$('prodCount');
+ if(!products.length){
+  grid.innerHTML=`<div class="col-span-full py-16 text-center"><p class="font-bold text-[16px]">لا توجد منتجات بعد</p><p class="text-[13px] text-zinc-500 mt-2">اذهب للأدمن وأضف منتجات - تأكد أنك تملأ الاسم والثمن والصورة</p><a href="admin.html" class="mt-4 inline-block px-6 py-3 bg-zinc-900 text-white rounded-full text-[13px] font-bold">افتح الأدمن</a></div>`;
+  count.textContent='0 منتجات';
+  return;
+ }
+ count.textContent=products.length+' منتجات (من السحابة ☁️)';
+ grid.innerHTML=products.map(p=>productCard(p)).join('');
+ debug(`تم عرض ${products.length} منتجات`);
+}
+
 function renderSlider(){
- const el=document.getElementById('slider');
- el.innerHTML=cfg.slider.map((s,i)=>`
- <div class="slide absolute inset-0 transition-all duration-[1400ms] ${i===0?'opacity-100':'opacity-0'}" data-i="${i}">
- <img src="${s.img}" class="absolute inset-0 w-full h-full object-cover" loading="eager">
- <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
- <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent hidden md:block"></div>
- <div class="absolute bottom-6 sm:bottom-10 md:bottom-14 left-4 right-4 sm:left-6 sm:right-6 md:left-12 md:right-12">
- <div class="inline-flex px-3 py-1 rounded-full bg-white/20 backdrop-blur text-white text-[10px] sm:text-[12px] font-bold mb-3">+200 عطر فاخر • توصيل مجاني</div>
- <h2 class="display text-white text-[28px] sm:text-[40px] md:text-[64px] font-[800] leading-[0.95] tracking-[-0.04em] max-w-[14ch] drop-shadow-xl">${s.title}</h2>
- <p class="text-white/90 mt-3 sm:mt-4 text-[14px] sm:text-[19px] md:text-[22px] font-medium max-w-[32ch]">${s.sub}</p>
- <button onclick="document.getElementById('grid').scrollIntoView({behavior:'smooth'})" class="btn mt-5 sm:mt-7 px-6 sm:px-8 py-3 sm:py-3.5 bg-white text-zinc-900 text-[13px] sm:text-[16px] shadow-xl">اكتشف الآن 🚀</button>
+ const el=$('slider');
+ const dots=$('dots');
+ if(!cfg.slider || !cfg.slider.length){
+  cfg.slider=[
+   {title:'عطرك.. بصمتك التي لا تُنسى ✨', sub:'ثبات يدوم 24 ساعة', img:'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1600&q=80'},
+   {title:'فخامة لا تقاوم 🔥', sub:'+200 عطر فاخر', img:'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1600&q=80'}
+  ];
+ }
+ // فلترة السلايدر - إزالة الشرائح الخاوية
+ let validSlides = cfg.slider.filter(s=> s && (s.img||s.image) && s.title);
+ if(!validSlides.length) validSlides=cfg.slider;
+
+ el.innerHTML=validSlides.map((s,i)=>`
+ <div class="slide absolute inset-0 transition-opacity duration-700 ${i===0?'opacity-100':'opacity-0'}" data-i="${i}">
+ <img src="${s.img||s.image}" class="absolute inset-0 w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1600&q=80'">
+ <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+ <div class="absolute bottom-6 left-4 right-4 md:bottom-12 md:left-12">
+ <h2 class="text-white text-[28px] md:text-[52px] font-[800] leading-[0.95] max-w-[14ch]">${s.title||'عطر فاخر'}</h2>
+ <p class="text-white/80 mt-3 text-[14px] md:text-[18px]">${s.sub||''}</p>
  </div>
  </div>`).join('');
- const dots=document.getElementById('dots');
- dots.innerHTML=cfg.slider.map((_,i)=>`<button onclick="go(${i})" class="dot h-[6px] sm:h-[8px] rounded-full transition-all ${i===0?'w-8 sm:w-10 bg-zinc-900':'w-[6px] sm:w-[8px] bg-zinc-300'}"></button>`).join('');
- let cur=0; setInterval(()=>{cur=(cur+1)%cfg.slider.length; go(cur)},4500);
- window.go=(n)=>{document.querySelectorAll('.slide').forEach((e,i)=>e.style.opacity=i===n?'1':'0'); document.querySelectorAll('.dot').forEach((d,i)=>{d.className=`dot h-[6px] sm:h-[8px] rounded-full transition-all ${i===n?'w-8 sm:w-10 bg-zinc-900':'w-[6px] sm:w-[8px] bg-zinc-300'}`}); cur=n;}
+
+ dots.innerHTML=validSlides.map((_,i)=>`<button onclick="goSlide(${i})" class="dot h-2 rounded-full transition-all ${i===0?'w-8 bg-zinc-900':'w-2 bg-zinc-300'}"></button>`).join('');
+
+ let cur=0;
+ window.goSlide=n=>{
+  document.querySelectorAll('.slide').forEach((e,i)=>e.style.opacity=i===n?'1':'0');
+  document.querySelectorAll('.dot').forEach((d,i)=>{d.className=`dot h-2 rounded-full transition-all ${i===n?'w-8 bg-zinc-900':'w-2 bg-zinc-300'}`});
+  cur=n;
+ };
+ setInterval(()=>{cur=(cur+1)%validSlides.length; goSlide(cur);},4000);
+ debug(`السلايدر: ${validSlides.length} شرائح`);
 }
 
 function renderPicks(){
- document.getElementById('offerSlots').innerHTML=[0,1,2].map(i=>{
+ $('offerSlots').innerHTML=[0,1,2].map(i=>{
   const p=picks[i];
-  if(p) return `<div class="card p-2 sm:p-3 aspect-[4/5] flex flex-col shadow-xl"><img src="${p.imageBase64||p.image||p.img}" class="w-full flex-1 object-contain p-2"><p class="font-bold text-[12px] sm:text-[15px] text-center leading-tight mt-2 line-clamp-2">${p.name}</p><button onclick="remPick(${i})" class="mt-2 text-[11px] sm:text-[12px] font-bold text-red-500 hover:text-red-600">إزالة ✕</button></div>`;
-  return `<button onclick="openPickModal(${i})" class="rounded-[20px] sm:rounded-[28px] aspect-[4/5] bg-white/70 backdrop-blur border-[2.5px] border-dashed border-[#8ED4BE] flex flex-col items-center justify-center gap-3 sm:gap-4 hover:bg-white hover:scale-[1.03] transition shadow-sm group"><div class="w-[56px] h-[56px] sm:w-[72px] sm:h-[72px] rounded-full bg-white shadow-[0_8px_24px_rgba(0,0,0,.08)] grid place-items-center text-[#0B7A6E] group-hover:scale-110 transition"><svg width="24" height="24" class="sm:w-[28px] sm:h-[28px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div><span class="font-[800] text-[16px] sm:text-[18px] text-[#0B7A6E]">${i+1}</span><span class="text-[10px] sm:text-[11px] text-zinc-500 font-bold">اختر عطر</span></button>`;
+  if(p) return `<div class="card p-3 aspect-[4/5] flex flex-col"><img src="${getImage(p)}" class="flex-1 object-contain p-2"><p class="font-bold text-[13px] text-center mt-2">${p.name}</p><button onclick="picks.splice(${i},1);renderPicks()" class="text-[11px] text-red-500 mt-2">إزالة</button></div>`;
+  return `<button onclick="openPick(${i})" class="rounded-[20px] aspect-[4/5] border-2 border-dashed border-[#8ED4BE] bg-white/60 grid place-items-center hover:bg-white"><div class="text-center"><div class="w-12 h-12 rounded-full bg-white shadow mx-auto grid place-items-center text-[#0B7A6E] text-[20px]">+</div><div class="font-bold mt-2">${i+1}</div></div></button>`;
  }).join('');
- document.getElementById('offerCounter').textContent=`${picks.length}/3`;
- document.getElementById('offerOrderBtn').disabled=picks.length!==3;
+ $('offerCounter').textContent=`${picks.length}/3`;
+ $('offerOrderBtn').disabled=picks.length!==3;
 }
 
-window.remPick=i=>{picks.splice(i,1);renderPicks()}
-window.scrollToProducts=()=>document.getElementById('grid').scrollIntoView({behavior:'smooth'})
-window.clearPicks=()=>{picks=[]; renderPicks()}
-
-function renderProducts(){
- document.getElementById('grid').innerHTML=products.map(p=>productCard(p)).join('');
-}
-
+window.openPick=i=>{window.pickIdx=i; $('pickModal').classList.remove('hidden'); $('pickGrid').innerHTML=products.map(p=>`<button onclick="pick('${p.id}')" class="flex gap-3 p-3 border rounded-xl hover:bg-zinc-50 w-full text-right"><img src="${getImage(p)}" class="w-14 h-14 rounded-lg object-contain bg-zinc-50"><div><div class="font-bold text-[13px]">${p.name}</div><div class="text-[11px] text-zinc-500">${p.price} MAD</div></div></button>`).join('');}
+window.closePick=()=>$('pickModal').classList.add('hidden');
 window.pick=id=>{
  const p=products.find(x=>x.id===id);
- if(picks.length>=3){alert('الباقة مكتملة - 3 عطور فقط'); return}
- if(picks.find(x=>x.id===id)){alert('العطر موجود في الباقة'); return}
+ if(picks.length>=3) return alert('الباقة مكتملة');
+ if(picks.find(x=>x.id===id)) return alert('موجود في الباقة');
  picks.push(p); renderPicks(); closePick();
- // اهتزاز خفيف
- if(navigator.vibrate) navigator.vibrate(50);
 };
-
-window.add=id=>{
- const p=products.find(x=>x.id===id);
- cart.push(p); updCart();
- if(navigator.vibrate) navigator.vibrate(30);
-};
-
-function updCart(){
- const c=document.getElementById('cartCount');
- c.textContent=cart.length;
- c.classList.toggle('hidden', cart.length===0);
- const total=cart.reduce((a,b)=>a+Number(b.price||0),0)+ (picks.length===3?cfg.offerPrice:0);
- document.getElementById('cartTotal').textContent=total+' MAD';
- document.getElementById('cartList').innerHTML=`
- ${picks.length===3?`<div class="glass rounded-[16px] p-4 mb-4 border-2 border-[#0B7A6E]/20"><div class="font-bold text-[14px]">الباقة الخاصة ✨</div><div class="text-[12px] text-zinc-600 mt-1">${picks.map(p=>p.name).join(' + ')}</div><div class="font-bold mt-2">${cfg.offerPrice} MAD</div></div>`:''}
- ${cart.map((x,i)=>`<div class="flex gap-4 py-4 border-b border-zinc-100"><img src="${x.imageBase64||x.image||x.img}" class="w-16 h-16 rounded-xl bg-zinc-50 object-contain"><div class="flex-1"><p class="font-bold text-[14px]">${x.name}</p><p class="font-bold text-[13px] text-[#0B7A6E]">${x.price} MAD</p></div><button onclick="cart.splice(${i},1);updCart()" class="text-zinc-400 hover:text-red-500">✕</button></div>`).join('') || '<div class="py-20 text-center text-zinc-400">السلة فارغة</div>'}
+window.add=id=>{const p=products.find(x=>x.id===id); cart.push(p); updateCart();};
+function updateCart(){
+ $('cartCount').textContent=cart.length;
+ $('cartCount').classList.toggle('hidden', cart.length===0);
+ $('cartList').innerHTML=cart.map((x,i)=>`<div class="flex gap-3 py-3 border-b"><img src="${getImage(x)}" class="w-12 h-12 rounded-lg bg-zinc-50 object-contain"><div class="flex-1"><p class="font-bold text-[13px]">${x.name}</p><p class="text-[12px]">${x.price} MAD</p></div><button onclick="cart.splice(${i},1);updateCart()" class="text-zinc-400">✕</button></div>`).join('') || '<div class="py-10 text-center text-zinc-400">السلة فارغة</div>';
 }
-
 window.order=()=>{
- let txt='';
- if(picks.length===3) txt=`السلام بغيت عرض 3 عطور ب ${cfg.offerPrice} درهم: ${picks.map(p=>p.name).join(' + ')}`;
- else if(cart.length) txt=`بغيت نطلب: ${cart.map(c=>c.name+' ('+c.price+' MAD)').join(', ')} - المجموع ${cart.reduce((a,b)=>a+Number(b.price||0),0)} MAD`;
- else {alert('السلة فارغة'); return}
+ let txt=picks.length===3?`بغيت الباقة 3 ب ${cfg.offerPrice} درهم: ${picks.map(p=>p.name).join(' + ')}`:`بغيت نطلب: ${cart.map(c=>c.name).join(', ')}`;
  window.open(`https://wa.me/212612345678?text=${encodeURIComponent(txt)}`,'_blank');
 };
+$('cartBtn').onclick=()=>$('drawer').classList.remove('hidden');
+window.closeDrawer=()=>$('drawer').classList.add('hidden');
+$('offerOrderBtn').onclick=()=>{if(picks.length===3) order()};
 
-document.getElementById('cartBtn').onclick=()=>document.getElementById('drawer').classList.remove('hidden');
-window.closeDrawer=()=>document.getElementById('drawer').classList.add('hidden');
-document.getElementById('offerOrderBtn').onclick=()=>{if(picks.length===3) order()};
-
-let pickIdx=0;
-window.openPickModal=i=>{pickIdx=i; document.getElementById('pickIdx').textContent=i+1; document.getElementById('pickModal').classList.remove('hidden'); renderPickGrid()}
-window.closePick=()=>document.getElementById('pickModal').classList.add('hidden')
-function renderPickGrid(){
- document.getElementById('pickGrid').innerHTML=products.map(p=>`
- <button onclick="pick('${p.id}')" class="flex gap-3 p-3 rounded-[16px] border hover:border-zinc-900 hover:bg-zinc-50 transition text-right">
- <img src="${p.imageBase64||p.image||p.img}" class="w-16 h-16 rounded-xl bg-zinc-50 object-contain flex-shrink-0">
- <div class="flex-1 text-right"><div class="font-bold text-[14px]">${p.name}</div><div class="text-[11px] text-zinc-500">${p.category||'عطر فاخر'} • ${p.price} MAD</div></div>
- </button>
- `).join('');
-}
-
-function apply(){
- document.getElementById('offerPrice').textContent=cfg.offerPrice;
- document.getElementById('offerDescText').textContent=cfg.offerDesc||cfg.phrases?.join(' • ')||'اضغط لاختيار 3 عطور';
- if(cfg.logoImage){const im=document.getElementById('logoImg'); im.src=cfg.logoImage; im.classList.remove('hidden'); document.getElementById('logoText').classList.add('hidden');}
- else document.getElementById('logoText').innerHTML=cfg.logoText||'SENTEL<span class="font-[400] text-[#0B7A6E]">LUXE</span>';
- const mq=(cfg.phrases||['توصيل مجاني لجميع المدن','الدفع عند الاستلام','خصم 93%','ثبات 24 ساعة']).map(p=>`✦ ${p}`).join('   ');
- document.getElementById('mq1').textContent=mq; document.getElementById('mq2').textContent=mq;
- document.getElementById('mq-top-1').textContent=mq; document.getElementById('mq-top-2').textContent=mq;
- if(cfg.footerMap){document.getElementById('footerMap').src=`https://www.google.com/maps?q=${encodeURIComponent(cfg.footerMap||cfg.map||'Kenitra,Morocco')}&z=13&output=embed`;}
+function applyConfig(){
+ $('offerPrice').textContent=cfg.offerPrice||200;
+ $('offerDesc').textContent=cfg.offerDesc||'اضغط لاختيار 3 عطور';
+ if(cfg.logoImage){$('logoImg').src=cfg.logoImage; $('logoImg').classList.remove('hidden'); $('logoText').classList.add('hidden');}
+ else{$('logoText').innerHTML=cfg.logoText||'SENTEL<span class="font-normal text-[#0B7A6E]">LUXE</span>';}
+ $('mqTop').textContent=(cfg.phrases||['توصيل مجاني','الدفع عند الاستلام']).join(' ✦ ');
  renderSlider(); renderPicks();
 }
 
-// --- FIXED CLOUD LOGIC - يقرا الصور من Firebase ويظهرها في أي جهاز ---
-const DEFAULT_PRODUCTS=[
- {id:'1',name:'Sauvage Elixir',price:299,oldPrice:899,description:'فخم رجالي يدوم 24 ساعة - ثبات 24 ساعة',bestseller:true,image:'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=800&q=90'},
- {id:'2',name:'Jadore Dior',price:349,oldPrice:999,description:'أنثوي ساحر وجذاب - عطر فاخر',bestseller:true,image:'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=90'},
- {id:'3',name:'Bleu Chanel',price:279,oldPrice:899,description:'منعش وأنيق - للرجل العصري',image:'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=800&q=90'},
- {id:'4',name:'Poison Girl',price:299,oldPrice:899,description:'حلو وجذاب - للمرأة الجريئة',bestseller:true,image:'https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=800&q=90'}
-];
-
-function isValidProduct(p){
-  if(!p) return false;
-  const hasName = p.name && typeof p.name==='string' && p.name.trim().length>1 && p.name!=='undefined';
-  const hasPrice = p.price && !isNaN(Number(p.price));
-  const hasImage = p.imageBase64 || p.image || p.img;
-  return hasName && hasPrice && hasImage;
-}
-
 if(db){
+ debug('جاري الاتصال بـ Firebase...');
  onSnapshot(collection(db,'parfums'), s=>{
-  let cloudProducts = s.docs.map(d=>({id:d.id,...d.data()}));
-  // تنظيف المنتجات الخاوية (اللي كتبان undefined)
-  let validCloud = cloudProducts.filter(isValidProduct);
-  console.log('Firebase: total', cloudProducts.length, 'valid', validCloud.length);
-  if(validCloud.length>0){
-   products=validCloud;
-  }else if(cloudProducts.length>0 && validCloud.length===0){
-   // كاينين منتجات خاوية - نوري الافتراضية + رسالة
-   console.warn('جميع المنتجات في Firebase خاوية - نعرض الافتراضية');
-   products=DEFAULT_PRODUCTS;
+  const all=s.docs.map(d=>({id:d.id, ...d.data()}));
+  debug(`Firebase: وجد ${all.length} وثائق`);
+  const valid=all.filter(isValid);
+  debug(`صالحة: ${valid.length} - خاوية: ${all.length-valid.length}`);
+  if(valid.length>0){
+   products=valid;
+   debug(`✅ عرض ${valid.length} منتجات من السحابة`);
   }else{
-   // ما كاين والو - نعرض الافتراضية
-   products=DEFAULT_PRODUCTS;
+   debug('⚠️ لا توجد منتجات صالحة - نعرض رسالة');
+   products=[];
   }
   renderProducts();
  }, err=>{
-  console.error('Firebase error', err);
-  products=DEFAULT_PRODUCTS;
+  debug('❌ خطأ Firebase: '+err.message);
+  products=[];
   renderProducts();
  });
- onSnapshot(doc(db,'config','site'), s=>{if(s.exists()){cfg={...cfg,...s.data()};} apply();}, ()=>apply());
+
+ onSnapshot(doc(db,'config','site'), s=>{
+  if(s.exists()){cfg={...cfg, ...s.data()}; debug('تم تحميل إعدادات الموقع'); applyConfig();}
+ }, err=>{debug('خطأ تحميل الإعدادات: '+err.message); applyConfig();});
 }else{
- apply();
- products=DEFAULT_PRODUCTS;
+ debug('❌ Firebase غير متصل - نعرض بيانات افتراضية');
+ applyConfig();
  renderProducts();
 }
 </script>
-<style>@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}</style>
 </body>
 </html>
