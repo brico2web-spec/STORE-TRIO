@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Royal Perfumes | Parfumerie de Luxe</title>
+    <title>TRIO PARFUM | Parfumerie de Luxe</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -11,10 +11,18 @@
             theme: {
                 extend: {
                     colors: {
+                        emeraldBrand: {
+                            950: '#050f0b',
+                            900: '#0b1b15',
+                            800: '#112920',
+                            700: '#18382c',
+                            600: '#1f4838',
+                        },
                         brandGold: {
-                            400: '#FBBF24',
-                            500: '#D97706',
-                            600: '#B45309',
+                            300: '#fde047',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
                         }
                     }
                 }
@@ -24,156 +32,599 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Poppins', 'Cairo', sans-serif; transition: background-color 0.3s, color 0.3s; }
-        
-        /* 🌙 Dark Mode Theme (أسود ملكي مع خطوط بيضاء وذهبية شديدة الوضوح) */
-        .dark body { background-color: #090a0f; color: #ffffff; }
-        .dark .text-primary-title { color: #ffffff; }
-        .dark .text-secondary-sub { color: #d1d5db; }
-        .dark .gold-accent { color: #f59e0b; }
-        .dark .card-box { background-color: #111827; border: 1px solid #374151; }
-        .dark .pack-box { background: linear-gradient(180deg, #1f2937 0%, #111827 100%); border: 2px solid #d97706; }
-        .dark .slot-card { background-color: #1f2937; border: 2px dashed #d97706; }
-        .dark .slot-card:hover { background-color: #374151; }
+        /* 🌿 النمط الليلي (Dark Mode) - بالأخضر الزيتي الفاخر 🌿 */
+        html.dark body { 
+            background-color: #0b1b15 !important; 
+            color: #ffffff !important;
+        }
+        html.dark .nav-bg {
+            background-color: rgba(11, 27, 21, 0.95) !important;
+            border-bottom: 1px solid rgba(245, 158, 11, 0.3) !important;
+        }
+        html.dark .card-box { 
+            background-color: #112920 !important; 
+            border: 1px solid #1f4838 !important; 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4) !important;
+        }
+        html.dark .pack-box { 
+            background: linear-gradient(180deg, #18382c 0%, #112920 100%) !important; 
+            border: 2px solid #f59e0b !important; 
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6) !important; 
+        }
+        html.dark .slot-card { 
+            background-color: #0b1b15 !important; 
+            border: 2px dashed #f59e0b !important; 
+        }
+        html.dark .slot-card:hover { 
+            background-color: #18382c !important; 
+        }
+        html.dark .text-primary-title { color: #ffffff !important; }
+        html.dark .text-secondary-sub { color: #d1d5db !important; }
+        html.dark .modal-bg { background-color: #0b1b15 !important; }
+        html.dark .modal-item { background-color: #18382c !important; }
+        html.dark .img-container-bg { background-color: rgba(5, 15, 11, 0.6) !important; }
+        html.dark footer {
+            background-color: #050f0b !important;
+            border-t: 1px solid rgba(245, 158, 11, 0.2) !important;
+        }
 
-        /* ☀️ Light Mode Theme (أبيض ناصع مع خطوط سوداء داكنة وذهبية واضحة جداً) */
-        body:not(.dark) { background-color: #ffffff; color: #0f172a; }
-        body:not(.dark) .text-primary-title { color: #0f172a; }
-        body:not(.dark) .text-secondary-sub { color: #334155; }
-        body:not(.dark) .gold-accent { color: #b45309; }
-        body:not(.dark) .card-box { background-color: #f8fafc; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-        body:not(.dark) .pack-box { background: linear-gradient(180deg, #fffbe3 0%, #ffffff 100%); border: 2px solid #b45309; box-shadow: 0 10px 25px -5px rgba(180, 83, 9, 0.15); }
-        body:not(.dark) .slot-card { background-color: #ffffff; border: 2px dashed #b45309; }
-        body:not(.dark) .slot-card:hover { background-color: #fef3c7; }
+        /* ☀️ النمط الشمسي (Light Mode) - بالأبيض والذهبي الناصع ☀️ */
+        html:not(.dark) body { 
+            background-color: #f8fafc !important; 
+            color: #0f172a !important;
+        }
+        html:not(.dark) .nav-bg {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            border-bottom: 1px solid rgba(217, 119, 6, 0.3) !important;
+        }
+        html:not(.dark) .card-box { 
+            background-color: #ffffff !important; 
+            border: 1px solid #e2e8f0 !important; 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06) !important;
+        }
+        html:not(.dark) .pack-box { 
+            background: linear-gradient(180deg, #ffffff 0%, #fef3c7 100%) !important; 
+            border: 2px solid #d97706 !important; 
+            box-shadow: 0 12px 35px rgba(217, 119, 6, 0.15) !important; 
+        }
+        html:not(.dark) .slot-card { 
+            background-color: #ffffff !important; 
+            border: 2px dashed #d97706 !important; 
+        }
+        html:not(.dark) .slot-card:hover { 
+            background-color: #fef3c7 !important; 
+        }
+        html:not(.dark) .text-primary-title { color: #0f172a !important; }
+        html:not(.dark) .text-secondary-sub { color: #475569 !important; }
+        html:not(.dark) .modal-bg { background-color: #ffffff !important; }
+        html:not(.dark) .modal-item { background-color: #fef3c7 !important; }
+        html:not(.dark) .img-container-bg { background-color: #f1f5f9 !important; }
+        html:not(.dark) footer {
+            background-color: #ffffff !important;
+            border-t: 1px solid #e2e8f0 !important;
+        }
+
+        /* الانتقالات بين النمطين */
+        body, nav, div, section, footer {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* 🌟 Splash Screen Styles & Animations */
+        #splash-screen {
+            background: radial-gradient(circle at center, #18382c 0%, #0b1b15 70%, #050f0b 100%);
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out, visibility 0.8s;
+        }
+
+        .logo-glow {
+            animation: pulseGlow 2.5s infinite alternate ease-in-out, floatLogo 1.5s ease-out forwards;
+        }
+
+        @keyframes pulseGlow {
+            0% { filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.3)); transform: scale(0.97); }
+            100% { filter: drop-shadow(0 0 35px rgba(251, 191, 36, 0.8)); transform: scale(1.03); }
+        }
+
+        @keyframes floatLogo {
+            0% { opacity: 0; transform: translateY(20px) scale(0.9); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .loader-bar {
+            width: 0%;
+            animation: fillBar 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes fillBar {
+            0% { width: 0%; }
+            50% { width: 65%; }
+            100% { width: 100%; }
+        }
+
+        .aura-circle {
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(245,158,11,0.18) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            animation: spinAura 8s linear infinite;
+        }
+
+        @keyframes spinAura {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.15); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .gold-accent { color: #d97706 !important; }
+        html.dark .gold-accent { color: #fbbf24 !important; }
+
+        .logo-gold-glow {
+            filter: drop-shadow(0px 0px 8px rgba(245, 158, 11, 0.7)) 
+                    drop-shadow(0px 0px 18px rgba(251, 191, 36, 0.4));
+            transition: filter 0.3s ease, transform 0.3s ease;
+        }
+
+        .logo-gold-glow:hover {
+            filter: drop-shadow(0px 0px 12px rgba(245, 158, 11, 0.9)) 
+                    drop-shadow(0px 0px 25px rgba(251, 191, 36, 0.7));
+            transform: scale(1.03);
+        }
+
+        .perfume-showcase {
+            background-color: rgba(5, 15, 11, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        html:not(.dark) .perfume-showcase {
+            background-color: #f1f5f9;
+        }
+
+        .perfume-img-clear {
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.4));
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .group:hover .perfume-img-clear {
+            transform: scale(1.05);
+            filter: drop-shadow(0 15px 20px rgba(245, 158, 11, 0.3));
+        }
+
+        .ticker-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+        .ticker-track {
+            display: inline-flex;
+            gap: 2rem;
+            will-change: transform;
+        }
+        .animate-ticker-ltr {
+            animation: scrollLTR 12s linear infinite;
+        }
+        @keyframes scrollLTR {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-ticker-rtl {
+            animation: scrollRTL 12s linear infinite;
+        }
+        @keyframes scrollRTL {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
+        /* 🎬 تأثيرات السلايدر العصري والمثير (Ken Burns & Fade Effects) */
+        .slider-slide {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transform: scale(1.08);
+            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 5s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: opacity, transform;
+        }
+        .slider-slide.active {
+            opacity: 0.4;
+            transform: scale(1);
+        }
+        .slider-indicator-bar {
+            height: 3px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 999px;
+            overflow: hidden;
+            transition: width 0.3s ease;
+        }
+        .slider-indicator-fill {
+            height: 100%;
+            width: 0%;
+            background: #f59e0b;
+        }
+        .slider-indicator-bar.active .slider-indicator-fill {
+            animation: fillProgress 4.5s linear forwards;
+        }
+        @keyframes fillProgress {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col justify-between overflow-x-hidden" id="main-body">
 
-    <!-- Header / Navbar -->
-    <nav class="border-b border-amber-500/30 bg-white dark:bg-gray-950 sticky top-0 z-40 shadow-sm transition-colors duration-300">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-2">
-            
-            <!-- Logo / Brand -->
-            <div id="nav-brand" class="flex items-center gap-3">
-                <h1 class="text-base sm:text-xl font-black text-amber-600 dark:text-amber-400 flex items-center gap-2">
-                    <i class="fa-solid fa-spray-can-sparkles"></i> <span>ROYAL PARFUM</span>
+    <div>
+        <!-- Splash Screen -->
+        <div id="splash-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-4">
+            <div class="aura-circle pointer-events-none"></div>
+
+            <div class="relative z-10 flex flex-col items-center text-center">
+                <div class="w-28 h-28 sm:w-36 sm:h-36 mb-6 logo-glow bg-white/5 p-4 rounded-full border border-amber-500/40 backdrop-blur-md flex items-center justify-center shadow-2xl">
+                    <svg viewBox="0 0 200 200" class="w-full h-full fill-amber-400 drop-shadow-md">
+                        <circle cx="100" cy="115" r="55" fill="none" stroke="#FBBF24" stroke-width="12"/>
+                        <rect x="82" y="38" width="36" height="20" rx="4" fill="#FBBF24"/>
+                        <rect x="90" y="28" width="20" height="10" rx="2" fill="#FBBF24"/>
+                        <path d="M 50,115 L 150,115" stroke="#FBBF24" stroke-width="2" opacity="0.3"/>
+                    </svg>
+                </div>
+
+                <h1 class="text-3xl sm:text-4xl font-black tracking-widest text-white mb-2">
+                    TRIO <span class="text-amber-400">PARFUM</span>
                 </h1>
-            </div>
+                <p class="text-xs sm:text-sm text-amber-100/90 font-bold tracking-wider uppercase mb-8" id="splash-sub-text">
+                    CHARGEMENT DE VOTRE BOUTIQUE D'ESSENCES...
+                </p>
 
-            <!-- Controls (Language Switcher + Dark/Light Toggle + Admin Link) -->
-            <div class="flex items-center gap-2 sm:gap-3">
+                <div class="w-52 sm:w-64 h-1.5 bg-black/60 rounded-full overflow-hidden border border-amber-500/40 shadow-inner">
+                    <div class="h-full bg-gradient-to-r from-amber-600 via-amber-400 to-amber-200 rounded-full loader-bar"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Header / Navbar -->
+        <nav class="nav-bg sticky top-0 z-40 shadow-xl backdrop-blur-md py-2 sm:py-3">
+            <div class="max-w-7xl mx-auto px-4 flex justify-between items-center gap-2">
                 
-                <!-- Language Selector -->
-                <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/40 text-xs font-extrabold rounded-xl px-2.5 py-1.5 focus:outline-none cursor-pointer">
-                    <option value="FR" selected class="bg-white dark:bg-gray-900 text-black dark:text-white">FR 🇫🇷</option>
-                    <option value="AR" class="bg-white dark:bg-gray-900 text-black dark:text-white">AR 🇲🇦</option>
-                    <option value="EN" class="bg-white dark:bg-gray-900 text-black dark:text-white">EN 🇬🇧</option>
-                </select>
-
-                <!-- Theme Toggle Button -->
-                <button id="theme-toggle" onclick="toggleTheme()" class="w-9 h-9 flex items-center justify-center rounded-xl bg-amber-500/10 border border-amber-500/40 text-amber-700 dark:text-amber-400 hover:bg-amber-500 hover:text-white dark:hover:text-black transition">
-                    <i id="theme-icon" class="fa-solid fa-sun text-sm"></i>
-                </button>
-
-                <!-- Admin Link -->
-                <a href="admin.html" class="text-xs font-bold bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/40 px-3 py-1.5 rounded-xl hover:bg-amber-500 hover:text-white dark:hover:text-black transition flex items-center gap-1">
-                    <i class="fa-solid fa-user-shield"></i> <span class="hidden md:inline" data-i18n="admin">Admin</span>
-                </a>
-            </div>
-
-        </div>
-    </nav>
-
-    <!-- Hero / Slider -->
-    <section class="relative overflow-hidden my-4 max-w-7xl mx-auto w-full px-3 sm:px-6">
-        <div class="relative h-[200px] sm:h-[300px] md:h-[380px] rounded-2xl sm:rounded-3xl overflow-hidden card-box flex items-center justify-center">
-            <img id="slider-img" src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?q=80&w=1200" class="absolute inset-0 w-full h-full object-cover opacity-25 dark:opacity-40 transition-opacity duration-700">
-            <div class="relative z-10 text-center p-4">
-                <h2 class="text-2xl sm:text-4xl md:text-5xl font-extrabold mb-2 text-primary-title" data-i18n="heroTitle">Monde des Parfums de Luxe</h2>
-                <p class="text-secondary-sub text-xs sm:text-sm md:text-base font-bold" data-i18n="heroSub">Une collection exclusive aux touches boisées, fraîches et florales.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ⚡ Pack Builder Section ⚡ -->
-    <section class="max-w-4xl mx-auto px-3 sm:px-6 my-6 w-full">
-        <div class="pack-box rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 relative">
-            <div class="flex justify-between items-center mb-4 sm:mb-6">
-                <div>
-                    <h3 id="display-offer-title" class="text-lg sm:text-2xl font-black text-primary-title" data-i18n="offerTitle">Composez votre Pack</h3>
-                    <p id="display-offer-sub" class="text-[11px] sm:text-sm text-secondary-sub font-semibold mt-0.5" data-i18n="offerSub">Cliquez pour choisir 3 parfums parmi les plus vendus.</p>
+                <div id="nav-brand" class="flex items-center gap-3">
+                    <h1 class="text-xl sm:text-2xl md:text-3xl font-black text-amber-500 dark:text-amber-400 flex items-center gap-2 py-1 logo-gold-glow">
+                        <i class="fa-solid fa-spray-can-sparkles"></i> <span>TRIO PARFUM</span>
+                    </h1>
                 </div>
-                <div class="bg-amber-500 text-white dark:text-black font-black px-3.5 py-1.5 rounded-full text-xs shadow" id="bundle-counter">
-                    0/3
-                </div>
-            </div>
 
-            <!-- Slots Grid -->
-            <div class="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 my-4">
-                <!-- Slot 0 -->
-                <div onclick="openPerfumeSelector(0)" class="slot-card rounded-xl sm:rounded-2xl h-32 sm:h-44 md:h-52 flex flex-col items-center justify-center cursor-pointer transition relative overflow-hidden group p-2">
-                    <div id="slot-content-0" class="flex flex-col items-center text-center">
-                        <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-amber-500/20 flex items-center justify-center mb-1.5 group-hover:scale-110 transition">
-                            <i class="fa-solid fa-plus gold-accent text-base sm:text-xl"></i>
+                <script>
+                    window.updateLogoForTheme = function() {
+                        const isDark = document.documentElement.classList.contains('dark');
+                        const darkLogo = localStorage.getItem('site_cached_logo_dark') || localStorage.getItem('site_cached_logo');
+                        const lightLogo = localStorage.getItem('site_cached_logo_light') || localStorage.getItem('site_cached_logo');
+                        const activeLogo = isDark ? darkLogo : lightLogo;
+
+                        const navBrand = document.getElementById('nav-brand');
+                        if (navBrand) {
+                            if (activeLogo) {
+                                navBrand.innerHTML = `<img src="${activeLogo}" class="h-12 sm:h-16 md:h-20 max-w-[200px] sm:max-w-[280px] object-contain logo-gold-glow">`;
+                            } else {
+                                navBrand.innerHTML = `<h1 class="text-xl sm:text-2xl md:text-3xl font-black text-amber-500 dark:text-amber-400 flex items-center gap-2 py-1 logo-gold-glow"><i class="fa-solid fa-spray-can-sparkles"></i> <span>TRIO PARFUM</span></h1>`;
+                            }
+                        }
+                    };
+                    
+                    (function() {
+                        window.updateLogoForTheme();
+                    })();
+                </script>
+
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <button onclick="toggleTheme()" class="bg-amber-500/20 dark:bg-gray-800 text-amber-600 dark:text-amber-400 border border-amber-500/40 w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center hover:bg-amber-500 hover:text-black dark:hover:bg-amber-500 dark:hover:text-black transition shadow-sm focus:outline-none">
+                        <i id="theme-icon" class="fa-solid fa-moon text-xs sm:text-sm"></i>
+                    </button>
+
+                    <div class="relative inline-block text-left">
+                        <button id="lang-btn" onclick="toggleLangDropdown(event)" class="bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/40 text-xs font-black rounded-xl px-3 py-2 flex items-center gap-1.5 hover:bg-amber-500/20 transition focus:outline-none shadow-sm">
+                            <span id="current-lang-text">FR</span>
+                            <span id="current-lang-flag">🇫🇷</span>
+                            <i class="fa-solid fa-chevron-down text-[10px] ml-1 transition-transform duration-200" id="lang-chevron"></i>
+                        </button>
+
+                        <div id="lang-menu" class="hidden absolute right-0 ltr:right-0 rtl:left-0 mt-2 w-32 bg-white dark:bg-[#112920] border border-amber-500/40 rounded-xl shadow-2xl z-50 overflow-hidden transition-all duration-200">
+                            <button onclick="selectLanguage('FR')" class="w-full text-left ltr:text-left rtl:text-right px-3.5 py-2.5 text-xs font-bold hover:bg-amber-500/20 text-gray-800 dark:text-gray-100 flex items-center justify-between border-b border-gray-100 dark:border-amber-500/20 transition">
+                                <span>FR</span>
+                                <span>🇫🇷</span>
+                            </button>
+                            <button onclick="selectLanguage('AR')" class="w-full text-left ltr:text-left rtl:text-right px-3.5 py-2.5 text-xs font-bold hover:bg-amber-500/20 text-gray-800 dark:text-gray-100 flex items-center justify-between border-b border-gray-100 dark:border-amber-500/20 transition">
+                                <span>AR</span>
+                                <span>🇲🇦</span>
+                            </button>
+                            <button onclick="selectLanguage('EN')" class="w-full text-left ltr:text-left rtl:text-right px-3.5 py-2.5 text-xs font-bold hover:bg-amber-500/20 text-gray-800 dark:text-gray-100 flex items-center justify-between transition">
+                                <span>EN</span>
+                                <span>🇬🇧</span>
+                            </button>
                         </div>
-                        <span class="text-xs font-bold text-secondary-sub">1</span>
+                    </div>
+
+                    <a href="admin.html" class="text-xs font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/40 px-3 py-2 rounded-xl hover:bg-amber-500 hover:text-black transition flex items-center gap-1">
+                        <i class="fa-solid fa-user-shield"></i> <span class="hidden md:inline" data-i18n="admin">Admin</span>
+                    </a>
+                </div>
+
+            </div>
+        </nav>
+
+        <!-- Hero / Slider بدون أسهم بتأثير الحركة السينمائية العصري -->
+        <section class="relative overflow-hidden my-4 max-w-7xl mx-auto w-full px-3 sm:px-6">
+            <div class="relative h-[200px] sm:h-[300px] md:h-[380px] rounded-2xl sm:rounded-3xl overflow-hidden card-box flex items-center justify-center border border-amber-500/30">
+                
+                <!-- حاوية صور السلايدر للتحريك السينمائي -->
+                <div id="slider-container" class="absolute inset-0 w-full h-full overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?q=80&w=1200" class="slider-slide active object-cover">
+                </div>
+
+                <!-- النصوص المكتوبة فوق الصور -->
+                <div class="relative z-10 text-center p-4">
+                    <h2 id="slider-display-title" class="text-2xl sm:text-4xl md:text-5xl font-black mb-2 text-primary-title" data-i18n="heroTitle">Monde des Parfums de Luxe</h2>
+                    <p id="slider-display-sub" class="text-secondary-sub text-xs sm:text-sm md:text-base font-bold" data-i18n="heroSub">Une collection exclusive aux touches boisées, fraîches et florales.</p>
+                </div>
+
+                <!-- مؤشرات التقدم الحديثة بالسفل (Progress Line Indicators) -->
+                <div id="slider-indicators" class="absolute bottom-3 left-0 right-0 z-20 flex justify-center items-center gap-2 px-6"></div>
+            </div>
+        </section>
+
+        <!-- الشريط المتحرك السريع -->
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 w-full mb-2">
+            <div class="ticker-container bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 dark:from-amber-600 dark:via-amber-500 dark:to-amber-600 text-black py-2 px-4 rounded-xl shadow-lg border border-amber-300 dark:border-amber-400">
+                <div id="ticker-track" class="ticker-track animate-ticker-ltr font-black text-xs sm:text-sm tracking-wide"></div>
+            </div>
+        </div>
+
+        <!-- Pack Builder Section -->
+        <section class="max-w-4xl mx-auto px-3 sm:px-6 my-6 w-full">
+            <div class="pack-box rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 relative">
+                <div class="flex justify-between items-center mb-4 sm:mb-6">
+                    <div>
+                        <h3 id="display-offer-title" class="text-lg sm:text-2xl font-black text-primary-title" data-i18n="offerTitle">Composez votre Pack</h3>
+                        <p id="display-offer-sub" class="text-[11px] sm:text-sm text-secondary-sub font-semibold mt-0.5" data-i18n="offerSub">Cliquez pour choisir 3 parfums parmi les plus vendus.</p>
+                    </div>
+                    <div class="bg-amber-500 text-black font-black px-3.5 py-1.5 rounded-full text-xs shadow-md" id="bundle-counter">
+                        0/3
                     </div>
                 </div>
 
-                <!-- Slot 1 -->
-                <div onclick="openPerfumeSelector(1)" class="slot-card rounded-xl sm:rounded-2xl h-32 sm:h-44 md:h-52 flex flex-col items-center justify-center cursor-pointer transition relative overflow-hidden group p-2">
-                    <div id="slot-content-1" class="flex flex-col items-center text-center">
-                        <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-amber-500/20 flex items-center justify-center mb-1.5 group-hover:scale-110 transition">
-                            <i class="fa-solid fa-plus gold-accent text-base sm:text-xl"></i>
+                <!-- Slots Grid -->
+                <div class="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 my-4">
+                    <div onclick="openPerfumeSelector(0)" class="slot-card rounded-xl sm:rounded-2xl h-32 sm:h-44 md:h-52 flex flex-col items-center justify-center cursor-pointer transition relative overflow-hidden group p-2">
+                        <div id="slot-content-0" class="flex flex-col items-center text-center">
+                            <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-amber-500/20 flex items-center justify-center mb-1.5 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-plus gold-accent text-base sm:text-xl"></i>
+                            </div>
+                            <span class="text-xs font-bold text-secondary-sub">1</span>
                         </div>
-                        <span class="text-xs font-bold text-secondary-sub">2</span>
+                    </div>
+
+                    <div onclick="openPerfumeSelector(1)" class="slot-card rounded-xl sm:rounded-2xl h-32 sm:h-44 md:h-52 flex flex-col items-center justify-center cursor-pointer transition relative overflow-hidden group p-2">
+                        <div id="slot-content-1" class="flex flex-col items-center text-center">
+                            <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-amber-500/20 flex items-center justify-center mb-1.5 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-plus gold-accent text-base sm:text-xl"></i>
+                            </div>
+                            <span class="text-xs font-bold text-secondary-sub">2</span>
+                        </div>
+                    </div>
+
+                    <div onclick="openPerfumeSelector(2)" class="slot-card rounded-xl sm:rounded-2xl h-32 sm:h-44 md:h-52 flex flex-col items-center justify-center cursor-pointer transition relative overflow-hidden group p-2">
+                        <div id="slot-content-2" class="flex flex-col items-center text-center">
+                            <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-amber-500/20 flex items-center justify-center mb-1.5 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-plus gold-accent text-base sm:text-xl"></i>
+                            </div>
+                            <span class="text-xs font-bold text-secondary-sub">3</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Slot 2 -->
-                <div onclick="openPerfumeSelector(2)" class="slot-card rounded-xl sm:rounded-2xl h-32 sm:h-44 md:h-52 flex flex-col items-center justify-center cursor-pointer transition relative overflow-hidden group p-2">
-                    <div id="slot-content-2" class="flex flex-col items-center text-center">
-                        <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-amber-500/20 flex items-center justify-center mb-1.5 group-hover:scale-110 transition">
-                            <i class="fa-solid fa-plus gold-accent text-base sm:text-xl"></i>
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 mt-4 sm:mt-6 pt-4 border-t border-amber-500/30">
+                    <div class="text-center ltr:sm:text-left rtl:sm:text-right">
+                        <span class="text-xs text-secondary-sub block font-bold" data-i18n="totalPrice">Prix total du pack:</span>
+                        <span id="display-offer-price" class="text-2xl sm:text-3xl font-black gold-accent">200 <span class="text-xs font-bold text-primary-title" data-i18n="currency">DH</span></span>
+                    </div>
+                    <button id="btn-submit-bundle" onclick="submitBundle()" disabled class="w-full sm:w-auto bg-amber-500 hover:bg-amber-400 text-black font-black px-6 py-3.5 rounded-xl opacity-50 cursor-not-allowed transition text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20">
+                        <span data-i18n="orderWhatsApp">Commander via WhatsApp</span> <i class="fa-brands fa-whatsapp text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- All Products -->
+        <section class="max-w-7xl mx-auto px-3 sm:px-6 my-8 w-full" id="products-section">
+            <h3 class="text-lg sm:text-xl font-extrabold mb-6 flex items-center gap-2 text-primary-title">
+                <i class="fa-solid fa-gem gold-accent"></i> <span data-i18n="allPerfumes">Tous les Parfums</span>
+            </h3>
+            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6"></div>
+        </section>
+
+        <!-- ⚡⚡ قسم التصنيفات العصري (HOMME / FEMME) ⚡⚡ -->
+        <section class="max-w-7xl mx-auto px-3 sm:px-6 my-10 w-full">
+            <div class="grid grid-cols-2 gap-3 sm:gap-6">
+                <!-- HOMME Card -->
+                <div onclick="filterByCategory('homme')" class="relative h-64 sm:h-80 md:h-96 rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group shadow-2xl border border-amber-500/30">
+                    <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-700 ease-out">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-end p-4 sm:p-8">
+                        <div class="bg-black/40 backdrop-blur-md p-3 sm:p-5 rounded-xl sm:rounded-2xl border border-white/20 transition group-hover:border-amber-400">
+                            <span class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-amber-400 block mb-1">Pour Homme</span>
+                            <h3 class="text-xl sm:text-3xl md:text-4xl font-black text-white uppercase tracking-wider">HOMME</h3>
                         </div>
-                        <span class="text-xs font-bold text-secondary-sub">3</span>
+                    </div>
+                </div>
+
+                <!-- FEMME Card -->
+                <div onclick="filterByCategory('femme')" class="relative h-64 sm:h-80 md:h-96 rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group shadow-2xl border border-amber-500/30">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-700 ease-out">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-end p-4 sm:p-8">
+                        <div class="bg-black/40 backdrop-blur-md p-3 sm:p-5 rounded-xl sm:rounded-2xl border border-white/20 transition group-hover:border-amber-400">
+                            <span class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-amber-400 block mb-1">Pour Femme</span>
+                            <h3 class="text-xl sm:text-3xl md:text-4xl font-black text-white uppercase tracking-wider">FEMME</h3>
+                        </div>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Price & Submit Button -->
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 mt-4 sm:mt-6 pt-4 border-t border-amber-500/30">
-                <div class="text-center ltr:sm:text-left rtl:sm:text-right">
-                    <span class="text-xs text-secondary-sub block font-bold" data-i18n="totalPrice">Prix total du pack:</span>
-                    <span id="display-offer-price" class="text-2xl sm:text-3xl font-black gold-accent">200 <span class="text-xs font-bold text-primary-title" data-i18n="currency">DH</span></span>
+        <!-- ⚡⚡ قسم المميزات بأيقونات SVG عصرية وخرافية مطابق للصورة ⚡⚡ -->
+        <section class="max-w-7xl mx-auto px-3 sm:px-6 my-12 w-full">
+            <div class="card-box rounded-2xl sm:rounded-3xl p-6 sm:p-10 border border-amber-500/30">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    
+                    <!-- 1. أيقونة العطر الأصلي العصرية -->
+                    <div class="flex flex-col items-center group">
+                        <div class="w-20 h-20 sm:w-24 sm:h-24 mb-4 flex items-center justify-center rounded-2xl bg-amber-500/10 dark:bg-amber-500/15 border border-amber-500/30 group-hover:scale-110 group-hover:bg-amber-500/20 transition-all duration-300 shadow-lg">
+                            <svg class="w-10 h-10 sm:w-12 sm:h-12 text-amber-500" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M 24 16 C 24 13.8 25.8 12 28 12 L 36 12 C 38.2 12 40 13.8 40 16 L 40 22 L 24 22 Z" fill="currentColor" opacity="0.4"/>
+                                <rect x="28" y="6" width="8" height="6" rx="2" fill="currentColor"/>
+                                <rect x="16" y="22" width="32" height="36" rx="10" fill="currentColor"/>
+                                <circle cx="32" cy="40" r="7" fill="#0b1b15" class="dark:fill-[#0b1b15] fill-white"/>
+                                <circle cx="50" cy="18" r="1.5" fill="currentColor"/>
+                                <circle cx="54" cy="22" r="2" fill="currentColor"/>
+                                <circle cx="51" cy="27" r="1" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h4 class="font-extrabold text-base sm:text-lg text-primary-title mb-1" data-i18n="feat1Title">Parfums Authentiques</h4>
+                        <p class="text-xs sm:text-sm text-secondary-sub font-semibold" data-i18n="feat1Sub">à prix pas cher</p>
+                    </div>
+
+                    <!-- 2. أيقونة شاحنة التوصيل المجاني السريعة -->
+                    <div class="flex flex-col items-center group">
+                        <div class="w-20 h-20 sm:w-24 sm:h-24 mb-4 flex items-center justify-center rounded-2xl bg-amber-500/10 dark:bg-amber-500/15 border border-amber-500/30 group-hover:scale-110 group-hover:bg-amber-500/20 transition-all duration-300 shadow-lg">
+                            <svg class="w-10 h-10 sm:w-12 sm:h-12 text-amber-500" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M 10 20 C 10 17.8 11.8 16 14 16 L 36 16 C 38.2 16 40 17.8 40 20 L 40 42 L 10 42 Z" fill="currentColor"/>
+                                <path d="M 40 26 L 50 26 C 52 26 53.6 27.2 54.3 28.9 L 57.5 36.5 C 57.8 37.3 58 38.1 58 39 L 58 42 L 40 42 Z" fill="currentColor" opacity="0.8"/>
+                                <circle cx="22" cy="44" r="6" fill="currentColor"/>
+                                <circle cx="22" cy="44" r="3" fill="#0b1b15" class="dark:fill-[#0b1b15] fill-white"/>
+                                <circle cx="48" cy="44" r="6" fill="currentColor"/>
+                                <circle cx="48" cy="44" r="3" fill="#0b1b15" class="dark:fill-[#0b1b15] fill-white"/>
+                                <path d="M 4 24 L 8 24 M 2 30 L 7 30 M 4 36 L 8 36" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h4 class="font-extrabold text-base sm:text-lg text-primary-title mb-1" data-i18n="feat2Title">Livraison GRATUITE</h4>
+                        <p class="text-xs sm:text-sm text-secondary-sub font-semibold" data-i18n="feat2Sub">Votre Parfum Partout au MAROC.</p>
+                    </div>
+
+                    <!-- 3. أيقونة الدفع يد بيد مع رمز العملة -->
+                    <div class="flex flex-col items-center group">
+                        <div class="w-20 h-20 sm:w-24 sm:h-24 mb-4 flex items-center justify-center rounded-2xl bg-amber-500/10 dark:bg-amber-500/15 border border-amber-500/30 group-hover:scale-110 group-hover:bg-amber-500/20 transition-all duration-300 shadow-lg">
+                            <svg class="w-10 h-10 sm:w-12 sm:h-12 text-amber-500" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M 12 44 C 18 44 22 40 28 38 C 34 36 44 38 52 42 C 54 43 54 46 51 47 C 43 50 31 52 20 52 C 14 52 12 48 12 44 Z" fill="currentColor"/>
+                                <path d="M 12 36 L 24 36 C 26 36 28 37.5 28 39.5 C 28 41.5 26 43 24 43 L 12 43 Z" fill="currentColor" opacity="0.6"/>
+                                <path d="M 32 10 C 32 10 32 26 32 26 M 26 15 C 26 13 28 11 32 11 C 36 11 38 13 38 15 C 38 19 26 19 26 23 C 26 26 29 27 32 27 C 36 27 38 25 38 23" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h4 class="font-extrabold text-base sm:text-lg text-primary-title mb-1" data-i18n="feat3Title">Paiement à la livraison</h4>
+                        <p class="text-xs sm:text-sm text-secondary-sub font-semibold" data-i18n="feat3Sub">Commandez en toute sécurité</p>
+                    </div>
+
                 </div>
-                <button id="btn-submit-bundle" onclick="submitBundle()" disabled class="w-full sm:w-auto bg-amber-600 dark:bg-amber-500 hover:bg-amber-700 dark:hover:bg-amber-400 text-white dark:text-black font-black px-6 py-3.5 rounded-xl opacity-50 cursor-not-allowed transition text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md">
-                    <span data-i18n="orderWhatsApp">Commander via WhatsApp</span> <i class="fa-brands fa-whatsapp text-lg"></i>
-                </button>
             </div>
+        </section>
+    </div>
+
+    <!-- ⚡⚡ قسم الفوتر (FOOTER) الفاخر والكامل ⚡⚡ -->
+    <footer class="mt-16 border-t border-amber-500/30 pt-12 pb-6 px-4 sm:px-8 relative z-10 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+            
+            <!-- العمود 1: عن المتجر وعبارات عن العطر -->
+            <div class="flex flex-col gap-4">
+                <div class="flex items-center gap-2 text-xl font-black text-amber-500 logo-gold-glow">
+                    <i class="fa-solid fa-spray-can-sparkles"></i>
+                    <span id="display-footer-brand">TRIO PARFUM</span>
+                </div>
+                <p id="display-footer-desc" class="text-xs sm:text-sm text-secondary-sub leading-relaxed font-semibold" data-i18n="footerAbout">
+                    العطر ليس مجرد نفحات عابرة، بل هو هويتك وأثرك الذي يسبق حضورك ويبقاء بعد غيابك. نقدم لكم أجود تركيبات العطور الفاخرة المستوحاة من العاطفة والجمال.
+                </p>
+                <!-- أزرار التواصل الاجتماعي -->
+                <div class="flex items-center gap-3 mt-2">
+                    <a href="https://facebook.com" target="_blank" class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-500 hover:bg-amber-500 hover:text-black transition-all duration-300 shadow-md">
+                        <i class="fa-brands fa-facebook-f text-sm"></i>
+                    </a>
+                    <a id="display-footer-insta" href="https://instagram.com" target="_blank" class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-500 hover:bg-amber-500 hover:text-black transition-all duration-300 shadow-md">
+                        <i class="fa-brands fa-instagram text-base"></i>
+                    </a>
+                    <a href="https://twitter.com" target="_blank" class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-500 hover:bg-amber-500 hover:text-black transition-all duration-300 shadow-md">
+                        <i class="fa-brands fa-x-twitter text-sm"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- العمود 2: روابط سريعة -->
+            <div>
+                <h4 class="text-base sm:text-lg font-black text-primary-title mb-4 border-b-2 border-amber-500/40 pb-2 inline-block" data-i18n="footerQuickLinks">
+                    روابط سريعة
+                </h4>
+                <ul class="space-y-2.5 text-xs sm:text-sm font-semibold text-secondary-sub">
+                    <li><a href="#main-body" class="hover:text-amber-500 transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-[10px] gold-accent"></i> <span data-i18n="navHome">الرئيسية</span></a></li>
+                    <li><a href="#products-section" class="hover:text-amber-500 transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-[10px] gold-accent"></i> <span data-i18n="allPerfumes">جميع العطور</span></a></li>
+                    <li><a href="javascript:void(0)" onclick="filterByCategory('homme')" class="hover:text-amber-500 transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-[10px] gold-accent"></i> <span>Pour Homme</span></a></li>
+                    <li><a href="javascript:void(0)" onclick="filterByCategory('femme')" class="hover:text-amber-500 transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-[10px] gold-accent"></i> <span>Pour Femme</span></a></li>
+                </ul>
+            </div>
+
+            <!-- العمود 3: معلومات الاتصال الأساسية -->
+            <div>
+                <h4 class="text-base sm:text-lg font-black text-primary-title mb-4 border-b-2 border-amber-500/40 pb-2 inline-block" data-i18n="footerContact">
+                    معلومات الاتصال
+                </h4>
+                <ul class="space-y-3 text-xs sm:text-sm font-semibold text-secondary-sub">
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-location-dot gold-accent mt-1"></i>
+                        <span id="display-footer-address" data-i18n="footerAddress">المملكة المغربية، الدار البيضاء / جميع المدن</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-phone gold-accent"></i>
+                        <span id="display-footer-phone" dir="ltr">+212 600-000000</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-envelope gold-accent"></i>
+                        <span id="display-footer-email">contact@trioparfum.ma</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-clock gold-accent"></i>
+                        <span id="display-footer-hours" data-i18n="footerHours">خدمة الزبناء: 24/7 طيلة الأسبوع</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- العمود 4: خريطة موقع جوجل (Google Maps) -->
+            <div>
+                <h4 class="text-base sm:text-lg font-black text-primary-title mb-4 border-b-2 border-amber-500/40 pb-2 inline-block" data-i18n="footerLocation">
+                    موقعنا على الخريطة
+                </h4>
+                <div class="w-full h-36 sm:h-40 rounded-xl overflow-hidden border border-amber-500/30 shadow-lg relative">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d106376.56000720847!2d-7.669394334346083!3d33.57240323334812!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda7cd4778aa113b%3A0xb06c1d84f310fd3!2sCasablanca!5e0!3m2!1sfr!2sma!4v1700000000000!5m2!1sfr!2sma" 
+                        class="w-full h-full border-0 grayscale hover:grayscale-0 transition duration-500" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+
         </div>
-    </section>
 
-    <!-- All Products -->
-    <section class="max-w-7xl mx-auto px-3 sm:px-6 my-8 w-full">
-        <h3 class="text-lg sm:text-xl font-extrabold mb-6 flex items-center gap-2 text-primary-title">
-            <i class="fa-solid fa-gem gold-accent"></i> <span data-i18n="allPerfumes">Tous les Parfums</span>
-        </h3>
-        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"></div>
-    </section>
+        <!-- حقوق النشر والتأليف -->
+        <div class="max-w-7xl mx-auto pt-6 border-t border-amber-500/20 text-center text-xs font-bold text-secondary-sub flex flex-col sm:flex-row items-center justify-between gap-2">
+            <p>&copy; <span id="current-year">2026</span> TRIO PARFUM. Tous droits réservés.</p>
+            <p class="gold-accent" data-i18n="footerMadeWith">صُنِع بشغف لتقديم أفضل العطور ✨</p>
+        </div>
+    </footer>
 
     <!-- Modal Selection -->
-    <div id="perfume-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-3 sm:p-4 backdrop-blur-sm">
-        <div class="card-box bg-white dark:bg-gray-900 border-2 border-amber-500/40 w-full max-w-md rounded-2xl sm:rounded-3xl p-4 sm:p-6 relative max-h-[85vh] flex flex-col shadow-2xl">
+    <div id="perfume-modal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-3 sm:p-4 backdrop-blur-sm">
+        <div class="modal-bg card-box border-2 border-amber-500/40 w-full max-w-md rounded-2xl sm:rounded-3xl p-4 sm:p-6 relative max-h-[85vh] flex flex-col shadow-2xl">
             <div class="flex justify-between items-center mb-4 pb-2 border-b border-amber-500/20">
                 <h4 class="font-extrabold text-primary-title text-sm sm:text-base" data-i18n="selectPerfume">Choisir un Parfum</h4>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-amber-600 p-1"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-amber-500 p-1"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <div id="modal-perfumes-list" class="grid grid-cols-2 gap-2.5 sm:gap-3 overflow-y-auto p-1"></div>
         </div>
     </div>
 
-    <!-- Firebase & Application Logic -->
+    <!-- Firebase & Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -190,11 +641,59 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- 1. Dictionnaire des Langues ---
+        let allLoadedProducts = [];
+
+        window.toggleTheme = () => {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.className = 'fa-solid fa-sun text-xs sm:text-sm text-amber-600';
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                icon.className = 'fa-solid fa-moon text-xs sm:text-sm text-amber-400';
+                localStorage.setItem('theme', 'dark');
+            }
+            
+            if (typeof window.updateLogoForTheme === 'function') {
+                window.updateLogoForTheme();
+            }
+        };
+
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.remove('dark');
+            setTimeout(() => {
+                const icon = document.getElementById('theme-icon');
+                if(icon) icon.className = 'fa-solid fa-sun text-xs sm:text-sm text-amber-600';
+            }, 100);
+        }
+
+        const flags = { FR: '🇫🇷', AR: '🇲🇦', EN: '🇬🇧' };
+
+        window.toggleLangDropdown = (e) => {
+            e.stopPropagation();
+            const menu = document.getElementById('lang-menu');
+            const chevron = document.getElementById('lang-chevron');
+            menu.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        };
+
+        document.addEventListener('click', () => {
+            const menu = document.getElementById('lang-menu');
+            const chevron = document.getElementById('lang-chevron');
+            if (menu && !menu.classList.contains('hidden')) {
+                menu.classList.add('hidden');
+                chevron.classList.remove('rotate-180');
+            }
+        });
+
         const translations = {
             FR: {
                 dir: "ltr",
                 admin: "Admin",
+                navHome: "Accueil",
                 heroTitle: "Monde des Parfums de Luxe",
                 heroSub: "Une collection exclusive aux touches boisées, fraîches et florales.",
                 offerTitle: "Composez votre Pack",
@@ -206,11 +705,34 @@
                 selectPerfume: "Choisir un Parfum",
                 orderNow: "Commander",
                 noOfferPerfumes: "Aucun parfum disponible pour le moment.",
-                whatsappMsg: "Bonjour, je souhaite commander le pack de 3 parfums à 200 DH:\n- Parfums sélectionnés: "
+                splashSub: "CHARGEMENT DE VOTRE BOUTIQUE D'ESSENCES...",
+                whatsappMsg: "Bonjour, je souhaite commander le pack de 3 parfums à 200 DH:\n- Parfums sélectionnés: ",
+                bestSellerTag: "🔥 OFFRE SPÉCIALE",
+                singleOrderMsg: "Bonjour, je souhaite commander le parfum : ",
+                feat1Title: "Parfums Authentiques",
+                feat1Sub: "à prix pas cher",
+                feat2Title: "Livraison GRATUITE",
+                feat2Sub: "Votre Parfum Partout au MAROC.",
+                feat3Title: "Paiement à la livraison",
+                feat3Sub: "Commandez en toute sécurité",
+                footerAbout: "Le parfum n'est pas seulement une senteur passagère, c'est votre signature. Nous vous proposons les meilleures essences de luxe créées avec passion.",
+                footerQuickLinks: "Liens Rapides",
+                footerContact: "Contactez-nous",
+                footerLocation: "Notre Emplacement",
+                footerAddress: "Maroc, Casablanca / Toutes les villes",
+                footerHours: "Service client: 24h/24 & 7j/7",
+                footerMadeWith: "Créé avec passion pour les amateurs de parfum ✨",
+                tickerItems: [
+                    "🚀 Livraison GRATUITE partout au Maroc",
+                    "✦ Paiement à la Livraison",
+                    "✦ Parfums 100% Authentiques",
+                    "✦ +200 Parfums de Luxe Disponibles"
+                ]
             },
             AR: {
                 dir: "rtl",
                 admin: "لوحة التحكم",
+                navHome: "الرئيسية",
                 heroTitle: "عالم العطور الفاخرة",
                 heroSub: "تشكيلة حصرية بلمسات خشبية، منعشة، وزهرية ساحرة.",
                 offerTitle: "ركّب باقتك",
@@ -222,11 +744,34 @@
                 selectPerfume: "اختر عطر للخانة",
                 orderNow: "طلب الآن",
                 noOfferPerfumes: "لا توجد عطور محددة للعرض حالياً.",
-                whatsappMsg: "مرحباً، أود طلب باقة 3 عطور بـ 200 درهم:\n- العطور المختارة: "
+                splashSub: "جاري تحميل متجرك للعطور...",
+                whatsappMsg: "مرحباً، أود طلب باقة 3 عطور بـ 200 درهم:\n- العطور المختارة: ",
+                bestSellerTag: "🔥 الأكثر مبيعاً - عرض خاص",
+                singleOrderMsg: "مرحباً، أود طلب العطر التالي: ",
+                feat1Title: "عطور أصلية 100%",
+                feat1Sub: "بأفضل الأسعار",
+                feat2Title: "التوصيل مجاني (Gratuit)",
+                feat2Sub: "عطرك الفاخر إلى جميع مدن المغرب",
+                feat3Title: "الدفع عند الاستلام",
+                feat3Sub: "اطلب بكل أمان وراحة بال",
+                footerAbout: "العطر ليس مجرد نفحات عابرة، بل هو هويتك وأثرك الذي يسبق حضورك ويبقى بعد غيابك. نقدم لكم أجود تركيبات العطور الفاخرة المستوحاة من العاطفة والجمال.",
+                footerQuickLinks: "روابط سريعة",
+                footerContact: "معلومات الاتصال",
+                footerLocation: "موقعنا على الخريطة",
+                footerAddress: "المملكة المغربية، الدار البيضاء / جميع المدن",
+                footerHours: "خدمة الزبناء: 24/7 طيلة الأسبوع",
+                footerMadeWith: "صُنِع بشغف لتقديم أفضل العطور ✨",
+                tickerItems: [
+                    "🚀 توصيل مجاني لكل المغرب",
+                    "✦ الدفع عند الاستلام",
+                    "✦ عطور أصلية 100%",
+                    "✦ +200 عطر فاخر"
+                ]
             },
             EN: {
                 dir: "ltr",
                 admin: "Admin",
+                navHome: "Home",
                 heroTitle: "World of Luxury Perfumes",
                 heroSub: "An exclusive collection with woody, fresh, and floral notes.",
                 offerTitle: "Build Your Pack",
@@ -238,11 +783,46 @@
                 selectPerfume: "Select a Perfume",
                 orderNow: "Order Now",
                 noOfferPerfumes: "No perfumes available right now.",
-                whatsappMsg: "Hello, I would like to order the 3 perfume pack for 200 DH:\n- Selected perfumes: "
+                splashSub: "LOADING YOUR PERFUME STORE...",
+                whatsappMsg: "Hello, I would like to order the 3 perfume pack for 200 DH:\n- Selected perfumes: ",
+                bestSellerTag: "🔥 SPECIAL OFFER",
+                singleOrderMsg: "Hello, I would like to order the perfume: ",
+                feat1Title: "Authentic Perfumes",
+                feat1Sub: "At best prices",
+                feat2Title: "Free Delivery",
+                feat2Sub: "Your Perfume Everywhere in MOROCCO.",
+                feat3Title: "Cash on Delivery",
+                feat3Sub: "Order with complete security",
+                footerAbout: "Perfume is not just a passing scent, it is your signature. We bring you the finest luxury essences created with passion.",
+                footerQuickLinks: "Quick Links",
+                footerContact: "Contact Info",
+                footerLocation: "Our Location",
+                footerAddress: "Morocco, Casablanca / All Cities",
+                footerHours: "Customer Care: 24/7 All Week",
+                footerMadeWith: "Crafted with passion for perfume lovers ✨",
+                tickerItems: [
+                    "🚀 FREE Shipping All Over Morocco",
+                    "✦ Cash on Delivery",
+                    "✦ 100% Original Perfumes",
+                    "✦ +200 Luxury Perfumes"
+                ]
             }
         };
 
         let currentLang = "FR";
+
+        window.selectLanguage = (lang) => {
+            currentLang = lang;
+            document.getElementById('current-lang-text').innerText = lang;
+            document.getElementById('current-lang-flag').innerText = flags[lang];
+            
+            const menu = document.getElementById('lang-menu');
+            const chevron = document.getElementById('lang-chevron');
+            if(menu) menu.classList.add('hidden');
+            if(chevron) chevron.classList.remove('rotate-180');
+
+            changeLanguage(lang);
+        };
 
         window.changeLanguage = (lang) => {
             currentLang = lang;
@@ -255,28 +835,42 @@
                 if(t[key]) el.innerText = t[key];
             });
 
-            loadProducts();
+            const splashSub = document.getElementById('splash-sub-text');
+            if(splashSub) splashSub.innerText = t.splashSub;
+
+            updateTicker(lang);
+            renderProducts(allLoadedProducts);
         };
 
-        // --- 2. Theme Toggle (Dark / Light) ---
-        window.toggleTheme = () => {
-            const isDark = document.documentElement.classList.toggle('dark');
-            const icon = document.getElementById('theme-icon');
-            if (isDark) {
-                icon.className = "fa-solid fa-sun text-sm";
-                localStorage.setItem('theme', 'dark');
+        function updateTicker(lang) {
+            const track = document.getElementById('ticker-track');
+            if (!track) return;
+
+            const t = translations[lang];
+            const items = t.tickerItems;
+            
+            const combinedItems = [...items, ...items, ...items, ...items];
+            const htmlContent = combinedItems.map(item => `<span>${item}</span>`).join('<span class="mx-3 opacity-60">•</span>');
+            
+            track.innerHTML = htmlContent;
+
+            if (lang === 'AR') {
+                track.className = 'ticker-track animate-ticker-rtl font-black text-xs sm:text-sm tracking-wide';
             } else {
-                icon.className = "fa-solid fa-moon text-sm";
-                localStorage.setItem('theme', 'light');
+                track.className = 'ticker-track animate-ticker-ltr font-black text-xs sm:text-sm tracking-wide';
             }
-        };
-
-        if (localStorage.getItem('theme') === 'light') {
-            document.documentElement.classList.remove('dark');
-            document.getElementById('theme-icon').className = "fa-solid fa-moon text-sm";
         }
 
-        // --- 3. App Logic ---
+        setTimeout(() => {
+            const splash = document.getElementById('splash-screen');
+            if (splash) {
+                splash.style.opacity = '0';
+                splash.style.transform = 'translateY(-100%)';
+                document.getElementById('main-body').classList.remove('overflow-hidden');
+                setTimeout(() => splash.remove(), 800);
+            }
+        }, 3000);
+
         let selectedBundle = [null, null, null];
         let currentSlot = 0;
         let availableOfferPerfumes = [];
@@ -286,48 +880,118 @@
                 const sDoc = await getDoc(doc(db, "settings", "general"));
                 if(sDoc.exists()) {
                     const data = sDoc.data();
-                    if(data.logo) {
-                        document.getElementById('nav-brand').innerHTML = `<img src="${data.logo}" class="h-8 sm:h-10 object-contain">`;
+                    if(data.logoDark || data.logo) localStorage.setItem('site_cached_logo_dark', data.logoDark || data.logo);
+                    if(data.logoLight || data.logo) localStorage.setItem('site_cached_logo_light', data.logoLight || data.logo);
+                    
+                    if (typeof window.updateLogoForTheme === 'function') {
+                        window.updateLogoForTheme();
                     }
+
                     if(data.offerTitle) document.getElementById('display-offer-title').innerText = data.offerTitle;
                     if(data.offerSub) document.getElementById('display-offer-sub').innerText = data.offerSub;
                     if(data.offerPrice) {
                         const curr = translations[currentLang].currency;
                         document.getElementById('display-offer-price').innerHTML = `${data.offerPrice} <span class="text-xs font-bold text-primary-title">${curr}</span>`;
                     }
+
+                    // تطبيق إعدادات الشريط المخصص والتوقيت
+                    if(data.tickerText) {
+                        const items = data.tickerText.split('•').map(x => x.trim()).filter(x => x);
+                        if(items.length > 0) translations[currentLang].tickerItems = items;
+                        updateTicker(currentLang);
+                    }
+
+                    // عبارات السلايدر المخصصة
+                    if(data.sliderTitle) document.getElementById('slider-display-title').innerText = data.sliderTitle;
+                    if(data.sliderSub) document.getElementById('slider-display-sub').innerText = data.sliderSub;
+
+                    // بيانات الفوتر المخصصة
+                    if(data.footerBrand) document.getElementById('display-footer-brand').innerText = data.footerBrand;
+                    if(data.footerAddress) document.getElementById('display-footer-address').innerText = data.footerAddress;
+                    if(data.footerDesc) document.getElementById('display-footer-desc').innerText = data.footerDesc;
+                    if(data.footerPhone) document.getElementById('display-footer-phone').innerText = data.footerPhone;
+                    if(data.footerEmail) document.getElementById('display-footer-email').innerText = data.footerEmail;
+                    if(data.footerHours) document.getElementById('display-footer-hours').innerText = data.footerHours;
+                    if(data.footerInsta) document.getElementById('display-footer-insta').href = data.footerInsta;
                 }
             } catch(e){}
         }
 
         async function loadProducts() {
-            const grid = document.getElementById('products-grid');
             const snap = await getDocs(collection(db, "products"));
-            grid.innerHTML = '';
+            allLoadedProducts = [];
             availableOfferPerfumes = [];
-
-            const t = translations[currentLang];
 
             snap.forEach(d => {
                 const p = d.data();
+                allLoadedProducts.push(p);
                 if(p.allowOffer) availableOfferPerfumes.push(p);
+            });
+
+            renderProducts(allLoadedProducts);
+        }
+
+        function renderProducts(productsList) {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = '';
+            const t = translations[currentLang];
+
+            productsList.forEach(p => {
+                const currentPrice = parseFloat(p.price) || 0;
+                const oldPrice = p.oldPrice ? parseFloat(p.oldPrice) : Math.round(currentPrice * 1.35);
 
                 grid.innerHTML += `
-                    <div class="card-box rounded-2xl overflow-hidden hover:border-amber-500 transition duration-300 flex flex-col justify-between">
-                        <img src="${p.imageUrl}" class="w-full h-48 sm:h-56 object-cover">
-                        <div class="p-4 flex-grow flex flex-col justify-between">
+                    <div class="card-box rounded-2xl sm:rounded-3xl overflow-hidden hover:border-amber-500 transition-all duration-300 flex flex-col justify-between relative group border shadow-xl">
+                        <div class="absolute top-3 left-3 z-20 bg-gradient-to-r from-amber-500 to-amber-600 text-black font-black text-[10px] sm:text-xs px-2.5 py-1 rounded-full shadow-lg tracking-wide uppercase flex items-center gap-1">
+                            <span>${t.bestSellerTag}</span>
+                        </div>
+                        <div class="absolute top-3 right-3 z-20 bg-red-600 text-white font-black text-[11px] sm:text-xs px-2 py-0.5 rounded-lg shadow-md border border-white/20">
+                            -30%
+                        </div>
+                        <div class="w-full h-60 sm:h-64 perfume-showcase flex items-center justify-center p-4">
+                            <img src="${p.imageUrl}" class="max-h-full max-w-full object-contain perfume-img-clear" alt="${p.name}">
+                        </div>
+                        <div class="p-4 sm:p-5 flex-grow flex flex-col justify-between">
                             <div>
-                                <h4 class="font-extrabold text-primary-title text-sm sm:text-base">${p.name}</h4>
-                                <p class="text-secondary-sub text-xs my-2 line-clamp-2">${p.description || ''}</p>
+                                <h4 class="font-black text-primary-title text-base sm:text-lg leading-snug mb-1.5">${p.name}</h4>
+                                <p class="text-secondary-sub text-xs sm:text-sm font-semibold line-clamp-3 leading-relaxed mb-3">${p.description || 'عطر فاخر برائحة ممتازة تدوم طويلاً، لمسات زكية تناسب جميع المناسبات.'}</p>
                             </div>
-                            <div class="flex justify-between items-center mt-3 pt-2 border-t border-amber-500/20">
-                                <span class="gold-accent font-extrabold text-sm sm:text-base">${p.price} ${t.currency}</span>
-                                <button onclick="alert('${t.orderWhatsApp}')" class="bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/30 font-bold px-3 py-1.5 rounded-xl text-xs hover:bg-amber-500 hover:text-white dark:hover:text-black transition">${t.orderNow}</button>
+                            <div class="pt-3 border-t border-amber-500/20 flex flex-col gap-3">
+                                <div class="flex items-baseline justify-between">
+                                    <span class="text-xs text-secondary-sub font-bold">${t.totalPrice.replace(':', '')}:</span>
+                                    <div class="flex items-baseline gap-2">
+                                        <span class="text-xs sm:text-sm text-gray-400 line-through font-bold">${oldPrice} ${t.currency}</span>
+                                        <span class="gold-accent font-black text-xl sm:text-2xl">${currentPrice} <span class="text-xs font-black text-primary-title">${t.currency}</span></span>
+                                    </div>
+                                </div>
+                                <button onclick="orderSingleProduct('${p.name}', '${p.price}')" class="w-full bg-amber-500 hover:bg-amber-400 active:scale-95 text-black font-black py-2.5 px-4 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 transition duration-200 shadow-md">
+                                    <i class="fa-brands fa-whatsapp text-base"></i>
+                                    <span>${t.orderNow}</span>
+                                </button>
                             </div>
                         </div>
                     </div>
                 `;
             });
         }
+
+        window.filterByCategory = (category) => {
+            const filtered = allLoadedProducts.filter(p => {
+                const cat = (p.category || '').toLowerCase();
+                const name = (p.name || '').toLowerCase();
+                return cat.includes(category) || name.includes(category);
+            });
+            renderProducts(filtered.length > 0 ? filtered : allLoadedProducts);
+            
+            const section = document.getElementById('products-section');
+            if(section) section.scrollIntoView({ behavior: 'smooth' });
+        };
+
+        window.orderSingleProduct = (name, price) => {
+            const t = translations[currentLang];
+            const msg = `${t.singleOrderMsg}${name} (${price} ${t.currency})`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+        };
 
         window.openPerfumeSelector = (slotIndex) => {
             currentSlot = slotIndex;
@@ -340,8 +1004,8 @@
             } else {
                 availableOfferPerfumes.forEach(p => {
                     modalList.innerHTML += `
-                        <div onclick="selectPerfumeForSlot('${p.name}', '${p.imageUrl}')" class="bg-slate-100 dark:bg-gray-800 hover:bg-amber-500/20 p-2 rounded-xl cursor-pointer flex flex-col items-center border border-amber-500/30 text-center transition">
-                            <img src="${p.imageUrl}" class="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg mb-1.5">
+                        <div onclick="selectPerfumeForSlot('${p.name}', '${p.imageUrl}')" class="modal-item hover:bg-amber-500/20 p-2 rounded-xl cursor-pointer flex flex-col items-center border border-amber-500/30 text-center transition">
+                            <img src="${p.imageUrl}" class="w-16 h-16 sm:w-20 sm:h-20 object-contain rounded-lg mb-1.5 perfume-img-clear">
                             <span class="text-[11px] font-extrabold text-primary-title line-clamp-1">${p.name}</span>
                         </div>
                     `;
@@ -356,7 +1020,7 @@
             selectedBundle[currentSlot] = { name, img };
             
             document.getElementById(`slot-content-${currentSlot}`).innerHTML = `
-                <img src="${img}" class="w-16 h-16 sm:w-24 sm:h-24 md:w-28 md:h-28 object-cover rounded-lg sm:rounded-xl shadow mb-1">
+                <img src="${img}" class="w-16 h-16 sm:w-24 sm:h-24 md:w-28 md:h-28 object-contain rounded-lg sm:rounded-xl shadow mb-1 perfume-img-clear">
                 <span class="text-[10px] sm:text-[11px] font-extrabold gold-accent line-clamp-1">${name}</span>
             `;
             closeModal();
@@ -384,22 +1048,53 @@
             window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
         };
 
+        // 🎬 دالة تحميل وتشغيل السلايدر بالحركة السينمائية بدون أسهم 🎬
         async function loadSlider() {
             try {
                 const snap = await getDocs(collection(db, "slider"));
                 const imgs = [];
                 snap.forEach(d => imgs.push(d.data().url));
-                if(imgs.length > 0) {
-                    let i = 0;
+                
+                const container = document.getElementById('slider-container');
+                const indicators = document.getElementById('slider-indicators');
+
+                if (imgs.length > 0) {
+                    container.innerHTML = '';
+                    indicators.innerHTML = '';
+
+                    imgs.forEach((url, idx) => {
+                        // إضافة الصور
+                        const imgEl = document.createElement('img');
+                        imgEl.src = url;
+                        imgEl.className = `slider-slide object-cover ${idx === 0 ? 'active' : ''}`;
+                        container.appendChild(imgEl);
+
+                        // إضافة خطوط التقدم السفلية
+                        const bar = document.createElement('div');
+                        bar.className = `slider-indicator-bar flex-1 ${idx === 0 ? 'active' : ''}`;
+                        bar.innerHTML = `<div class="slider-indicator-fill"></div>`;
+                        indicators.appendChild(bar);
+                    });
+
+                    if (imgs.length === 1) return; // صورة واحدة لا تحتاج حركة
+
+                    let currentIndex = 0;
+                    const slides = container.querySelectorAll('.slider-slide');
+                    const bars = indicators.querySelectorAll('.slider-indicator-bar');
+
                     setInterval(() => {
-                        i = (i + 1) % imgs.length;
-                        document.getElementById('slider-img').src = imgs[i];
-                    }, 4000);
+                        slides[currentIndex].classList.remove('active');
+                        bars[currentIndex].classList.remove('active');
+
+                        currentIndex = (currentIndex + 1) % imgs.length;
+
+                        slides[currentIndex].classList.add('active');
+                        bars[currentIndex].classList.add('active');
+                    }, 4500);
                 }
-            }catch(e){}
+            } catch(e){}
         }
 
-        // Init App
         changeLanguage('FR');
         loadSettings();
         loadProducts();

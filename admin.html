@@ -13,26 +13,95 @@
 </head>
 <body class="p-3 sm:p-6 md:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8">
 
+    <!-- نافذة التنبيهات العصرية والمخصصة (Custom Stylish Alert Modal) -->
+    <div id="custom-alert-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-4 transition-all duration-300">
+        <div class="bg-gray-900 border border-amber-500/30 p-6 rounded-2xl w-full max-w-sm text-center space-y-5 shadow-2xl shadow-amber-500/10 transform scale-95 transition-all id-modal-box">
+            <div class="w-12 h-12 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mx-auto text-amber-400 text-xl">
+                <i class="fa-solid fa-circle-check" id="custom-alert-icon"></i>
+            </div>
+            <div class="space-y-1">
+                <h3 class="text-base font-bold text-white" id="custom-alert-title">تنبيه</h3>
+                <p class="text-xs sm:text-sm text-gray-300 leading-relaxed" id="custom-alert-message">تمت العملية بنجاح!</p>
+            </div>
+            <button id="custom-alert-btn" onclick="closeCustomAlert()" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold py-2.5 rounded-xl transition text-xs sm:text-sm shadow-lg shadow-amber-500/20 active:scale-95">
+                موافق
+            </button>
+        </div>
+    </div>
+
+    <!-- نافذة الحماية وتسجيل الدخول -->
+    <div id="login-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="bg-gray-900 border border-gray-800 p-6 sm:p-8 rounded-2xl w-full max-w-md space-y-6 shadow-2xl">
+            <div class="text-center space-y-2">
+                <i class="fa-solid fa-lock text-4xl text-amber-400"></i>
+                <h2 class="text-xl font-black text-white">تسجيل الدخول للوحة التحكم</h2>
+                <p class="text-xs text-gray-400">يرجى إدخال اسم المستخدم وكلمة المرور للوصول</p>
+            </div>
+            <form id="login-form" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 mb-1">اسم المستخدم</label>
+                    <input type="text" id="auth-username" required class="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 mb-1">كلمة المرور</label>
+                    <input type="password" id="auth-password" required class="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <button type="submit" class="w-full bg-amber-500 text-black font-bold py-3 rounded-xl hover:bg-amber-400 transition text-sm">
+                    دخول اللوحة
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- Navbar Header -->
     <div class="flex flex-col sm:flex-row justify-between items-center gap-4 border-b border-gray-800 pb-4">
         <h1 class="text-xl sm:text-2xl font-black text-amber-400 text-center sm:text-right">
             <i class="fa-solid fa-sliders ml-2"></i> لوحة تحكم المتجر
         </h1>
-        <a href="index.html" class="w-full sm:w-auto text-center text-xs sm:text-sm bg-gray-800 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-gray-700 transition">
-            <i class="fa-solid fa-house ml-1"></i> الرجوع للواجهة الرئيسية
-        </a>
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+            <a href="index.html" class="flex-1 sm:flex-none text-center text-xs sm:text-sm bg-gray-800 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-gray-700 transition">
+                <i class="fa-solid fa-house ml-1"></i> الرجوع للواجهة الرئيسية
+            </a>
+            <button id="btn-logout" class="text-xs sm:text-sm bg-red-600/20 text-red-400 border border-red-500/30 px-4 py-2.5 rounded-xl hover:bg-red-600 hover:text-white transition">
+                <i class="fa-solid fa-right-from-bracket ml-1"></i> خروج
+            </button>
+        </div>
     </div>
 
     <!-- 1. قسم تغيير اللوغو والنصوص للعرض الخاص -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- تغيير اللوغو -->
-        <div class="bg-gray-900 p-4 sm:p-6 rounded-2xl border border-gray-800">
-            <h2 class="text-base sm:text-lg font-bold text-white mb-4"><i class="fa-solid fa-image text-amber-400 ml-2"></i> لوغو المتجر (PNG / JPG)</h2>
-            <div id="logo-preview" class="mb-4 h-20 bg-gray-800 rounded-xl flex items-center justify-center overflow-hidden border border-gray-700">
-                <span class="text-gray-500 text-xs">لا يوجد لوغو مرفوع حالياً</span>
+        
+        <!-- تغيير اللوغو (النمط الليلي والنمط الشمسي) -->
+        <div class="bg-gray-900 p-4 sm:p-6 rounded-2xl border border-gray-800 space-y-6">
+            <h2 class="text-base sm:text-lg font-bold text-white"><i class="fa-solid fa-image text-amber-400 ml-2"></i> لوغو المتجر (PNG / JPG)</h2>
+            
+            <!-- 🌙 لوغو النمط الليلي -->
+            <div class="bg-gray-800/50 p-4 rounded-xl border border-gray-700/60 space-y-3">
+                <label class="block text-xs sm:text-sm font-bold text-amber-300">
+                    <i class="fa-solid fa-moon ml-1"></i> لوغو النمط الليلي (Dark Mode)
+                </label>
+                <div id="logo-preview-dark" class="h-20 bg-gray-950 rounded-xl flex items-center justify-center overflow-hidden border border-gray-800">
+                    <span class="text-gray-500 text-xs">لا يوجد لوغو مرفوع حالياً</span>
+                </div>
+                <input type="file" id="logo-file-dark" accept="image/png, image/jpeg" class="w-full text-xs sm:text-sm text-gray-400 file:ml-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:bg-amber-500 file:text-black file:font-bold">
+                <button id="btn-upload-logo-dark" class="w-full bg-amber-500 text-black font-bold py-2 rounded-xl hover:bg-amber-400 transition text-xs sm:text-sm">
+                    حفظ لوغو النمط الليلي
+                </button>
             </div>
-            <input type="file" id="logo-file" accept="image/png, image/jpeg" class="w-full text-xs sm:text-sm text-gray-400 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:bg-amber-500 file:text-black file:font-bold">
-            <button id="btn-upload-logo" class="w-full mt-3 bg-amber-500 text-black font-bold py-2.5 rounded-xl hover:bg-amber-400 transition text-sm">حفظ اللوغو الجديد</button>
+
+            <!-- ☀️ لوغو النمط الشمسي -->
+            <div class="bg-gray-800/50 p-4 rounded-xl border border-gray-700/60 space-y-3">
+                <label class="block text-xs sm:text-sm font-bold text-amber-300">
+                    <i class="fa-solid fa-sun ml-1"></i> لوغو النمط الشمسي (Light Mode)
+                </label>
+                <div id="logo-preview-light" class="h-20 bg-slate-100 rounded-xl flex items-center justify-center overflow-hidden border border-gray-300">
+                    <span class="text-gray-400 text-xs">لا يوجد لوغو مرفوع حالياً</span>
+                </div>
+                <input type="file" id="logo-file-light" accept="image/png, image/jpeg" class="w-full text-xs sm:text-sm text-gray-400 file:ml-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:bg-amber-500 file:text-black file:font-bold">
+                <button id="btn-upload-logo-light" class="w-full bg-amber-500 text-black font-bold py-2 rounded-xl hover:bg-amber-400 transition text-xs sm:text-sm">
+                    حفظ لوغو النمط الشمسي
+                </button>
+            </div>
         </div>
 
         <!-- إعدادات نصوص عرض الـ 3 عطور -->
@@ -47,22 +116,62 @@
         </div>
     </div>
 
-    <!-- 2. قسم إضافة وتعديل المنتجات -->
+    <!-- 2. قسم الشريط الإعلاني المتحرك (إعدادات النص والسرعة) -->
+    <div class="bg-gray-900 p-4 sm:p-6 rounded-2xl border border-gray-800">
+        <h2 class="text-base sm:text-lg font-bold text-white mb-4"><i class="fa-solid fa-bullhorn text-amber-400 ml-2"></i> إعدادات الشريط المتحرك الإعلاني</h2>
+        <form id="ticker-settings-form" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="md:col-span-2">
+                <label class="block text-xs font-bold text-gray-300 mb-1">نص العبارات (الفصل بـ • بين العبارات)</label>
+                <input type="text" id="ticker-text" placeholder="مثال: 🚀 توصيل مجاني لكل المدن • عروض حصرية لفترة محدودة" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-300 mb-1">سرعة الحركة (بالثواني)</label>
+                <input type="number" id="ticker-speed" placeholder="15" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+            </div>
+            <button type="submit" class="md:col-span-3 bg-amber-500 text-black font-bold py-2.5 rounded-xl hover:bg-amber-400 transition text-sm">حفظ إعدادات الشريط</button>
+        </form>
+    </div>
+
+    <!-- 3. قسم نصوص السلايدر (العنوان والوصف المكتوبين فوق الصورة) -->
+    <div class="bg-gray-900 p-4 sm:p-6 rounded-2xl border border-gray-800">
+        <h2 class="text-base sm:text-lg font-bold text-white mb-4"><i class="fa-solid fa-heading text-amber-400 ml-2"></i> تعديل العبارات المكتوبة فوق السلايدر</h2>
+        <form id="slider-text-form" class="space-y-3">
+            <input type="text" id="slider-title" placeholder="العنوان الرئيسي فوق الصور (مثال: Monde des Parfums de Luxe)" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+            <textarea id="slider-sub" placeholder="الوصف الفرعي (مثال: Une collection exclusive aux touches boisées...)" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500" rows="2"></textarea>
+            <button type="submit" class="w-full bg-amber-500 text-black font-bold py-2.5 rounded-xl hover:bg-amber-400 transition text-sm">حفظ عبارات السلايدر</button>
+        </form>
+    </div>
+
+    <!-- 4. قسم إضافة وتعديل المنتجات مع إضافة خانة تصنيف (نسائي / رجالي) -->
     <div class="bg-gray-900 p-4 sm:p-6 rounded-2xl border border-gray-800">
         <h2 class="text-base sm:text-lg font-bold text-white mb-4"><i class="fa-solid fa-box-open text-amber-400 ml-2"></i> إضافة / تعديل منتج</h2>
         <form id="product-form" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <input type="hidden" id="p-id">
             <input type="text" id="p-name" placeholder="اسم العطر" required class="bg-gray-800 border border-gray-700 rounded-xl p-3 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
             <input type="number" id="p-price" placeholder="السعر (درهم)" required class="bg-gray-800 border border-gray-700 rounded-xl p-3 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+            
+            <!-- 🌟 خانة تصنيف العطر (رجالي / نسائي) -->
+            <div class="sm:col-span-2">
+                <label class="block text-xs font-bold text-amber-400 mb-1"><i class="fa-solid fa-venus-mars ml-1"></i> تصنيف العطر (نسائي / رجالي)</label>
+                <select id="p-category" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+                    <option value="men">رجالي (Pour Homme)</option>
+                    <option value="women">نسائي (Pour Femme)</option>
+                    <option value="unisex">للجنسين (Unisex)</option>
+                </select>
+            </div>
+
             <div class="sm:col-span-2">
                 <label class="block text-xs text-gray-400 mb-1">صورة العطر:</label>
                 <input type="file" id="p-file" accept="image/*" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-xs sm:text-sm text-gray-300">
             </div>
             <textarea id="p-desc" placeholder="وصف العطر" class="sm:col-span-2 bg-gray-800 border border-gray-700 rounded-xl p-3 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500" rows="2"></textarea>
             
-            <div class="sm:col-span-2 flex items-center gap-2">
-                <input type="checkbox" id="p-allow-offer" class="w-4 h-4 text-amber-500 rounded accent-amber-500">
-                <label for="p-allow-offer" class="text-xs sm:text-sm text-gray-300">السماح باختيار هذا العطر داخل "عرض 3 عطور بـ 200 درهم"</label>
+            <!-- زر التفعيل للعرض الخاص -->
+            <div class="sm:col-span-2 flex items-center gap-3 bg-gray-800/80 p-3 rounded-xl border border-amber-500/30">
+                <input type="checkbox" id="p-allow-offer" class="w-5 h-5 text-amber-500 rounded accent-amber-500 cursor-pointer">
+                <label for="p-allow-offer" class="text-xs sm:text-sm font-bold text-amber-400 cursor-pointer select-none">
+                    إظهار هذا العطر داخل قائمة العرض الخاص (3 عطور بـ 200 درهم)
+                </label>
             </div>
 
             <button type="submit" id="p-btn" class="sm:col-span-2 bg-amber-500 text-black font-bold py-3 rounded-xl hover:bg-amber-400 transition text-sm">حفظ المنتج</button>
@@ -75,7 +184,7 @@
         <div id="admin-products-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
     </div>
 
-    <!-- 3. قسم السلايدر -->
+    <!-- 5. قسم صور السلايدر -->
     <div class="bg-gray-900 p-4 sm:p-6 rounded-2xl border border-gray-800">
         <h2 class="text-base sm:text-lg font-bold text-white mb-4"><i class="fa-solid fa-images text-amber-400 ml-2"></i> إدارة صور السلايدر</h2>
         <div class="flex flex-col sm:flex-row gap-3 mb-6">
@@ -84,6 +193,94 @@
         </div>
         <div id="admin-slider-list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3"></div>
     </div>
+
+    <!-- 6. قسم تعديل معلومات الفوتر بالكامل -->
+    <div class="bg-gray-900 p-4 sm:p-6 rounded-2xl border border-gray-800 space-y-4">
+        <h2 class="text-base sm:text-lg font-bold text-white"><i class="fa-solid fa-shoe-prints text-amber-400 ml-2"></i> تعديل كافة معلومات الفوتر (Footer)</h2>
+        <form id="footer-settings-form" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-xs font-bold text-gray-300 mb-1">اسم المتجر / العلامة</label>
+                <input type="text" id="footer-brand" placeholder="TRIO PARFUM" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-300 mb-1">العنوان / المدينة</label>
+                <input type="text" id="footer-address" placeholder="Maroc, Casablanca / Toutes les villes" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+            </div>
+            <div class="sm:col-span-2">
+                <label class="block text-xs font-bold text-gray-300 mb-1">الوصف الفرعي بالفوتر</label>
+                <textarea id="footer-desc" placeholder="Le parfum n'est pas seulement une senteur..." class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500" rows="2"></textarea>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-300 mb-1">رقم الهاتف</label>
+                <input type="text" id="footer-phone" placeholder="+212 600-000000" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-300 mb-1">البريد الإلكتروني</label>
+                <input type="email" id="footer-email" placeholder="contact@trioparfum.ma" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-300 mb-1">أوقات وساعات الدعم</label>
+                <input type="text" id="footer-hours" placeholder="Service client: 24h/24 & 7j/7" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-300 mb-1">رابط إنستغرام</label>
+                <input type="url" id="footer-insta" placeholder="https://instagram.com/..." class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+            </div>
+            <button type="submit" class="sm:col-span-2 bg-amber-500 text-black font-bold py-2.5 rounded-xl hover:bg-amber-400 transition text-sm">حفظ كافة معلومات الفوتر</button>
+        </form>
+    </div>
+
+    <!-- 7. قسم التعديل على اسم المستخدم وكلمة المرور -->
+    <div class="bg-gray-900 p-4 sm:p-6 rounded-2xl border border-gray-800">
+        <h2 class="text-base sm:text-lg font-bold text-white mb-4"><i class="fa-solid fa-key text-amber-400 ml-2"></i> تغيير اسم المستخدم وكلمة المرور للوحة</h2>
+        <form id="security-form" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-xs font-bold text-gray-300 mb-1">اسم المستخدم الجديد</label>
+                <input type="text" id="new-username" placeholder="أدخل اسم المستخدم الجديد" required class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-300 mb-1">كلمة المرور الجديدة</label>
+                <input type="password" id="new-password" placeholder="أدخل كلمة المرور الجديدة" required class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+            </div>
+            <button type="submit" class="sm:col-span-2 bg-amber-500 text-black font-bold py-2.5 rounded-xl hover:bg-amber-400 transition text-sm">تحديث بيانات الأمان</button>
+        </form>
+    </div>
+
+    <!-- Custom Alert Helper Script -->
+    <script>
+        function alert(message, title = "تنبيه الإدارة", isError = false) {
+            const modal = document.getElementById('custom-alert-modal');
+            const msgEl = document.getElementById('custom-alert-message');
+            const titleEl = document.getElementById('custom-alert-title');
+            const iconEl = document.getElementById('custom-alert-icon');
+            
+            msgEl.innerText = message;
+            titleEl.innerText = title;
+
+            if(isError) {
+                iconEl.className = "fa-solid fa-circle-exclamation text-red-400";
+            } else {
+                iconEl.className = "fa-solid fa-circle-check text-amber-400";
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modal.querySelector('.id-modal-box').classList.remove('scale-95');
+                modal.querySelector('.id-modal-box').classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeCustomAlert() {
+            const modal = document.getElementById('custom-alert-modal');
+            modal.querySelector('.id-modal-box').classList.remove('scale-100');
+            modal.querySelector('.id-modal-box').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 150);
+        }
+    </script>
 
     <!-- Firebase Code -->
     <script type="module">
@@ -107,29 +304,94 @@
             r.onload = () => res(r.result); r.onerror = e => rej(e);
         });
 
-        // 1. اللوغو والنصوص
+        // Auth Logic Handling
+        let authCredentials = { username: 'admin', password: 'admin123' };
+
+        document.getElementById('login-form').onsubmit = (e) => {
+            e.preventDefault();
+            const u = document.getElementById('auth-username').value;
+            const p = document.getElementById('auth-password').value;
+            if (u === authCredentials.username && p === authCredentials.password) {
+                document.getElementById('login-modal').style.display = 'none';
+            } else {
+                alert('اسم المستخدم أو كلمة المرور غير صحيحة!', 'خطأ في الدخول', true);
+            }
+        };
+
+        document.getElementById('btn-logout').onclick = () => {
+            document.getElementById('login-modal').style.display = 'flex';
+        };
+
+        // 1. اللوغو والنصوص والإعدادات الشاملة
         async function loadSettings() {
             try {
                 const sDoc = await getDoc(doc(db, "settings", "general"));
                 if(sDoc.exists()) {
                     const data = sDoc.data();
-                    if(data.logo) document.getElementById('logo-preview').innerHTML = `<img src="${data.logo}" class="h-16 object-contain">`;
+
+                    // تسجيل الدخول الحساب
+                    if(data.auth) {
+                        authCredentials = data.auth;
+                        document.getElementById('new-username').value = data.auth.username;
+                    }
+
+                    // عرض لوغو النمط الليلي
+                    if(data.logoDark) {
+                        document.getElementById('logo-preview-dark').innerHTML = `<img src="${data.logoDark}" class="h-16 object-contain">`;
+                    } else if(data.logo) {
+                        document.getElementById('logo-preview-dark').innerHTML = `<img src="${data.logo}" class="h-16 object-contain">`;
+                    }
+                    
+                    // عرض لوغو النمط الشمسي
+                    if(data.logoLight) {
+                        document.getElementById('logo-preview-light').innerHTML = `<img src="${data.logoLight}" class="h-16 object-contain">`;
+                    }
+
                     if(data.offerTitle) document.getElementById('offer-title').value = data.offerTitle;
                     if(data.offerSub) document.getElementById('offer-sub').value = data.offerSub;
                     if(data.offerPrice) document.getElementById('offer-price').value = data.offerPrice;
+
+                    // Ticker Settings
+                    if(data.tickerText) document.getElementById('ticker-text').value = data.tickerText;
+                    if(data.tickerSpeed) document.getElementById('ticker-speed').value = data.tickerSpeed;
+
+                    // Slider Texts
+                    if(data.sliderTitle) document.getElementById('slider-title').value = data.sliderTitle;
+                    if(data.sliderSub) document.getElementById('slider-sub').value = data.sliderSub;
+
+                    // Footer Data
+                    if(data.footerBrand) document.getElementById('footer-brand').value = data.footerBrand;
+                    if(data.footerAddress) document.getElementById('footer-address').value = data.footerAddress;
+                    if(data.footerDesc) document.getElementById('footer-desc').value = data.footerDesc;
+                    if(data.footerPhone) document.getElementById('footer-phone').value = data.footerPhone;
+                    if(data.footerEmail) document.getElementById('footer-email').value = data.footerEmail;
+                    if(data.footerHours) document.getElementById('footer-hours').value = data.footerHours;
+                    if(data.footerInsta) document.getElementById('footer-insta').value = data.footerInsta;
                 }
             } catch(e){}
         }
 
-        document.getElementById('btn-upload-logo').onclick = async () => {
-            const file = document.getElementById('logo-file').files[0];
-            if(!file) return alert('اختر ملف اللوغو أولاً');
+        // حفظ لوغو النمط الليلي
+        document.getElementById('btn-upload-logo-dark').onclick = async () => {
+            const file = document.getElementById('logo-file-dark').files[0];
+            if(!file) return alert('اختر ملف اللوغو الخاص بالنمط الليلي أولاً', 'تنبيه', true);
             const b64 = await fileToBase64(file);
-            await setDoc(doc(db, "settings", "general"), { logo: b64 }, { merge: true });
-            alert('تم حفظ اللوغو!');
+            await setDoc(doc(db, "settings", "general"), { logoDark: b64, logo: b64 }, { merge: true });
+            alert('تم حفظ لوغو النمط الليلي بنجاح!');
             loadSettings();
         };
 
+        // حفظ لوغو النمط الشمسي
+        document.getElementById('btn-upload-logo-light').onclick = async () => {
+            const file = document.getElementById('logo-file-light').files[0];
+            if(!file) return alert('اختر ملف اللوغو الخاص بالنمط الشمسي أولاً', 'تنبيه', true);
+            const b64 = await fileToBase64(file);
+            await setDoc(doc(db, "settings", "general"), { logoLight: b64 }, { merge: true });
+            alert('تم حفظ لوغو النمط الشمسي بنجاح!');
+            loadSettings();
+        };
+
+        // حفظ العروض
         document.getElementById('offer-settings-form').onsubmit = async (e) => {
             e.preventDefault();
             await setDoc(doc(db, "settings", "general"), {
@@ -137,7 +399,54 @@
                 offerSub: document.getElementById('offer-sub').value,
                 offerPrice: document.getElementById('offer-price').value
             }, { merge: true });
-            alert('تم حفظ إعدادات العرض!');
+            alert('تم حفظ إعدادات العرض بنجاح!');
+        };
+
+        // حفظ الشريط المتحرك
+        document.getElementById('ticker-settings-form').onsubmit = async (e) => {
+            e.preventDefault();
+            await setDoc(doc(db, "settings", "general"), {
+                tickerText: document.getElementById('ticker-text').value,
+                tickerSpeed: document.getElementById('ticker-speed').value
+            }, { merge: true });
+            alert('تم حفظ إعدادات الشريط!');
+        };
+
+        // حفظ عبارات السلايدر
+        document.getElementById('slider-text-form').onsubmit = async (e) => {
+            e.preventDefault();
+            await setDoc(doc(db, "settings", "general"), {
+                sliderTitle: document.getElementById('slider-title').value,
+                sliderSub: document.getElementById('slider-sub').value
+            }, { merge: true });
+            alert('تم حفظ عبارات السلايدر!');
+        };
+
+        // حفظ معلومات الفوتر
+        document.getElementById('footer-settings-form').onsubmit = async (e) => {
+            e.preventDefault();
+            await setDoc(doc(db, "settings", "general"), {
+                footerBrand: document.getElementById('footer-brand').value,
+                footerAddress: document.getElementById('footer-address').value,
+                footerDesc: document.getElementById('footer-desc').value,
+                footerPhone: document.getElementById('footer-phone').value,
+                footerEmail: document.getElementById('footer-email').value,
+                footerHours: document.getElementById('footer-hours').value,
+                footerInsta: document.getElementById('footer-insta').value
+            }, { merge: true });
+            alert('تم حفظ بيانات الفوتر!');
+        };
+
+        // حفظ اسم المستخدم وكلمة المرور
+        document.getElementById('security-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const u = document.getElementById('new-username').value;
+            const p = document.getElementById('new-password').value;
+            await setDoc(doc(db, "settings", "general"), {
+                auth: { username: u, password: p }
+            }, { merge: true });
+            authCredentials = { username: u, password: p };
+            alert('تم تحديث بيانات الدخول بنجاح!');
         };
 
         // 2. إدارة المنتجات
@@ -153,10 +462,11 @@
                         <div class="flex-grow min-w-0">
                             <h4 class="font-bold text-xs sm:text-sm truncate">${p.name}</h4>
                             <p class="text-xs text-amber-400 font-bold">${p.price} د.م.</p>
-                            ${p.allowOffer ? '<span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded">متاح بالعرض</span>' : ''}
+                            <span class="text-[10px] bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded font-bold">${p.category === 'women' ? 'نسائي' : 'رجالي'}</span>
+                            ${p.allowOffer ? '<span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-bold mr-1">متاح بالعرض</span>' : ''}
                         </div>
                         <div class="flex flex-col gap-1 flex-shrink-0">
-                            <button onclick="editProduct('${d.id}', '${p.name}', '${p.price}', '${p.description||''}', ${p.allowOffer||false})" class="text-xs bg-blue-600/30 text-blue-300 p-1.5 rounded hover:bg-blue-600/50"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="editProduct('${d.id}', '${p.name}', '${p.price}', '${p.description||''}', ${p.allowOffer||false}, '${p.category||'men'}')" class="text-xs bg-blue-600/30 text-blue-300 p-1.5 rounded hover:bg-blue-600/50"><i class="fa-solid fa-pen"></i></button>
                             <button onclick="deleteProduct('${d.id}')" class="text-xs bg-red-600/30 text-red-300 p-1.5 rounded hover:bg-red-600/50"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
@@ -164,14 +474,15 @@
             });
         }
 
-        window.editProduct = (id, name, price, desc, allowOffer) => {
+        window.editProduct = (id, name, price, desc, allowOffer, category) => {
             document.getElementById('p-id').value = id;
             document.getElementById('p-name').value = name;
             document.getElementById('p-price').value = price;
             document.getElementById('p-desc').value = desc;
+            document.getElementById('p-category').value = category || 'men';
             document.getElementById('p-allow-offer').checked = allowOffer;
             document.getElementById('p-btn').innerText = 'تحديث العطر';
-            window.scrollTo({ top: 300, behavior: 'smooth' });
+            window.scrollTo({ top: 600, behavior: 'smooth' });
         };
 
         window.deleteProduct = async (id) => {
@@ -189,6 +500,7 @@
                 name: document.getElementById('p-name').value,
                 price: document.getElementById('p-price').value,
                 description: document.getElementById('p-desc').value,
+                category: document.getElementById('p-category').value,
                 allowOffer: document.getElementById('p-allow-offer').checked
             };
 
@@ -196,11 +508,11 @@
 
             if(id) {
                 await updateDoc(doc(db, "products", id), data);
-                alert('تم التحديث!');
+                alert('تم تحديث العطر بنجاح!');
             } else {
-                if(!file) return alert('الرجاء اختيار صورة العطر');
+                if(!file) return alert('الرجاء اختيار صورة العطر', 'تنبيه', true);
                 await addDoc(collection(db, "products"), { ...data, createdAt: new Date().toISOString() });
-                alert('تم الإضافة!');
+                alert('تم إضافة العطر بنجاح!');
             }
             e.target.reset();
             document.getElementById('p-id').value = '';
@@ -225,7 +537,7 @@
 
         document.getElementById('btn-add-slider').onclick = async () => {
             const file = document.getElementById('s-file').files[0];
-            if(!file) return alert('اختر صورة أولاً');
+            if(!file) return alert('اختر صورة أولاً', 'تنبيه', true);
             const url = await fileToBase64(file);
             await addDoc(collection(db, "slider"), { url });
             document.getElementById('s-file').value = '';
